@@ -1,0 +1,45 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
+  <script type="text/javascript" src="../croaker/js/xml-to-json/jquery.xml2json.pack.js"></script>
+  <script type="text/javascript" src="../croaker/js/croaker.js"></script>
+
+  <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+
+  <script>
+    $(document).ready(function () {
+      module('parse tests');
+      asyncTest('basic parsing', function () {
+        $.get('data/basic.xml', function (data) {
+          var report = Croaker.parser.parseXml(data);
+          equal(report.Version, '10.0');
+          equal(report.Targets.Target.Name, 'C:\\some\\path\\Sample.Assembly.dll');
+          equal(report.Targets.Target.Modules.Module.Name, 'Some.dll');
+          equal(report.Targets.Target.Modules.Module.AssemblyVersion, '1.0.2.3');
+          equal(report.Targets.Target.Modules.Module.Metrics.Metric[0].Name, 'MaintainabilityIndex');
+          equal(report.Targets.Target.Modules.Module.Metrics.Metric[0].Value, '1');
+          equal(report.Targets.Target.Modules.Module.Namespaces.Namespace.Types.Type.Members.Member[1].Name, 'SampleClass()');
+          start();
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1 id="qunit-header">
+    Croaker Unit Tests</h1>
+  <h2 id="qunit-banner">
+  </h2>
+  <div id="qunit-testrunner-toolbar">
+  </div>
+  <h2 id="qunit-userAgent">
+  </h2>
+  <ol id="qunit-tests">
+  </ol>
+  <div id="qunit-fixture">
+    test markup, will be hidden
+  </div>
+</body>
+</html>
