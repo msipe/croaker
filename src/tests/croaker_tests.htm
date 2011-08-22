@@ -8,21 +8,152 @@
 
   <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
 
-  <script>
+  <script type="text/javascript">
     $(document).ready(function () {
-      module('parse tests');
-      asyncTest('basic parsing', function () {
-        $.get('data/basic.xml', function (data) {
-          var report = Croaker.parser.parseXml(data);
-          equal(report.Version, '10.0');
-          equal(report.Targets.Target.Name, 'C:\\some\\path\\Sample.Assembly.dll');
-          equal(report.Targets.Target.Modules.Module.Name, 'Some.dll');
-          equal(report.Targets.Target.Modules.Module.AssemblyVersion, '1.0.2.3');
-          equal(report.Targets.Target.Modules.Module.Metrics.Metric[0].Name, 'MaintainabilityIndex');
-          equal(report.Targets.Target.Modules.Module.Metrics.Metric[0].Value, '1');
-          equal(report.Targets.Target.Modules.Module.Namespaces.Namespace.Types.Type.Members.Member[1].Name, 'SampleClass()');
-          start();
+      var loadedFiles = {};
+      var parsed = {};
+
+      var loader = function (key, path) {
+        return $.get(path, function (xml) {
+          loadedFiles[key] = xml;
         });
+      };
+
+      var parse = function () {
+        parsed['basic'] = Croaker.parser.parse(loadedFiles['basic']);
+        parsed['missing'] = Croaker.parser.parse(loadedFiles['missing']);
+        start();
+      }
+
+      stop();
+      $.when(loader('basic', 'data/basic.xml'), loader('missing', 'data/missing_members.xml'))
+       .done(parse);
+
+      module('module class tests');
+      test('test defaults', function () {
+        var mod = Croaker.module('aname', 'version');
+        deepEqual(mod.name, 'aname');
+        deepEqual(mod.version, 'version');
+        deepEqual(mod.namespaces, []);
+      });
+
+      test('test add namespaces', function () {
+        var mod = Croaker.module('aname', 'version');
+        var ns = Croaker.namespace('ns1');
+        mod.add([ns]);
+        deepEqual(mod.namespaces, [ns]);
+        mod.add([ns, ns]);
+        deepEqual(mod.namespaces, [ns, ns, ns]);
+      });
+
+      module('namespace class tests');
+      test('test defaults', function () {
+        var ns = Croaker.namespace('aname');
+        deepEqual(ns.name, 'aname');
+        deepEqual(ns.types, []);
+      });
+
+      test('test add types', function () {
+        var ns = Croaker.namespace('aname');
+        var type = Croaker.type('t1');
+        ns.add([type]);
+        deepEqual(ns.types, [type]);
+        ns.add([type, type]);
+        deepEqual(ns.types, [type, type, type]);
+      });
+
+      module('type class tests');
+      test('test defaults', function () {
+        var type = Croaker.type('aname');
+        deepEqual(type.name, 'aname');
+        deepEqual(type.members, []);
+      });
+
+      test('test add members', function () {
+        var type = Croaker.type('aname');
+        var member = Croaker.member('m1');
+        type.add([member]);
+        deepEqual(type.members, [member]);
+        type.add([member, member]);
+        deepEqual(type.members, [member, member, member]);
+      });
+
+      module('member class tests');
+      test('test defaults', function () {
+        var member = Croaker.member('aname');
+        deepEqual(member.name, 'aname');
+        deepEqual(member.metrics, []);
+      });
+
+      test('test add members', function () {
+        var member = Croaker.member('aname');
+        var metric = Croaker.metric('m1', 33, member);
+        member.add([metric]);
+        deepEqual(member.metrics.length, 1);
+        ok(member.metrics[0] == metric);
+        member.add([metric, metric]);
+        deepEqual(member.metrics.length, 3);
+        ok(member.metrics[0] == metric);
+        ok(member.metrics[1] == metric);
+        ok(member.metrics[2] == metric);
+      });
+
+      module('metric class tests');
+      test('test defaults', function () {
+        var parent = Croaker.member('aname');
+        var metric = Croaker.metric('aname', 33, parent);
+        deepEqual(metric.name, 'aname');
+        deepEqual(metric.value, 33);
+        deepEqual(metric.parent, parent);
+      });
+
+      module('parse tests');
+      test('module parsing', function () {
+        equals(parsed['basic'].name, 'Some.dll');
+        equals(parsed['basic'].version, '1.0.2.3');
+        equals(parsed['basic'].namespaces.length, 1);
+      });
+
+      test('namespace parsing', function () {
+        var ns = parsed['basic'].namespaces[0];
+        equals(ns.name, 'Sample.Core');
+        equals(ns.types.length, 1);
+      });
+
+      test('type parsing', function () {
+        var type = parsed['basic'].namespaces[0].types[0];
+        equals(type.name, 'SampleClass');
+        equals(type.members.length, 2);
+      });
+
+      test('member parsing', function () {
+        var members = parsed['basic'].namespaces[0].types[0].members;
+        equals(members[0].name, 'Method1(String) : void');
+        equals(members[0].metrics.length, 5);
+        equals(members[1].name, 'SampleClass()');
+        equals(members[1].metrics.length, 2);
+      });
+
+      test('metric parsing', function () {
+        var members = parsed['basic'].namespaces[0].types[0].members;
+        equals(members[0].metrics[0].name, 'MaintainabilityIndex');
+        equals(members[0].metrics[0].value, 7);
+        equals(members[0].metrics[1].name, 'CyclomaticComplexity');
+        equals(members[0].metrics[1].value, 8);
+        equals(members[0].metrics[2].name, 'ClassCoupling');
+        equals(members[0].metrics[2].value, 11);
+        equals(members[0].metrics[3].name, 'DepthOfInheritance');
+        equals(members[0].metrics[3].value, 2);
+        equals(members[0].metrics[4].name, 'LinesOfCode');
+        equals(members[0].metrics[4].value, 6);
+        equals(members[1].metrics[0].name, 'MaintainabilityIndex');
+        equals(members[1].metrics[0].value, 9);
+        equals(members[1].metrics[1].name, 'CyclomaticComplexity');
+        equals(members[1].metrics[1].value, 10);
+      });
+
+      test('parsing type with no members', function () {
+        equals(parsed['missing'].namespaces[0].types[0].members.length, 0);
       });
     });
   </script>
