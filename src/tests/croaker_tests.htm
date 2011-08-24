@@ -85,17 +85,17 @@
         deepEqual(member.metrics, []);
       });
 
-      test('test add members', function () {
+      test('test add metrics', function () {
         var member = Croaker.member('aname');
         var metric = Croaker.metric('m1', 33, member);
         member.add([metric]);
         equals(member.metrics.length, 1);
-        ok(member.metrics[0] == metric);
+        equals(member.metrics[0], metric);
         member.add([metric, metric]);
         equals(member.metrics.length, 3);
-        ok(member.metrics[0] == metric);
-        ok(member.metrics[1] == metric);
-        ok(member.metrics[2] == metric);
+        equals(member.metrics[0], metric);
+        equals(member.metrics[1], metric);
+        equals(member.metrics[2], metric);
       });
 
       module('metric class tests');
