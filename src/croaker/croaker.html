@@ -4,20 +4,52 @@
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>   
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>   
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/xml-to-json/jquery.xml2json.pack.js"></script>   
-    <script type="text/javascript" src="js/croaker.js"></script>
-
-    <style type="text/css">
-    </style>
+    <script type="text/javascript" src="js/croaker/croaker.js"></script>
 
     <script type="text/javascript">
+      var root = null;
+
+      //TODO: this is just spike WIP 
+
+      function display() {
+        var flat = [root];
+
+        $.each(root.namespaces, function () {
+          flat.push(this);
+          $.each(this.types, function () {
+            flat.push(this);
+            $.each(this.members, function () {
+              flat.push(this);
+            });
+          });
+        });
+
+        $('#main')
+          .empty()
+          .append($.tmpl('croaker-table', { rows: flat }));
+      }
+
+      function loadTemplates() {
+        return $.get('templates/table-template.html', function (data) {$.template('croaker-table', data);}, 'html');
+      }
+
+      function loadXml() {
+        var path = window.location.search.substring(1).split('=')[1];
+        return $.get(path, function (xml) {
+          root = Croaker.parser.parse(xml);
+        });
+      }
+
       $(window).load(function () {
+        $.when(loadXml(), loadTemplates())
+         .done(display);
       });
     </script>
 
   </head>
   <body>
-
+    <div id="main">
+    </div>
   </body>
 </html>
