@@ -7,7 +7,7 @@ var Croaker = (function () {
     return spec;
   }
 
-  function parent(name, childrenName, spec) {
+  function parent(name, childrenName, spec, tag) {
     spec = named(name, spec);
     spec[childrenName] = [];
     spec.add = function (items) {
@@ -18,19 +18,19 @@ var Croaker = (function () {
   }
 
   function module(name, version) {
-    return parent(name, 'namespaces', { version: version });
+    return parent(name, 'namespaces', { version: version, tag: 'MOD' });
   }
 
   function namespace(name) {
-    return parent(name, 'types');
+    return parent(name, 'types', { tag: 'NS' });
   }
 
   function type(name) {
-    return parent(name, 'members');
+    return parent(name, 'members', { tag: 'TY' });
   }
 
   function member(name) {
-    return parent(name, 'metrics');
+    return parent(name, 'metrics', { tag: 'M' });
   }
 
   function metric(name, value, parent) {
