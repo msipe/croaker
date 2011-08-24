@@ -32,8 +32,8 @@
       module('module class tests');
       test('test defaults', function () {
         var mod = Croaker.module('aname', 'version');
-        deepEqual(mod.name, 'aname');
-        deepEqual(mod.version, 'version');
+        equals(mod.name, 'aname');
+        equals(mod.version, 'version');
         deepEqual(mod.namespaces, []);
       });
 
@@ -49,7 +49,7 @@
       module('namespace class tests');
       test('test defaults', function () {
         var ns = Croaker.namespace('aname');
-        deepEqual(ns.name, 'aname');
+        equals(ns.name, 'aname');
         deepEqual(ns.types, []);
       });
 
@@ -65,7 +65,7 @@
       module('type class tests');
       test('test defaults', function () {
         var type = Croaker.type('aname');
-        deepEqual(type.name, 'aname');
+        equals(type.name, 'aname');
         deepEqual(type.members, []);
       });
 
@@ -81,7 +81,7 @@
       module('member class tests');
       test('test defaults', function () {
         var member = Croaker.member('aname');
-        deepEqual(member.name, 'aname');
+        equals(member.name, 'aname');
         deepEqual(member.metrics, []);
       });
 
@@ -89,10 +89,10 @@
         var member = Croaker.member('aname');
         var metric = Croaker.metric('m1', 33, member);
         member.add([metric]);
-        deepEqual(member.metrics.length, 1);
+        equals(member.metrics.length, 1);
         ok(member.metrics[0] == metric);
         member.add([metric, metric]);
-        deepEqual(member.metrics.length, 3);
+        equals(member.metrics.length, 3);
         ok(member.metrics[0] == metric);
         ok(member.metrics[1] == metric);
         ok(member.metrics[2] == metric);
@@ -102,8 +102,8 @@
       test('test defaults', function () {
         var parent = Croaker.member('aname');
         var metric = Croaker.metric('aname', 33, parent);
-        deepEqual(metric.name, 'aname');
-        deepEqual(metric.value, 33);
+        equals(metric.name, 'aname');
+        equals(metric.value, 33);
         deepEqual(metric.parent, parent);
       });
 
