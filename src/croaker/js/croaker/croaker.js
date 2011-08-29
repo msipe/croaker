@@ -1,11 +1,32 @@
 var Croaker = (function () {
   'use strict';
 
-  var metricNames = ['MaintainabilityIndex',
-                     'CyclomaticComplexity',
-                     'ClassCoupling',
-                     'DepthOfInheritance',
-                     'LinesOfCode'];
+  var metricDefs = [{ name: 'ClassCoupling',
+                      friendlyName: 'Class Coupling',
+                      shortName: 'CC'
+                   },
+                   {
+                     name: 'DepthOfInheritance',
+                     friendlyName: 'Depth of Inheritance',
+                     shortName: 'DoI'
+                   },
+                   {
+                     name: 'CyclomaticComplexity',
+                     friendlyName: 'Cyclomatic Complexity',
+                     shortName: 'CYC'
+                   },
+                   {
+                     name: 'LinesOfCode',
+                     friendlyName: 'Lines of Code',
+                     shortName: 'LoC'
+                   },
+                   {
+                     name: 'MaintainabilityIndex',
+                     friendlyName: 'Maintainability Index',
+                     shortName: 'MI'
+                   }];
+
+  var metricNames = _.pluck(metricDefs, 'name');
 
   function named(name, spec) {
     spec = spec || {};
@@ -110,6 +131,7 @@ var Croaker = (function () {
     type: type,
     member: member,
     metric: metric,
-    parser: parser
+    parser: parser,
+    metricDefs: metricDefs
   };
 } ());

@@ -168,6 +168,41 @@
       test('parsing type with no members', function () {
         equals(parsed['missing'].namespaces[0].types[0].members.length, 0);
       });
+
+      module('metric definition tests');
+      test('genera', function () {
+        equals(Croaker.metricDefs.length, 5);
+      });
+
+      test('class coupling definition', function () {
+        equals(Croaker.metricDefs[0].name, 'ClassCoupling');
+        equals(Croaker.metricDefs[0].friendlyName, 'Class Coupling');
+        equals(Croaker.metricDefs[0].shortName, 'CC');
+      }); 
+      
+      test('depth of inheritance definition', function () {
+        equals(Croaker.metricDefs[1].name, 'DepthOfInheritance');
+        equals(Croaker.metricDefs[1].friendlyName, 'Depth of Inheritance');
+        equals(Croaker.metricDefs[1].shortName, 'DoI');
+      });
+
+      test('cyclomatic complexity definition', function () {
+        equals(Croaker.metricDefs[2].name, 'CyclomaticComplexity');
+        equals(Croaker.metricDefs[2].friendlyName, 'Cyclomatic Complexity');
+        equals(Croaker.metricDefs[2].shortName, 'CYC');
+      });
+
+      test('lines of code definition', function () {
+        equals(Croaker.metricDefs[3].name, 'LinesOfCode');
+        equals(Croaker.metricDefs[3].friendlyName, 'Lines of Code');
+        equals(Croaker.metricDefs[3].shortName, 'LoC');
+      });
+
+      test('maintainability index definition', function () {
+        equals(Croaker.metricDefs[4].name, 'MaintainabilityIndex');
+        equals(Croaker.metricDefs[4].friendlyName, 'Maintainability Index');
+        equals(Croaker.metricDefs[4].shortName, 'MI');
+      });
     });
   </script>
 </head>

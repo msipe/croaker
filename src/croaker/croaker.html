@@ -28,7 +28,8 @@
 
         $('#main')
           .empty()
-          .append($.tmpl('croaker-table', { rows: flat }));
+          .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, 
+                                            rows: flat }));
       }
 
       function loadTemplates() {

@@ -3,11 +3,9 @@
     <tr>
       <th style="width:10%">Type</th>
       <th>Name</th>
-      <th style="width:5%">M1</th>
-      <th style="width:5%">M2</th>
-      <th style="width:5%">M3</th>
-      <th style="width:5%">M4</th>
-      <th style="width:5%">M5</th>
+      {{each defs}}
+        <th style="width:5%">${$value.shortName}</th>
+      {{/each}}
     </tr>
   </thead>
   <tbody>
