@@ -39,8 +39,8 @@ var Croaker = (function () {
     return parent(name, 'metrics', { tag: 'M' });
   }
 
-  function metric(name, value, parent) {
-    return named(name, { value: value, parent: parent });
+  function metric(name, value) {
+    return named(name, { value: value });
   }
 
   var parser = (function () {

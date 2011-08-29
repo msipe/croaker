@@ -105,11 +105,9 @@
 
       module('metric class tests');
       test('test defaults', function () {
-        var parent = Croaker.member('aname');
-        var metric = Croaker.metric('aname', 33, parent);
+        var metric = Croaker.metric('aname', 33);
         equals(metric.name, 'aname');
         equals(metric.value, 33);
-        deepEqual(metric.parent, parent);
       });
 
       module('parse tests');
