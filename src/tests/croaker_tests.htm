@@ -134,9 +134,7 @@
       test('member parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
-        equals(members[0].metrics.length, 5);
         equals(members[1].name, 'SampleClass()');
-        equals(members[1].metrics.length, 2);
       });
 
       test('full metric parsing', function () {
@@ -152,6 +150,21 @@
         equals(members[0].metrics[3].value, 6);
         equals(members[0].metrics[4].name, 'MaintainabilityIndex');
         equals(members[0].metrics[4].value, 7);
+      });
+
+      test('partial metric parsing', function () {
+        var members = parsed['basic'].namespaces[0].types[0].members;
+        equals(members[1].metrics.length, 5);
+        equals(members[1].metrics[0].name, 'ClassCoupling');
+        equals(members[1].metrics[0].value, 'N/A');
+        equals(members[1].metrics[1].name, 'CyclomaticComplexity');
+        equals(members[1].metrics[1].value, 10);
+        equals(members[1].metrics[2].name, 'DepthOfInheritance');
+        equals(members[1].metrics[2].value, 'N/A');
+        equals(members[1].metrics[3].name, 'LinesOfCode');
+        equals(members[1].metrics[3].value, 'N/A');
+        equals(members[1].metrics[4].name, 'MaintainabilityIndex');
+        equals(members[1].metrics[4].value, 9);
       });
 
       test('parsing type with no members', function () {

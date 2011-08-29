@@ -1,6 +1,12 @@
 var Croaker = (function () {
   'use strict';
 
+  var metricNames = ['MaintainabilityIndex',
+                     'CyclomaticComplexity',
+                     'ClassCoupling',
+                     'DepthOfInheritance',
+                     'LinesOfCode'];
+
   function named(name, spec) {
     spec = spec || {};
     spec.name = name;
@@ -50,11 +56,22 @@ var Croaker = (function () {
       return members[0] !== '';
     }
 
+    function addMissingMetrics(metrics) {
+      var names = _.pluck(metrics, 'name');
+      var missing = _.reject(metricNames, function (n) { return _.include(names, n); });
+      _.each(missing, function (n) { metrics.push(metric(n, 'N/A')); });
+      return metrics;
+    }
+
+    function sortMetrics(metrics) {
+      return _.sortBy(metrics, function (m) { return m.name; });
+    }
+
     function parseMetrics(node) {
       var metrics = $.map(node.Metrics[0].Metric, function (n) {
         return metric(n.Name, parseInt(n.Value, 10));
-      })
-      return _.sortBy(metrics, function (m) { return m.name; });
+      });
+      return sortMetrics(addMissingMetrics(metrics));
     }
 
     function parseMembers(node) {
