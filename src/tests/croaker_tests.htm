@@ -4,6 +4,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
   <script type="text/javascript" src="../croaker/js/xml-to-json/jquery.xml2json.pack.js"></script>
+  <script type="text/javascript" src="../croaker/js/underscore/underscore-min.js"></script>
   <script type="text/javascript" src="../croaker/js/croaker/croaker.js"></script>
 
   <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
@@ -138,22 +139,19 @@
         equals(members[1].metrics.length, 2);
       });
 
-      test('metric parsing', function () {
+      test('full metric parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
-        equals(members[0].metrics[0].name, 'MaintainabilityIndex');
-        equals(members[0].metrics[0].value, 7);
+        equals(members[0].metrics.length, 5);
+        equals(members[0].metrics[0].name, 'ClassCoupling');
+        equals(members[0].metrics[0].value, 11);
         equals(members[0].metrics[1].name, 'CyclomaticComplexity');
         equals(members[0].metrics[1].value, 8);
-        equals(members[0].metrics[2].name, 'ClassCoupling');
-        equals(members[0].metrics[2].value, 11);
-        equals(members[0].metrics[3].name, 'DepthOfInheritance');
-        equals(members[0].metrics[3].value, 2);
-        equals(members[0].metrics[4].name, 'LinesOfCode');
-        equals(members[0].metrics[4].value, 6);
-        equals(members[1].metrics[0].name, 'MaintainabilityIndex');
-        equals(members[1].metrics[0].value, 9);
-        equals(members[1].metrics[1].name, 'CyclomaticComplexity');
-        equals(members[1].metrics[1].value, 10);
+        equals(members[0].metrics[2].name, 'DepthOfInheritance');
+        equals(members[0].metrics[2].value, 2);
+        equals(members[0].metrics[3].name, 'LinesOfCode');
+        equals(members[0].metrics[3].value, 6);
+        equals(members[0].metrics[4].name, 'MaintainabilityIndex');
+        equals(members[0].metrics[4].value, 7);
       });
 
       test('parsing type with no members', function () {

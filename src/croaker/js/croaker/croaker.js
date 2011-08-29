@@ -51,9 +51,10 @@ var Croaker = (function () {
     }
 
     function parseMetrics(node) {
-      return $.map(node.Metrics[0].Metric, function (n) {
+      var metrics = $.map(node.Metrics[0].Metric, function (n) {
         return metric(n.Name, parseInt(n.Value, 10));
-      });
+      })
+      return _.sortBy(metrics, function (m) { return m.name; });
     }
 
     function parseMembers(node) {
