@@ -93,10 +93,10 @@
       test('test add metrics', function () {
         var member = Croaker.member('aname');
         var metric = Croaker.metric('m1', 33, member);
-        member.add([metric]);
+        member.addmetrics([metric]);
         equals(member.metrics.length, 1);
         equals(member.metrics[0], metric);
-        member.add([metric, metric]);
+        member.addmetrics([metric, metric]);
         equals(member.metrics.length, 3);
         equals(member.metrics[0], metric);
         equals(member.metrics[1], metric);

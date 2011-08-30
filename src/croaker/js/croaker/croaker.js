@@ -2,9 +2,9 @@ var Croaker = (function () {
   'use strict';
 
   var metricDefs = [{ name: 'ClassCoupling',
-                      friendlyName: 'Class Coupling',
-                      shortName: 'CC'
-                   },
+    friendlyName: 'Class Coupling',
+    shortName: 'CC'
+  },
                    {
                      name: 'DepthOfInheritance',
                      friendlyName: 'Depth of Inheritance',
@@ -37,10 +37,20 @@ var Croaker = (function () {
   function parent(name, childrenName, spec, tag) {
     spec = named(name, spec);
     spec[childrenName] = [];
-    spec.add = function (items) {
-      $.merge(spec[childrenName], items);
+    spec['metrics'] = [];
+
+    if (childrenName) {
+      spec.add = function (items) {
+        $.merge(spec[childrenName], items);
+        return spec;
+      };
+    }
+
+    spec.addmetrics = function (items) {
+      $.merge(spec.metrics, items);
       return spec;
-    };
+    }
+
     return spec;
   }
 
@@ -57,7 +67,7 @@ var Croaker = (function () {
   }
 
   function member(name) {
-    return parent(name, 'metrics', { tag: 'M' });
+    return parent(name, null, { tag: 'M' });
   }
 
   function metric(name, value) {
@@ -101,7 +111,7 @@ var Croaker = (function () {
       }
 
       return $.map(node.Members[0].Member, function (n) {
-        return member(n.Name).add(parseMetrics(n));
+        return member(n.Name).addmetrics(parseMetrics(n));
       });
     }
 
