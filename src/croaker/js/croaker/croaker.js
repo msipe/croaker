@@ -34,7 +34,7 @@ var Croaker = (function () {
     return spec;
   }
 
-  function parent(name, childrenName, spec, tag) {
+  function parent(name, childrenName, spec) {
     spec = named(name, spec);
     spec[childrenName] = [];
     spec['metrics'] = [];
