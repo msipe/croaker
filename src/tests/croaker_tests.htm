@@ -38,6 +38,7 @@
         equals(mod.tag, 'MOD');
         equals(mod.namespaces.length, 0);
         equals(mod.metrics.length, 0);
+        equals(mod.parent, null);
       });
 
       test('test add namespaces', function () {
@@ -52,11 +53,12 @@
 
       module('namespace class tests');
       test('test defaults', function () {
-        var ns = Croaker.namespace('aname');
+        var ns = Croaker.namespace('aname', 'mod');
         equals(ns.name, 'aname');
         equals(ns.tag, 'NS');
         equals(ns.types.length, 0);
         equals(ns.metrics.length, 0);
+        equals(ns.parent, null);
       });
 
       test('test add types', function () {
@@ -76,6 +78,7 @@
         equals(type.tag, 'TY');
         equals(type.members.length, 0);
         equals(type.metrics.length, 0);
+        equals(type.parent, null);
       });
 
       test('test add members', function () {
@@ -94,6 +97,7 @@
         equals(member.name, 'aname');
         equals(member.tag, 'M');
         equals(member.metrics.length, 0);
+        equals(member.parent, null);
       });
 
       test('test add metrics', function () {
@@ -114,6 +118,7 @@
         var metric = Croaker.metric('aname', 33);
         equals(metric.name, 'aname');
         equals(metric.value, 33);
+        equals(metric.parent, null);
       });
 
       module('parse tests');
@@ -121,6 +126,7 @@
         equals(parsed['basic'].name, 'Some.dll');
         equals(parsed['basic'].version, '1.0.2.3');
         equals(parsed['basic'].namespaces.length, 1);
+        equals(parsed['basic'].parent, null);
       });
 
       test('module metric parsing', function () {
@@ -142,6 +148,7 @@
         var ns = parsed['basic'].namespaces[0];
         equals(ns.name, 'Sample.Core');
         equals(ns.types.length, 1);
+        equals(ns.parent.name, 'Some.dll');
       });
 
       test('namespace metric parsing', function () {
@@ -163,6 +170,7 @@
         var type = parsed['basic'].namespaces[0].types[0];
         equals(type.name, 'SampleClass');
         equals(type.members.length, 2);
+        equals(type.parent.name, 'Sample.Core');
       });
 
       test('type metric parsing', function () {
@@ -183,7 +191,9 @@
       test('member parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
+        equals(members[0].parent.name, 'SampleClass');
         equals(members[1].name, 'SampleClass()');
+        equals(members[1].parent.name, 'SampleClass');
       });
 
       test('full member metric parsing', function () {
@@ -191,14 +201,20 @@
         equals(members[0].metrics.length, 5);
         equals(members[0].metrics[0].name, 'ClassCoupling');
         equals(members[0].metrics[0].value, 11);
+        equals(members[0].metrics[0].parent.name, 'Method1(String) : void');
         equals(members[0].metrics[1].name, 'CyclomaticComplexity');
         equals(members[0].metrics[1].value, 8);
+        equals(members[0].metrics[1].parent.name, 'Method1(String) : void');
         equals(members[0].metrics[2].name, 'DepthOfInheritance');
         equals(members[0].metrics[2].value, 2);
+        equals(members[0].metrics[2].parent.name, 'Method1(String) : void');
         equals(members[0].metrics[3].name, 'LinesOfCode');
         equals(members[0].metrics[3].value, 6);
+        equals(members[0].metrics[3].parent.name, 'Method1(String) : void');
         equals(members[0].metrics[4].name, 'MaintainabilityIndex');
         equals(members[0].metrics[4].value, 7);
+        equals(members[0].metrics[4].parent.name, 'Method1(String) : void');
+
       });
 
       test('partial member metric parsing', function () {
@@ -206,14 +222,19 @@
         equals(members[1].metrics.length, 5);
         equals(members[1].metrics[0].name, 'ClassCoupling');
         equals(members[1].metrics[0].value, 'N/A');
+        equals(members[1].metrics[0].parent.name, 'SampleClass()');
         equals(members[1].metrics[1].name, 'CyclomaticComplexity');
         equals(members[1].metrics[1].value, 10);
+        equals(members[1].metrics[1].parent.name, 'SampleClass()');
         equals(members[1].metrics[2].name, 'DepthOfInheritance');
         equals(members[1].metrics[2].value, 'N/A');
+        equals(members[1].metrics[2].parent.name, 'SampleClass()');
         equals(members[1].metrics[3].name, 'LinesOfCode');
         equals(members[1].metrics[3].value, 'N/A');
+        equals(members[1].metrics[3].parent.name, 'SampleClass()');
         equals(members[1].metrics[4].name, 'MaintainabilityIndex');
         equals(members[1].metrics[4].value, 9);
+        equals(members[1].metrics[4].parent.name, 'SampleClass()');
       });
 
       test('parsing type with no members', function () {

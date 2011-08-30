@@ -38,16 +38,19 @@ var Croaker = (function () {
     spec = named(name, spec);
     spec[childrenName] = [];
     spec['metrics'] = [];
+    spec['parent'] = null;
 
     if (childrenName) {
       spec.add = function (items) {
         $.merge(spec[childrenName], items);
+        _.each(items, function (i) { i.parent = spec; });
         return spec;
       };
     }
 
     spec.addMetrics = function (items) {
       $.merge(spec.metrics, items);
+      _.each(items, function (i) { i.parent = spec; });
       return spec;
     }
 
@@ -125,7 +128,7 @@ var Croaker = (function () {
 
     function parseNamespaces(root) {
       return $.map(root.Namespaces[0].Namespace, function (n) {
-        return namespace(n.Name)
+        return namespace(n.Name, root)
           .addMetrics(parseMetrics(n))
           .add(parseTypes(n));
       });
