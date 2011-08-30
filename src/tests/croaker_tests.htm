@@ -36,7 +36,7 @@
         equals(mod.name, 'aname');
         equals(mod.version, 'version');
         equals(mod.tag, 'MOD');
-        deepEqual(mod.namespaces, []);
+        equals(mod.namespaces.length, 0);
       });
 
       test('test add namespaces', function () {
@@ -53,7 +53,7 @@
         var ns = Croaker.namespace('aname');
         equals(ns.name, 'aname');
         equals(ns.tag, 'NS');
-        deepEqual(ns.types, []);
+        equals(ns.types.length, 0);
       });
 
       test('test add types', function () {
@@ -70,7 +70,7 @@
         var type = Croaker.type('aname');
         equals(type.name, 'aname');
         equals(type.tag, 'TY');
-        deepEqual(type.members, []);
+        equals(type.members.length, 0);
       });
 
       test('test add members', function () {
@@ -87,7 +87,7 @@
         var member = Croaker.member('aname');
         equals(member.name, 'aname');
         equals(member.tag, 'M');
-        deepEqual(member.metrics, []);
+        equals(member.metrics.length, 0);
       });
 
       test('test add metrics', function () {
