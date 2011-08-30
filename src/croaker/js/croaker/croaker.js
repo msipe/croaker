@@ -42,15 +42,19 @@ var Croaker = (function () {
 
     if (childrenName) {
       spec.add = function (items) {
-        $.merge(spec[childrenName], items);
-        _.each(items, function (i) { i.parent = spec; });
+        _.each(items, function (i) {
+          spec[childrenName].push(i);
+          i.parent = spec;
+        });
         return spec;
       };
     }
 
     spec.addMetrics = function (items) {
-      $.merge(spec.metrics, items);
-      _.each(items, function (i) { i.parent = spec; });
+      _.each(items, function (i) {
+        spec.metrics.push(i);
+        i.parent = spec;
+      });
       return spec;
     }
 
@@ -102,7 +106,7 @@ var Croaker = (function () {
     }
 
     function parseMetrics(node) {
-      var metrics = $.map(node.Metrics[0].Metric, function (n) {
+      var metrics = _.map(node.Metrics[0].Metric, function (n) {
         return metric(n.Name, parseInt(n.Value, 10));
       });
       return sortMetrics(addMissingMetrics(metrics));
@@ -113,21 +117,21 @@ var Croaker = (function () {
         return [];
       }
 
-      return $.map(node.Members[0].Member, function (n) {
+      return _.map(node.Members[0].Member, function (n) {
         return member(n.Name).addMetrics(parseMetrics(n));
       });
     }
 
     function parseTypes(node) {
-      return $.map(node.Types[0].Type, function (t) {
+      return _.map(node.Types[0].Type, function (t) {
         return type(t.Name)
-           .addMetrics(parseMetrics(t))
+          .addMetrics(parseMetrics(t))
           .add(parseMembers(t));
       });
     }
 
     function parseNamespaces(root) {
-      return $.map(root.Namespaces[0].Namespace, function (n) {
+      return _.map(root.Namespaces[0].Namespace, function (n) {
         return namespace(n.Name, root)
           .addMetrics(parseMetrics(n))
           .add(parseTypes(n));
