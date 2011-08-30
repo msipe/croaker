@@ -99,10 +99,10 @@
       test('test add metrics', function () {
         var member = Croaker.member('aname');
         var metric = Croaker.metric('m1', 33, member);
-        member.addmetrics([metric]);
+        member.addMetrics([metric]);
         equals(member.metrics.length, 1);
         equals(member.metrics[0], metric);
-        member.addmetrics([metric, metric]);
+        member.addMetrics([metric, metric]);
         equals(member.metrics.length, 3);
         equals(member.metrics[0], metric);
         equals(member.metrics[1], metric);
@@ -123,10 +123,40 @@
         equals(parsed['basic'].namespaces.length, 1);
       });
 
+      test('module metric parsing', function () {
+        var metrics = parsed['basic'].metrics;
+        equals(metrics.length, 5);
+        equals(metrics[0].name, 'ClassCoupling');
+        equals(metrics[0].value, 11);
+        equals(metrics[1].name, 'CyclomaticComplexity');
+        equals(metrics[1].value, 2);
+        equals(metrics[2].name, 'DepthOfInheritance');
+        equals(metrics[2].value, 2);
+        equals(metrics[3].name, 'LinesOfCode');
+        equals(metrics[3].value, 6);
+        equals(metrics[4].name, 'MaintainabilityIndex');
+        equals(metrics[4].value, 1);
+      });
+
       test('namespace parsing', function () {
         var ns = parsed['basic'].namespaces[0];
         equals(ns.name, 'Sample.Core');
         equals(ns.types.length, 1);
+      });
+
+      test('namespace metric parsing', function () {
+        var metrics = parsed['basic'].namespaces[0].metrics;
+        equals(metrics.length, 5);
+        equals(metrics[0].name, 'ClassCoupling');
+        equals(metrics[0].value, 11);
+        equals(metrics[1].name, 'CyclomaticComplexity');
+        equals(metrics[1].value, 4);
+        equals(metrics[2].name, 'DepthOfInheritance');
+        equals(metrics[2].value, 2);
+        equals(metrics[3].name, 'LinesOfCode');
+        equals(metrics[3].value, 6);
+        equals(metrics[4].name, 'MaintainabilityIndex');
+        equals(metrics[4].value, 3);
       });
 
       test('type parsing', function () {
@@ -135,13 +165,28 @@
         equals(type.members.length, 2);
       });
 
+      test('type metric parsing', function () {
+        var metrics = parsed['basic'].namespaces[0].types[0].metrics;
+        equals(metrics.length, 5);
+        equals(metrics[0].name, 'ClassCoupling');
+        equals(metrics[0].value, 11);
+        equals(metrics[1].name, 'CyclomaticComplexity');
+        equals(metrics[1].value, 6);
+        equals(metrics[2].name, 'DepthOfInheritance');
+        equals(metrics[2].value, 2);
+        equals(metrics[3].name, 'LinesOfCode');
+        equals(metrics[3].value, 6);
+        equals(metrics[4].name, 'MaintainabilityIndex');
+        equals(metrics[4].value, 5);
+      });
+
       test('member parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
         equals(members[1].name, 'SampleClass()');
       });
 
-      test('full metric parsing', function () {
+      test('full member metric parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].metrics.length, 5);
         equals(members[0].metrics[0].name, 'ClassCoupling');
@@ -156,7 +201,7 @@
         equals(members[0].metrics[4].value, 7);
       });
 
-      test('partial metric parsing', function () {
+      test('partial member metric parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[1].metrics.length, 5);
         equals(members[1].metrics[0].name, 'ClassCoupling');

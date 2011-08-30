@@ -46,7 +46,7 @@ var Croaker = (function () {
       };
     }
 
-    spec.addmetrics = function (items) {
+    spec.addMetrics = function (items) {
       $.merge(spec.metrics, items);
       return spec;
     }
@@ -111,25 +111,31 @@ var Croaker = (function () {
       }
 
       return $.map(node.Members[0].Member, function (n) {
-        return member(n.Name).addmetrics(parseMetrics(n));
+        return member(n.Name).addMetrics(parseMetrics(n));
       });
     }
 
     function parseTypes(node) {
-      return $.map(node.Types[0].Type, function (n) {
-        return type(n.Name).add(parseMembers(n));
+      return $.map(node.Types[0].Type, function (t) {
+        return type(t.Name)
+           .addMetrics(parseMetrics(t))
+          .add(parseMembers(t));
       });
     }
 
     function parseNamespaces(root) {
       return $.map(root.Namespaces[0].Namespace, function (n) {
-        return namespace(n.Name).add(parseTypes(n));
+        return namespace(n.Name)
+          .addMetrics(parseMetrics(n))
+          .add(parseTypes(n));
       });
     }
 
     function parse(xml) {
       var root = getRoot(xml);
-      return module(root.Name, root.AssemblyVersion).add(parseNamespaces(root));
+      return module(root.Name, root.AssemblyVersion)
+        .addMetrics(parseMetrics(root))
+        .add(parseNamespaces(root));
     }
 
     return { parse: parse };
