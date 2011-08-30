@@ -37,6 +37,7 @@
         equals(mod.version, 'version');
         equals(mod.tag, 'MOD');
         equals(mod.namespaces.length, 0);
+        equals(mod.metrics.length, 0);
       });
 
       test('test add namespaces', function () {
@@ -46,6 +47,7 @@
         deepEqual(mod.namespaces, [ns]);
         mod.add([ns, ns]);
         deepEqual(mod.namespaces, [ns, ns, ns]);
+        equals(mod.metrics.length, 0);
       });
 
       module('namespace class tests');
@@ -54,6 +56,7 @@
         equals(ns.name, 'aname');
         equals(ns.tag, 'NS');
         equals(ns.types.length, 0);
+        equals(ns.metrics.length, 0);
       });
 
       test('test add types', function () {
@@ -63,6 +66,7 @@
         deepEqual(ns.types, [type]);
         ns.add([type, type]);
         deepEqual(ns.types, [type, type, type]);
+        equals(ns.metrics.length, 0);
       });
 
       module('type class tests');
@@ -71,6 +75,7 @@
         equals(type.name, 'aname');
         equals(type.tag, 'TY');
         equals(type.members.length, 0);
+        equals(type.metrics.length, 0);
       });
 
       test('test add members', function () {
@@ -80,6 +85,7 @@
         deepEqual(type.members, [member]);
         type.add([member, member]);
         deepEqual(type.members, [member, member, member]);
+        equals(type.metrics.length, 0);
       });
 
       module('member class tests');
@@ -178,8 +184,8 @@
         equals(Croaker.metricDefs[0].name, 'ClassCoupling');
         equals(Croaker.metricDefs[0].friendlyName, 'Class Coupling');
         equals(Croaker.metricDefs[0].shortName, 'CC');
-      }); 
-      
+      });
+
       test('depth of inheritance definition', function () {
         equals(Croaker.metricDefs[1].name, 'DepthOfInheritance');
         equals(Croaker.metricDefs[1].friendlyName, 'Depth of Inheritance');
