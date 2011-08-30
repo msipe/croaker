@@ -36,11 +36,11 @@ var Croaker = (function () {
 
   function parent(name, childrenName, spec) {
     spec = named(name, spec);
-    spec[childrenName] = [];
     spec.metrics = [];
     spec.parent = null;
 
     if (childrenName) {
+      spec[childrenName] = [];
       spec.add = function (items) {
         _.each(items, function (i) {
           spec[childrenName].push(i);
