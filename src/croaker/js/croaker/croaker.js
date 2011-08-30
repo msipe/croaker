@@ -37,8 +37,8 @@ var Croaker = (function () {
   function parent(name, childrenName, spec) {
     spec = named(name, spec);
     spec[childrenName] = [];
-    spec['metrics'] = [];
-    spec['parent'] = null;
+    spec.metrics = [];
+    spec.parent = null;
 
     if (childrenName) {
       spec.add = function (items) {
@@ -56,7 +56,7 @@ var Croaker = (function () {
         i.parent = spec;
       });
       return spec;
-    }
+    };
 
     return spec;
   }
