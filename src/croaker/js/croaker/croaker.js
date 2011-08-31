@@ -34,7 +34,7 @@ var Croaker = (function () {
     return spec;
   }
 
-  function parent(aparent, name, childrenName, spec) {
+  function parented(aparent, name, childrenName, spec) {
     spec = named(name, spec);
     spec.metrics = [];
     spec.parent = aparent;
@@ -87,19 +87,19 @@ var Croaker = (function () {
   }
 
   function module(name, version) {
-    return parent(null, name, 'namespaces', { version: version, tag: 'MOD' });
+    return parented(null, name, 'namespaces', { version: version, tag: 'MOD' });
   }
 
   function namespace(mod, name) {
-    return parent(mod, name, 'types', { tag: 'NS' });
+    return parented(mod, name, 'types', { tag: 'NS' });
   }
 
   function type(ns, name) {
-    return parent(ns, name, 'members', { tag: 'TY' });
+    return parented(ns, name, 'members', { tag: 'TY' });
   }
 
   function member(ty, name) {
-    return parent(ty, name, null, { tag: 'M' });
+    return parented(ty, name, null, { tag: 'M' });
   }
 
   function metric(name, value) {
