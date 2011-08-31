@@ -34,10 +34,10 @@ var Croaker = (function () {
     return spec;
   }
 
-  function parented(aparent, name, childrenName, spec) {
+  function parented(parent, name, childrenName, spec) {
     spec = named(name, spec);
     spec.metrics = [];
-    spec.parent = aparent;
+    spec.parent = parent;
     spec.fullName = spec.name;
     spec.location = [spec.name];
 
@@ -51,21 +51,6 @@ var Croaker = (function () {
       spec.location = parts.reverse();
       spec.fullName = _.reduce(spec.location, function (m, s) { return m + '.' + s });
     };
-
-    if (spec.tag === 'MOD') {
-      spec.init = function () {
-        _.each(spec.namespaces, function (ns) {
-          ns.doWork();
-          _.each(ns.types, function (ty) {
-            ty.doWork();
-            _.each(ty.members, function (mem) {
-              mem.doWork();
-            });
-          });
-        });
-        return spec;
-      };
-    }
 
     if (childrenName) {
       spec[childrenName] = [];
@@ -87,7 +72,20 @@ var Croaker = (function () {
   }
 
   function module(name, version) {
-    return parented(null, name, 'namespaces', { version: version, tag: 'MOD' });
+    var spec = { version: version, tag: 'MOD' };
+    spec.init = function () {
+      _.each(spec.namespaces, function (ns) {
+        ns.doWork();
+        _.each(ns.types, function (ty) {
+          ty.doWork();
+          _.each(ty.members, function (mem) {
+            mem.doWork();
+          });
+        });
+      });
+      return spec;
+    };
+    return parented(null, name, 'namespaces', spec);
   }
 
   function namespace(mod, name) {
