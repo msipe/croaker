@@ -58,6 +58,21 @@ var Croaker = (function () {
       return spec;
     };
 
+    if (spec.tag) {
+      spec.fullName = function () {
+        if (spec.tag === 'MOD')
+          return spec.name;
+
+        var parts = [];
+        var loc = spec;
+        while (loc && loc.tag !== 'MOD') {
+          parts.push(loc.name);
+          loc = loc.parent;
+        }
+        return _.reduce(parts.reverse(), function (m, s) { return m + '.' + s });
+      };
+    }
+
     return spec;
   }
 

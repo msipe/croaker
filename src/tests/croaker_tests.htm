@@ -32,13 +32,14 @@
 
       module('module class tests');
       test('test defaults', function () {
-        var mod = Croaker.module('aname', 'version');
-        equals(mod.name, 'aname');
+        var mod = Croaker.module('mname', 'version');
+        equals(mod.name, 'mname');
         equals(mod.version, 'version');
         equals(mod.tag, 'MOD');
         equals(mod.namespaces.length, 0);
         equals(mod.metrics.length, 0);
         equals(mod.parent, null);
+        equals(mod.fullName(), 'mname');
       });
 
       test('test add namespaces', function () {
@@ -53,12 +54,13 @@
 
       module('namespace class tests');
       test('test defaults', function () {
-        var ns = Croaker.namespace('aname', 'mod');
-        equals(ns.name, 'aname');
+        var ns = Croaker.namespace('nsname');
+        equals(ns.name, 'nsname');
         equals(ns.tag, 'NS');
         equals(ns.types.length, 0);
         equals(ns.metrics.length, 0);
         equals(ns.parent, null);
+        equals(ns.fullName(), 'nsname')
       });
 
       test('test add types', function () {
@@ -71,18 +73,26 @@
         equals(ns.metrics.length, 0);
       });
 
+      test('full name with parent set', function () {
+        var mod = Croaker.module('mod.dll', 'version');
+        var ns = Croaker.namespace('nsname');
+        mod.add([ns]);
+        equals(ns.fullName(), 'nsname');
+      });
+
       module('type class tests');
       test('test defaults', function () {
-        var type = Croaker.type('aname');
-        equals(type.name, 'aname');
+        var type = Croaker.type('tname');
+        equals(type.name, 'tname');
         equals(type.tag, 'TY');
         equals(type.members.length, 0);
         equals(type.metrics.length, 0);
         equals(type.parent, null);
+        equals(type.fullName(), 'tname');
       });
 
       test('test add members', function () {
-        var type = Croaker.type('aname');
+        var type = Croaker.type('tname');
         var member = Croaker.member('m1');
         type.add([member]);
         deepEqual(type.members, [member]);
@@ -91,17 +101,27 @@
         equals(type.metrics.length, 0);
       });
 
+      test('full name with parent set', function () {
+        var mod = Croaker.module('mod.dll');
+        var ns = Croaker.namespace('nsname');
+        var type = Croaker.type('tname');
+        mod.add([ns]);
+        ns.add([type]);
+        equals(type.fullName(), 'nsname.tname');
+      });
+
       module('member class tests');
       test('test defaults', function () {
-        var member = Croaker.member('aname');
-        equals(member.name, 'aname');
+        var member = Croaker.member('mname');
+        equals(member.name, 'mname');
         equals(member.tag, 'M');
         equals(member.metrics.length, 0);
         equals(member.parent, null);
+        equals(member.fullName(), 'mname');
       });
 
       test('test add metrics', function () {
-        var member = Croaker.member('aname');
+        var member = Croaker.member('mname');
         var metric = Croaker.metric('m1', 33, member);
         member.addMetrics([metric]);
         equals(member.metrics.length, 1);
@@ -113,17 +133,30 @@
         equals(member.metrics[2], metric);
       });
 
+      test('full name with parent set', function () {
+        var mod = Croaker.module('mod.dll');
+        var ns = Croaker.namespace('nsname');
+        var type = Croaker.type('tname');
+        var member = Croaker.member('mname');
+        mod.add([ns]);
+        ns.add([type]);
+        type.add([member]);
+        equals(member.fullName(), 'nsname.tname.mname');
+      });
+
       module('metric class tests');
       test('test defaults', function () {
         var metric = Croaker.metric('aname', 33);
         equals(metric.name, 'aname');
         equals(metric.value, 33);
         equals(metric.parent, null);
+        equals(metric.fullName, null);
       });
 
       module('parse tests');
       test('module parsing', function () {
         equals(parsed['basic'].name, 'Some.dll');
+        equals(parsed['basic'].fullName(), 'Some.dll');
         equals(parsed['basic'].version, '1.0.2.3');
         equals(parsed['basic'].namespaces.length, 1);
         equals(parsed['basic'].parent, null);
@@ -147,6 +180,7 @@
       test('namespace parsing', function () {
         var ns = parsed['basic'].namespaces[0];
         equals(ns.name, 'Sample.Core');
+        equals(ns.fullName(), 'Sample.Core');
         equals(ns.types.length, 1);
         equals(ns.parent.name, 'Some.dll');
       });
@@ -174,6 +208,7 @@
       test('type parsing', function () {
         var type = parsed['basic'].namespaces[0].types[0];
         equals(type.name, 'SampleClass');
+        equals(type.fullName(), 'Sample.Core.SampleClass');
         equals(type.members.length, 2);
         equals(type.parent.name, 'Sample.Core');
       });
@@ -201,8 +236,10 @@
       test('member parsing', function () {
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
+        equals(members[0].fullName(), 'Sample.Core.SampleClass.Method1(String) : void');
         equals(members[0].parent.name, 'SampleClass');
         equals(members[1].name, 'SampleClass()');
+        equals(members[1].fullName(), 'Sample.Core.SampleClass.SampleClass()');
         equals(members[1].parent.name, 'SampleClass');
       });
 
