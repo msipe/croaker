@@ -156,14 +156,19 @@
         equals(metrics.length, 5);
         equals(metrics[0].name, 'ClassCoupling');
         equals(metrics[0].value, 11);
+        equals(metrics[0].parent.name, 'Sample.Core');
         equals(metrics[1].name, 'CyclomaticComplexity');
         equals(metrics[1].value, 4);
+        equals(metrics[1].parent.name, 'Sample.Core');
         equals(metrics[2].name, 'DepthOfInheritance');
         equals(metrics[2].value, 2);
+        equals(metrics[2].parent.name, 'Sample.Core');
         equals(metrics[3].name, 'LinesOfCode');
         equals(metrics[3].value, 6);
+        equals(metrics[3].parent.name, 'Sample.Core');
         equals(metrics[4].name, 'MaintainabilityIndex');
         equals(metrics[4].value, 3);
+        equals(metrics[4].parent.name, 'Sample.Core');
       });
 
       test('type parsing', function () {
@@ -178,14 +183,19 @@
         equals(metrics.length, 5);
         equals(metrics[0].name, 'ClassCoupling');
         equals(metrics[0].value, 11);
+        equals(metrics[0].parent.name, 'SampleClass');
         equals(metrics[1].name, 'CyclomaticComplexity');
         equals(metrics[1].value, 6);
+        equals(metrics[1].parent.name, 'SampleClass');
         equals(metrics[2].name, 'DepthOfInheritance');
         equals(metrics[2].value, 2);
+        equals(metrics[2].parent.name, 'SampleClass');
         equals(metrics[3].name, 'LinesOfCode');
         equals(metrics[3].value, 6);
+        equals(metrics[3].parent.name, 'SampleClass');
         equals(metrics[4].name, 'MaintainabilityIndex');
         equals(metrics[4].value, 5);
+        equals(metrics[4].parent.name, 'SampleClass');
       });
 
       test('member parsing', function () {
