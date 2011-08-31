@@ -2,9 +2,9 @@ var Croaker = (function () {
   'use strict';
 
   var metricDefs = [{ name: 'ClassCoupling',
-    friendlyName: 'Class Coupling',
-    shortName: 'CC'
-  },
+                      friendlyName: 'Class Coupling',
+                      shortName: 'CC'
+                   },
                    {
                      name: 'DepthOfInheritance',
                      friendlyName: 'Depth of Inheritance',
