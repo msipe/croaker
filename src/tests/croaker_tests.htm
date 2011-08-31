@@ -76,7 +76,7 @@
         equals(ns.metrics.length, 0);
       });
 
-      test('full name with parent set', function () {
+      test('fully initialized', function () {
         var mod = Croaker.module('mod.dll', 'version');
         var ns = Croaker.namespace(mod, 'nsname');
         mod.add([ns]);
@@ -109,7 +109,7 @@
         equals(type.metrics.length, 0);
       });
 
-      test('full name with parent set', function () {
+      test('fully initialized', function () {
         var mod = Croaker.module('mod.dll', 'version');
         var ns = Croaker.namespace(mod, 'nsname');
         var type = Croaker.type(ns, 'tname');
@@ -147,7 +147,7 @@
         equals(member.metrics[2], metric);
       });
 
-      test('full name with parent set', function () {
+      test('fully initialized', function () {
         var mod = Croaker.module('mod.dll', 'version');
         var ns = Croaker.namespace(mod, 'nsname');
         var type = Croaker.type(ns, 'tname');
