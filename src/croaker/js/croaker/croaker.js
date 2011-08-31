@@ -41,7 +41,7 @@ var Croaker = (function () {
     spec.fullName = spec.name;
     spec.location = [spec.name];
 
-    spec.doWork = function () {
+    spec.initialize = function () {
       var parts = [];
       var loc = spec;
       while (loc && loc.tag !== 'MOD') {
@@ -75,11 +75,11 @@ var Croaker = (function () {
     var spec = { version: version, tag: 'MOD' };
     spec.init = function () {
       _.each(spec.namespaces, function (ns) {
-        ns.doWork();
+        ns.initialize();
         _.each(ns.types, function (ty) {
-          ty.doWork();
+          ty.initialize();
           _.each(ty.members, function (mem) {
-            mem.doWork();
+            mem.initialize();
           });
         });
       });
