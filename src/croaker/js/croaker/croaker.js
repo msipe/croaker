@@ -42,9 +42,8 @@ var Croaker = (function () {
     spec.location = [spec.name];
 
     spec.initialize = function () {
-      var tmp = spec.parent.tag === 'MOD' ? spec.location : [spec.parent.location, spec.name];
-      spec.location = _.flatten(tmp);
-      spec.fullName = _.reduce(spec.location, function (m, s) { return m + '.' + s });
+      spec.location = _.flatten([spec.parent.location, spec.name]);
+      spec.fullName = _.reduce(_.rest(spec.location), function (m, s) { return m + '.' + s });
     };
 
     if (childrenName) {

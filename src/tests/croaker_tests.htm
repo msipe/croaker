@@ -82,7 +82,7 @@
         mod.add([ns]);
         mod.init();
         equals(ns.fullName, 'nsname');
-        same(ns.location, ['nsname']);
+        same(ns.location, ['mod.dll', 'nsname']);
       });
 
       module('type class tests');
@@ -117,7 +117,7 @@
         ns.add([type]);
         mod.init();
         equals(type.fullName, 'nsname.tname');
-        same(type.location, ['nsname', 'tname']);
+        same(type.location, ['mod.dll', 'nsname', 'tname']);
       });
 
       module('member class tests');
@@ -157,7 +157,7 @@
         type.add([member]);
         mod.init();
         equals(member.fullName, 'nsname.tname.mname');
-        same(member.location, ['nsname', 'tname', 'mname']);
+        same(member.location, ['mod.dll', 'nsname', 'tname', 'mname']);
       });
 
       module('metric class tests');
@@ -198,7 +198,7 @@
         var ns = parsed['basic'].namespaces[0];
         equals(ns.name, 'Sample.Core');
         equals(ns.fullName, 'Sample.Core');
-        same(ns.location, ['Sample.Core']);
+        same(ns.location, ['Some.dll', 'Sample.Core']);
         equals(ns.types.length, 1);
         equals(ns.parent.name, 'Some.dll');
       });
@@ -227,7 +227,7 @@
         var type = parsed['basic'].namespaces[0].types[0];
         equals(type.name, 'SampleClass');
         equals(type.fullName, 'Sample.Core.SampleClass');
-        same(type.location, ['Sample.Core', 'SampleClass']);
+        same(type.location, ['Some.dll', 'Sample.Core', 'SampleClass']);
         equals(type.members.length, 2);
         equals(type.parent.name, 'Sample.Core');
       });
@@ -256,11 +256,11 @@
         var members = parsed['basic'].namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
         equals(members[0].fullName, 'Sample.Core.SampleClass.Method1(String) : void');
-        same(members[0].location, ['Sample.Core', 'SampleClass', 'Method1(String) : void']);
+        same(members[0].location, ['Some.dll', 'Sample.Core', 'SampleClass', 'Method1(String) : void']);
         equals(members[0].parent.name, 'SampleClass');
         equals(members[1].name, 'SampleClass()');
         equals(members[1].fullName, 'Sample.Core.SampleClass.SampleClass()');
-        same(members[1].location, ['Sample.Core', 'SampleClass', 'SampleClass()']);
+        same(members[1].location, ['Some.dll', 'Sample.Core', 'SampleClass', 'SampleClass()']);
         equals(members[1].parent.name, 'SampleClass');
       });
 
