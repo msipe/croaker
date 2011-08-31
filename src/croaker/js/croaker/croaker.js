@@ -2,9 +2,9 @@ var Croaker = (function () {
   'use strict';
 
   var metricDefs = [{ name: 'ClassCoupling',
-                      friendlyName: 'Class Coupling',
-                      shortName: 'CC'
-                   },
+    friendlyName: 'Class Coupling',
+    shortName: 'CC'
+  },
                    {
                      name: 'DepthOfInheritance',
                      friendlyName: 'Depth of Inheritance',
@@ -42,13 +42,8 @@ var Croaker = (function () {
     spec.location = [spec.name];
 
     spec.initialize = function () {
-      var parts = [];
-      var loc = spec;
-      while (loc && loc.tag !== 'MOD') {
-        parts.push(loc.name);
-        loc = loc.parent;
-      }
-      spec.location = parts.reverse();
+      var tmp = spec.parent.tag === 'MOD' ? spec.location : [spec.parent.location, spec.name];
+      spec.location = _.flatten(tmp);
       spec.fullName = _.reduce(spec.location, function (m, s) { return m + '.' + s });
     };
 
