@@ -34,18 +34,43 @@ var Croaker = (function () {
     return spec;
   }
 
-  function parent(name, childrenName, spec) {
+  function parent(aparent, name, childrenName, spec) {
     spec = named(name, spec);
     spec.metrics = [];
-    spec.parent = null;
+    spec.parent = aparent;
+    spec.fullName = spec.name;
+    spec.location = [spec.name];
+
+    spec.doWork = function () {
+      var parts = [];
+      var loc = spec;
+      while (loc && loc.tag !== 'MOD') {
+        parts.push(loc.name);
+        loc = loc.parent;
+      }
+      spec.location = parts.reverse();
+      spec.fullName = _.reduce(spec.location, function (m, s) { return m + '.' + s });
+    };
+
+    if (spec.tag === 'MOD') {
+      spec.init = function () {
+        _.each(spec.namespaces, function (ns) {
+          ns.doWork();
+          _.each(ns.types, function (ty) {
+            ty.doWork();
+            _.each(ty.members, function (mem) {
+              mem.doWork();
+            });
+          });
+        });
+        return spec;
+      };
+    }
 
     if (childrenName) {
       spec[childrenName] = [];
       spec.add = function (items) {
-        _.each(items, function (i) {
-          spec[childrenName].push(i);
-          i.parent = spec;
-        });
+        _.each(items, function (i) { spec[childrenName].push(i); });
         return spec;
       };
     }
@@ -58,38 +83,23 @@ var Croaker = (function () {
       return spec;
     };
 
-    if (spec.tag) {
-      spec.fullName = function () {
-        if (spec.tag === 'MOD')
-          return spec.name;
-
-        var parts = [];
-        var loc = spec;
-        while (loc && loc.tag !== 'MOD') {
-          parts.push(loc.name);
-          loc = loc.parent;
-        }
-        return _.reduce(parts.reverse(), function (m, s) { return m + '.' + s });
-      };
-    }
-
     return spec;
   }
 
   function module(name, version) {
-    return parent(name, 'namespaces', { version: version, tag: 'MOD' });
+    return parent(null, name, 'namespaces', { version: version, tag: 'MOD' });
   }
 
-  function namespace(name) {
-    return parent(name, 'types', { tag: 'NS' });
+  function namespace(mod, name) {
+    return parent(mod, name, 'types', { tag: 'NS' });
   }
 
-  function type(name) {
-    return parent(name, 'members', { tag: 'TY' });
+  function type(ns, name) {
+    return parent(ns, name, 'members', { tag: 'TY' });
   }
 
-  function member(name) {
-    return parent(name, null, { tag: 'M' });
+  function member(ty, name) {
+    return parent(ty, name, null, { tag: 'M' });
   }
 
   function metric(name, value) {
@@ -127,37 +137,41 @@ var Croaker = (function () {
       return sortMetrics(addMissingMetrics(metrics));
     }
 
-    function parseMembers(node) {
+    function parseMembers(ty, node) {
       if (!shouldProcessMembers(node.Members)) {
         return [];
       }
 
       return _.map(node.Members[0].Member, function (n) {
-        return member(n.Name).addMetrics(parseMetrics(n));
+        return member(ty, n.Name).addMetrics(parseMetrics(n));
       });
     }
 
-    function parseTypes(node) {
+    function parseTypes(ns, node) {
       return _.map(node.Types[0].Type, function (t) {
-        return type(t.Name)
-          .addMetrics(parseMetrics(t))
-          .add(parseMembers(t));
+        var ty = type(ns, t.Name);
+        ty.addMetrics(parseMetrics(t));
+        ty.add(parseMembers(ty, t));
+        return ty;
       });
     }
 
-    function parseNamespaces(root) {
+    function parseNamespaces(mod, root) {
       return _.map(root.Namespaces[0].Namespace, function (n) {
-        return namespace(n.Name, root)
-          .addMetrics(parseMetrics(n))
-          .add(parseTypes(n));
+        var ns = namespace(mod, n.Name, root);
+        ns.addMetrics(parseMetrics(n));
+        ns.add(parseTypes(ns, n));
+        return ns;
       });
     }
 
     function parse(xml) {
       var root = getRoot(xml);
-      return module(root.Name, root.AssemblyVersion)
-        .addMetrics(parseMetrics(root))
-        .add(parseNamespaces(root));
+      var mod = module(root.Name, root.AssemblyVersion);
+      mod.addMetrics(parseMetrics(root));
+      mod.add(parseNamespaces(mod, root));
+      mod.init();
+      return mod;
     }
 
     return { parse: parse };
