@@ -9,43 +9,32 @@
     <script type="text/javascript" src="js/croaker/croaker.js"></script>
 
     <script type="text/javascript">
-      var root = null;
+      var App = (function () {
+        var root = null;
 
-      //TODO: this is just spike WIP 
+        function loadXml(xmlPath) {
+          return $.get(xmlPath, function (xml) { root = Croaker.parser.parse(xml); });
+        }
 
-      function display() {
-        var flat = [root];
+        function loadTemplates() {
+          return $.get('templates/table-template.html', function (data) { $.template('croaker-table', data); }, 'html');
+        }
 
-        $.each(root.namespaces, function () {
-          flat.push(this);
-          $.each(this.types, function () {
-            flat.push(this);
-            $.each(this.members, function () {
-              flat.push(this);
-            });
-          });
-        });
-
-        $('#main')
+        function display() {
+          $('#main')
           .empty()
-          .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, 
-                                            rows: flat }));
-      }
+          .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
+        }
 
-      function loadTemplates() {
-        return $.get('templates/table-template.html', function (data) {$.template('croaker-table', data);}, 'html');
-      }
-
-      function loadXml() {
-        var path = window.location.search.substring(1).split('=')[1];
-        return $.get(path, function (xml) {
-          root = Croaker.parser.parse(xml);
-        });
-      }
+        function init(xmlPath) {
+          $.when(loadXml(xmlPath), loadTemplates())
+           .done(display);
+        }
+        return { init: init };
+      } ());
 
       $(window).load(function () {
-        $.when(loadXml(), loadTemplates())
-         .done(display);
+        App.init(window.location.search.substring(1).split('=')[1]);
       });
     </script>
 
