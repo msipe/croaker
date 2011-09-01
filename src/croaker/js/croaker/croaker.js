@@ -50,7 +50,6 @@ var Croaker = (function () {
       spec[childrenName] = [];
       spec.add = function (items) {
         _.each(items, function (i) { spec[childrenName].push(i); });
-        return spec;
       };
     }
 
@@ -59,7 +58,6 @@ var Croaker = (function () {
         spec.metrics.push(i);
         i.parent = spec;
       });
-      return spec;
     };
 
     return spec;
@@ -77,7 +75,6 @@ var Croaker = (function () {
           });
         });
       });
-      return spec;
     };
     return parented(null, name, 'namespaces', spec);
   }
@@ -135,7 +132,9 @@ var Croaker = (function () {
       }
 
       return _.map(node.Members[0].Member, function (n) {
-        return member(ty, n.Name).addMetrics(parseMetrics(n));
+        var mem = member(ty, n.Name);
+        mem.addMetrics(parseMetrics(n));
+        return mem;
       });
     }
 
