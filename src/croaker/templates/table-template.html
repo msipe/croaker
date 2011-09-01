@@ -1,10 +1,10 @@
-<table cellpadding="0" cellspacing="0" style="width:100%">
+<table cellpadding="0" cellspacing="0" style="width:100%;table-layout:fixed;">
   <thead>
     <tr>
-      <th style="width:10%">Type</th>
-      <th>Name</th>
+      <th style="width:5%;text-align:left;">Type</th>
+      <th style="width:10em;text-align:left;">Name</th>
       {{each defs}}
-        <th style="width:5%">${$value.shortName}</th>
+        <th style="width:5%;text-align:right;">${$value.shortName}</th>
       {{/each}}
     </tr>
   </thead>
@@ -12,9 +12,9 @@
     {{each rows}}
       <tr>
         <td>${$value.tag}</td>
-        <td>${$value.fullName}</td>
+        <td style="width:10em;overflow:hidden;white-space:nowrap;">${$value.fullName}</td>
         {{each $value.metrics}}
-          <td>${$value.value}</td>
+          <td style="text-align:right">${$value.value}</td>
         {{/each}}
       </tr>
     {{/each}}
