@@ -156,13 +156,27 @@ var Croaker = (function () {
       });
     }
 
+    function flatten(hierarchy) {
+      var flat = [hierarchy];
+      _.each(hierarchy.namespaces, function (ns) {
+        flat.push(ns);
+        _.each(ns.types, function (ty) {
+          flat.push(ty);
+          _.each(ty.members, function (mem) {
+            flat.push(mem);
+          });
+        });
+      });
+      return flat;
+    }
+
     function parse(xml) {
       var root = getRoot(xml);
       var mod = module(root.Name, root.AssemblyVersion);
       mod.addMetrics(parseMetrics(root));
       mod.add(parseNamespaces(mod, root));
       mod.init();
-      return mod;
+      return { hierarchy: mod, flat: flatten(mod) };
     }
 
     return { parse: parse };
