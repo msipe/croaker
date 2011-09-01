@@ -21,8 +21,8 @@
       };
 
       var parse = function () {
-        parsed['basic'] = Croaker.parser.parse(loadedFiles['basic']);
-        parsed['missing'] = Croaker.parser.parse(loadedFiles['missing']);
+        parsed.basic = Croaker.parser.parse(loadedFiles['basic']);
+        parsed.missing = Croaker.parser.parse(loadedFiles['missing']);
         start();
       }
 
@@ -171,16 +171,16 @@
 
       module('parse tests');
       test('module parsing', function () {
-        equals(parsed['basic'].name, 'Some.dll');
-        equals(parsed['basic'].fullName, 'Some.dll');
-        same(parsed['basic'].location, ['Some.dll']);
-        equals(parsed['basic'].version, '1.0.2.3');
-        equals(parsed['basic'].namespaces.length, 1);
-        equals(parsed['basic'].parent, null);
+        equals(parsed.basic.name, 'Some.dll');
+        equals(parsed.basic.fullName, 'Some.dll');
+        same(parsed.basic.location, ['Some.dll']);
+        equals(parsed.basic.version, '1.0.2.3');
+        equals(parsed.basic.namespaces.length, 1);
+        equals(parsed.basic.parent, null);
       });
 
       test('module metric parsing', function () {
-        var metrics = parsed['basic'].metrics;
+        var metrics = parsed.basic.metrics;
         equals(metrics.length, 5);
         equals(metrics[0].name, 'ClassCoupling');
         equals(metrics[0].value, 11);
@@ -195,7 +195,7 @@
       });
 
       test('namespace parsing', function () {
-        var ns = parsed['basic'].namespaces[0];
+        var ns = parsed.basic.namespaces[0];
         equals(ns.name, 'Sample.Core');
         equals(ns.fullName, 'Sample.Core');
         same(ns.location, ['Some.dll', 'Sample.Core']);
@@ -204,7 +204,7 @@
       });
 
       test('namespace metric parsing', function () {
-        var metrics = parsed['basic'].namespaces[0].metrics;
+        var metrics = parsed.basic.namespaces[0].metrics;
         equals(metrics.length, 5);
         equals(metrics[0].name, 'ClassCoupling');
         equals(metrics[0].value, 11);
@@ -224,7 +224,7 @@
       });
 
       test('type parsing', function () {
-        var type = parsed['basic'].namespaces[0].types[0];
+        var type = parsed.basic.namespaces[0].types[0];
         equals(type.name, 'SampleClass');
         equals(type.fullName, 'Sample.Core.SampleClass');
         same(type.location, ['Some.dll', 'Sample.Core', 'SampleClass']);
@@ -233,7 +233,7 @@
       });
 
       test('type metric parsing', function () {
-        var metrics = parsed['basic'].namespaces[0].types[0].metrics;
+        var metrics = parsed.basic.namespaces[0].types[0].metrics;
         equals(metrics.length, 5);
         equals(metrics[0].name, 'ClassCoupling');
         equals(metrics[0].value, 11);
@@ -253,7 +253,7 @@
       });
 
       test('member parsing', function () {
-        var members = parsed['basic'].namespaces[0].types[0].members;
+        var members = parsed.basic.namespaces[0].types[0].members;
         equals(members[0].name, 'Method1(String) : void');
         equals(members[0].fullName, 'Sample.Core.SampleClass.Method1(String) : void');
         same(members[0].location, ['Some.dll', 'Sample.Core', 'SampleClass', 'Method1(String) : void']);
@@ -265,7 +265,7 @@
       });
 
       test('full member metric parsing', function () {
-        var members = parsed['basic'].namespaces[0].types[0].members;
+        var members = parsed.basic.namespaces[0].types[0].members;
         equals(members[0].metrics.length, 5);
         equals(members[0].metrics[0].name, 'ClassCoupling');
         equals(members[0].metrics[0].value, 11);
@@ -286,7 +286,7 @@
       });
 
       test('partial member metric parsing', function () {
-        var members = parsed['basic'].namespaces[0].types[0].members;
+        var members = parsed.basic.namespaces[0].types[0].members;
         equals(members[1].metrics.length, 5);
         equals(members[1].metrics[0].name, 'ClassCoupling');
         equals(members[1].metrics[0].value, 'N/A');
@@ -306,7 +306,7 @@
       });
 
       test('parsing type with no members', function () {
-        equals(parsed['missing'].namespaces[0].types[0].members.length, 0);
+        equals(parsed.missing.namespaces[0].types[0].members.length, 0);
       });
 
       module('metric definition tests');
