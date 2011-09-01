@@ -43,7 +43,7 @@ var Croaker = (function () {
 
     spec.initialize = function () {
       spec.location = _.flatten([spec.parent.location, spec.name]);
-      spec.fullName = _.reduce(_.rest(spec.location), function (m, s) { return m + '.' + s });
+      spec.fullName = _.reduce(_.rest(spec.location), function (m, s) { return m + '.' + s; });
     };
 
     if (childrenName) {
