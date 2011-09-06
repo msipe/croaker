@@ -3,10 +3,14 @@
   <head>
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>   
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>   
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>   
     <script type="text/javascript" src="js/xml-to-json/jquery.xml2json.pack.js"></script>   
     <script type="text/javascript" src="js/underscore/underscore-min.js"></script>   
     <script type="text/javascript" src="js/croaker/croaker.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/theme/redmond/jquery-ui-1.8.16.custom.css" />
+    <link rel="stylesheet" type="text/css" href="css/croaker/croaker.css" />
 
     <script type="text/javascript">
       var App = (function () {
@@ -16,6 +20,28 @@
           }
           return { load: load };
         } ());
+
+        var resultTable = (function () {
+          var $table = null;
+
+          function init() {
+            $table = $('#main table');
+            $table
+              .find('th')
+              .addClass('ui-state-default')
+              .end()
+              .find('td')
+              .addClass('ui-widget-content')
+              .end()
+              .find('tr')
+              .hover(function () { $(this).children('td').addClass('ui-state-hover'); },
+                     function () { $(this).children('td').removeClass('ui-state-hover'); })
+              .click(function () { $(this).children('td').toggleClass('ui-state-highlight'); });
+          }
+
+          return { init: init };
+        } ());
+
 
         var root = null;
 
@@ -32,6 +58,8 @@
           $('#main')
           .empty()
           .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
+
+          resultTable.init();
         }
 
         function init(xmlPath) {
