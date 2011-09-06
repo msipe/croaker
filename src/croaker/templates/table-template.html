@@ -9,14 +9,6 @@
     </tr>
   </thead>
   <tbody>
-    {{each rows}}
-      <tr>
-        <td>${$value.tag}</td>
-        <td style="width:10em;overflow:hidden;white-space:nowrap;">${$value.fullName}</td>
-        {{each $value.metrics}}
-          <td style="text-align:right">${$value.value}</td>
-        {{/each}}
-      </tr>
-    {{/each}}
+    {{tmpl(rows) "croaker-row"}}
   </tbody>
 </table>

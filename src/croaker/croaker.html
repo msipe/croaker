@@ -10,6 +10,13 @@
 
     <script type="text/javascript">
       var App = (function () {
+        var templateLoader = (function () {
+          function load(name, key) {
+            return $.get('templates/' + name, function (data) { $.template(key, data); }, 'html');
+          }
+          return { load: load };
+        } ());
+
         var root = null;
 
         function loadXml(xmlPath) {
@@ -17,7 +24,8 @@
         }
 
         function loadTemplates() {
-          return $.get('templates/table-template.html', function (data) { $.template('croaker-table', data); }, 'html');
+          return $.when(templateLoader.load('table-template.html', 'croaker-table'),
+                        templateLoader.load('row-template.html', 'croaker-row'));
         }
 
         function display() {

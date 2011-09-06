@@ -1,0 +1,7 @@
+<tr>
+  <td>${tag}</td>
+  <td style="width:10em;overflow:hidden;white-space:nowrap;">${fullName}</td>
+  {{each metrics}}
+    <td style="text-align:right">${$value.value}</td>
+  {{/each}}
+</tr>
