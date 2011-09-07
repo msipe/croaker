@@ -1,3 +1,10 @@
 table td.ui-state-hover {
   font-weight: normal;
 }
+
+#flash {
+  padding:1em;
+  margin-bottom:1em;
+  font-weight:bold;
+  display:none;
+}
