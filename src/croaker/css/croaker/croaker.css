@@ -1,5 +1,15 @@
-table td.ui-state-hover {
+table {
+  width:100%;
+  table-layout:fixed;
+}
+
+table thead th {
+  font-size:small;
+}
+
+table td.ui-state-hover, table td.ui-widget, table td.ui-widget-content {
   font-weight: normal;
+  font-size:small;
 }
 
 #flash {

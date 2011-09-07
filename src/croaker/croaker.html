@@ -46,7 +46,7 @@
               .addClass('ui-widget-content')
               .end()
               .find('tr')
-              .hover(function () { $(this).children('td').addClass('ui-state-hover'); },
+              .hover(function () { $(this).children('td').addClass('ui-state-hover').css('font-weight', 'normal'); },
                      function () { $(this).children('td').removeClass('ui-state-hover'); })
               .click(function () { $(this).children('td').toggleClass('ui-state-highlight'); });
           }
