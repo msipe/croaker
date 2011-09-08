@@ -37,7 +37,7 @@
           var $table = null;
 
           function init() {
-            $table = $('#main table');
+            $table = $('#results table');
             $table
               .find('th')
               .addClass('ui-state-default')
@@ -68,13 +68,11 @@
         }
 
         function display() {
-          $('#main')
-          .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
-
+          $('#results').append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
           resultTable.init();
+          $('#results').show();
           $('#nav').show();
           $('#btnsearch').button();
-
           flash.hide();
         }
 
@@ -86,7 +84,22 @@
           return window.location.search.substring(1).split('=')[1];
         }
 
+        function doSearch() {
+          $.when(flash.set('Searching...'))
+           .done(function () {
+             var results = root.search.execute($('#search').val(), true);
+             $('#results')
+               .empty()
+               .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: results }));
+             resultTable.init();
+             flash.hide();
+           });
+        }
+
         function init() {
+          $('#main')
+            .delegate('#btnsearch', { click: doSearch });
+
           xmlPath = getXmlPath();
           if (xmlPath) {
             $.when(flash.set('Loading File...')).done(beginLoading);
@@ -104,13 +117,14 @@
 
   </head>
   <body class="ui-helper-reset">
-    <div class="ui-widget" id="main">
-      <div class="ui-state-highlight ui-corner-all" id="flash"></div>
-      <div class="ui-corner-all ui-widget-content" id="nav" style="display:none">
+    <div id="main" class="ui-widget">
+      <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all" style="display:none"></div>
+      <div id="nav" class="ui-widget-content ui-corner-all" style="display:none">
         <label for="search">Search</label>
         <input id="search" type="text" />
         <button id="btnsearch">Search</button>
       </div>
+      <div id="results" class="ui-widget-content ui-corner-all" style="display:none"></div>
     </div>
   </body>
 </html>

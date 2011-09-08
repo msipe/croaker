@@ -3,29 +3,27 @@ table {
   table-layout:fixed;
 }
 
-table thead th {
-  font-size:small;
-}
-
-table td.ui-state-hover, table td.ui-widget, table td.ui-widget-content {
-  font-weight: normal;
-  font-size:small;
-}
-
 #flash {
-  margin-bottom:1em;
   font-weight:bold;
-  display:none;
 }
 
 #main > div {
   margin-bottom:1em;
 }
 
-#flash, #nav {
+#nav, #flash {
   padding:.5em;
 }
 
 #main {
   padding:.5em;
+}
+
+table thead th {
+ font-size :small;
+}
+
+table td.ui-state-hover, table td.ui-widget, table td.ui-widget-content {
+  font-weight: normal;
+  font-size:small;
 }
