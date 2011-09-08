@@ -451,28 +451,28 @@
       module('search tests');
       test('search by full name exact match module', function () {
         expect(2);
-        var results = parsed.basic.search.execute('Some.dll');
+        var results = parsed.basic.search.execute('Some.dll', true);
         equals(results.length, 1);
         equals(results[0].name, 'Some.dll');
       });
 
       test('search by full name exact match type', function () {
         expect(2);
-        var results = parsed.basic.search.execute('^Sample.Core.SampleClass$');
+        var results = parsed.basic.search.execute('^Sample.Core.SampleClass$', true);
         equals(results.length, 1);
         equals(results[0].name, 'SampleClass');
       });
 
       test('search should be case insensitive', function () {
         expect(2);
-        var results = parsed.basic.search.execute('^SAmple.core.SampleClass$');
+        var results = parsed.basic.search.execute('^SAmple.core.SampleClass$', true);
         equals(results.length, 1);
         equals(results[0].name, 'SampleClass');
       });
 
       test('partial match', function () {
         expect(4);
-        var results = parsed.basic.search.execute('SampleClass');
+        var results = parsed.basic.search.execute('SampleClass', true);
         equals(results.length, 3);
         equals(results[0].name, 'SampleClass');
         equals(results[1].name, 'Method1(String) : void');
@@ -481,9 +481,23 @@
 
       test('partial match', function () {
         expect(2);
-        var results = parsed.basic.search.execute('.+Core$');
+        var results = parsed.basic.search.execute('.+Core$', true);
         equals(results.length, 1);
         equals(results[0].name, 'Sample.Core');
+      });
+
+      test('name match only', function () {
+        expect(3);
+        var results = parsed.basic.search.execute('SampleClass', false);
+        equals(results.length, 2);
+        equals(results[0].name, 'SampleClass');
+        equals(results[1].name, 'SampleClass()');
+      });
+
+      test('no match', function () {
+        expect(1);
+        var results = parsed.basic.search.execute('^Sample.Core.SampleClass_$', false);
+        equals(results.length, 0);
       });
 
       module('metric definition tests');

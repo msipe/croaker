@@ -96,13 +96,19 @@ var Croaker = (function () {
   }
 
   var search = (function () {
+    var nameProviders = {
+      true: function(item) {return item.fullName;},
+      false: function(item) {return item.name;}
+    };
+
     function init(spec) {
       var self = {};
       spec.search = self;
 
-      self.execute = function (value) {
+      self.execute = function (value, searchFullName) {
         var re = new RegExp(value, 'i');
-        return _.select(spec.flat, function (item) { return re.test(item.fullName); });
+        var provider = nameProviders[searchFullName];
+        return _.select(spec.flat, function (item) { return re.test(provider(item)); });
       }
     }
     return { init: init };
