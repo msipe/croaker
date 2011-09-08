@@ -95,6 +95,19 @@ var Croaker = (function () {
     return named(name, { value: value });
   }
 
+  var search = (function () {
+    function init(spec) {
+      var self = {};
+      spec.search = self;
+
+      self.execute = function (value) {
+        var re = new RegExp(value, 'i');
+        return _.select(spec.flat, function (item) { return re.test(item.fullName); });
+      }
+    }
+    return { init: init };
+  } ());
+
   var parser = (function () {
     function parseXml(xml) {
       return $.xml2json(xml, true);
@@ -176,7 +189,13 @@ var Croaker = (function () {
       mod.addMetrics(parseMetrics(root));
       mod.add(parseNamespaces(mod, root));
       mod.init();
-      return { hierarchy: mod, flat: flatten(mod) };
+
+      var spec = {
+        hierarchy: mod,
+        flat: flatten(mod)
+      };
+      search.init(spec);
+      return spec;
     }
 
     return { parse: parse };

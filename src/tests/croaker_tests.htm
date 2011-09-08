@@ -448,6 +448,44 @@
         equals(parsed.missing.hierarchy.namespaces[0].types[0].members.length, 0);
       });
 
+      module('search tests');
+      test('search by full name exact match module', function () {
+        expect(2);
+        var results = parsed.basic.search.execute('Some.dll');
+        equals(results.length, 1);
+        equals(results[0].name, 'Some.dll');
+      });
+
+      test('search by full name exact match type', function () {
+        expect(2);
+        var results = parsed.basic.search.execute('^Sample.Core.SampleClass$');
+        equals(results.length, 1);
+        equals(results[0].name, 'SampleClass');
+      });
+
+      test('search should be case insensitive', function () {
+        expect(2);
+        var results = parsed.basic.search.execute('^SAmple.core.SampleClass$');
+        equals(results.length, 1);
+        equals(results[0].name, 'SampleClass');
+      });
+
+      test('partial match', function () {
+        expect(4);
+        var results = parsed.basic.search.execute('SampleClass');
+        equals(results.length, 3);
+        equals(results[0].name, 'SampleClass');
+        equals(results[1].name, 'Method1(String) : void');
+        equals(results[2].name, 'SampleClass()');
+      });
+
+      test('partial match', function () {
+        expect(2);
+        var results = parsed.basic.search.execute('.+Core$');
+        equals(results.length, 1);
+        equals(results[0].name, 'Sample.Core');
+      });
+
       module('metric definition tests');
       test('genera', function () {
         equals(Croaker.metricDefs.length, 5);
