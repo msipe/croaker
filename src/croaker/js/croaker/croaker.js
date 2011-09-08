@@ -97,8 +97,8 @@ var Croaker = (function () {
 
   var search = (function () {
     var nameProviders = {
-      true: function(item) {return item.fullName;},
-      false: function(item) {return item.name;}
+      'true': function(item) {return item.fullName;},
+      'false': function(item) {return item.name;}
     };
 
     function init(spec) {
@@ -109,7 +109,7 @@ var Croaker = (function () {
         var re = new RegExp(value, 'i');
         var provider = nameProviders[searchFullName];
         return _.select(spec.flat, function (item) { return re.test(provider(item)); });
-      }
+      };
     }
     return { init: init };
   } ());
