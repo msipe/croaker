@@ -69,10 +69,12 @@
 
         function display() {
           $('#main')
-          .empty()
           .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
 
           resultTable.init();
+          $('#nav').show();
+          $('#btnsearch').button();
+
           flash.hide();
         }
 
@@ -101,8 +103,14 @@
     </script>
 
   </head>
-  <body>
-    <div class="ui-state-highlight ui-corner-all" id="flash"></div>
-    <div class="ui-widget" id="main"></div>
+  <body class="ui-helper-reset">
+    <div class="ui-widget" id="main">
+      <div class="ui-state-highlight ui-corner-all" id="flash"></div>
+      <div class="ui-corner-all ui-widget-content" id="nav" style="display:none">
+        <label for="search">Search</label>
+        <input id="search" type="text" />
+        <button id="btnsearch">Search</button>
+      </div>
+    </div>
   </body>
 </html>
