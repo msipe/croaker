@@ -27,17 +27,24 @@
         } ());
 
         var templateLoader = (function () {
-          function load(name, key) {
+          function loadTemplate(name, key) {
             return $.get('templates/' + name, function (data) { $.template(key, data); }, 'html');
           }
+
+          function load() {
+            return $.when(loadTemplate('table-template.html', 'croaker-table'),
+                          loadTemplate('row-template.html', 'croaker-row'));
+          }
+
           return { load: load };
         } ());
 
         var resultTable = (function () {
-          var $table = null;
-
-          function init() {
-            $('#results table')
+          function display(data) {
+            $('#results')
+              .hide()
+              .empty()
+              .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: data }))
               .find('th')
               .addClass('ui-state-default')
               .end()
@@ -45,12 +52,14 @@
               .addClass('ui-widget-content')
               .end()
               .find('tr')
-              .hover(function () { $(this).children('td').addClass('ui-state-hover'); },
+              .hover(function () { $(this).children('td').addClass('ui-state-hover').css('font-weight', 'normal'); },
                      function () { $(this).children('td').removeClass('ui-state-hover'); })
-              .click(function () { $(this).children('td').toggleClass('ui-state-highlight'); });
+              .click(function () { $(this).children('td').toggleClass('ui-state-highlight'); })
+              .end()
+              .show();
           }
 
-          return { init: init };
+          return { display: display };
         } ());
 
 
@@ -61,21 +70,14 @@
           return $.get(xmlPath, function (xml) { root = Croaker.parser.parse(xml); });
         }
 
-        function loadTemplates() {
-          return $.when(templateLoader.load('table-template.html', 'croaker-table'),
-                        templateLoader.load('row-template.html', 'croaker-row'));
-        }
-
         function display() {
-          $('#results').append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: root.flat }));
-          resultTable.init();
-          $('#results').show();
+          resultTable.display(root.flat);
           $('#nav').show();
           flash.hide();
         }
 
         function beginLoading() {
-          $.when(loadXml(xmlPath), loadTemplates()).done(display);
+          $.when(loadXml(xmlPath), templateLoader.load()).done(display);
         }
 
         function getXmlPath() {
@@ -85,11 +87,7 @@
         function doSearch() {
           $.when(flash.set('Searching...'))
             .done(function () {
-              var results = root.search.execute($('#search').val(), true);
-              $('#results')
-                .empty()
-                .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: results }));
-              resultTable.init();
+              resultTable.display(root.search.execute($('#search').val(), true));
               flash.hide();
             });
           return false;

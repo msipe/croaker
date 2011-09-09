@@ -3,6 +3,10 @@ table {
   table-layout:fixed;
 }
 
+#results td {
+  font-weight:normal;
+}
+
 #flash {
   font-weight:bold;
 }
