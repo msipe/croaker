@@ -37,8 +37,7 @@
           var $table = null;
 
           function init() {
-            $table = $('#results table');
-            $table
+            $('#results table')
               .find('th')
               .addClass('ui-state-default')
               .end()
@@ -46,7 +45,7 @@
               .addClass('ui-widget-content')
               .end()
               .find('tr')
-              .hover(function () { $(this).children('td').addClass('ui-state-hover').css('font-weight', 'normal'); },
+              .hover(function () { $(this).children('td').addClass('ui-state-hover'); },
                      function () { $(this).children('td').removeClass('ui-state-hover'); })
               .click(function () { $(this).children('td').toggleClass('ui-state-highlight'); });
           }
@@ -72,7 +71,6 @@
           resultTable.init();
           $('#results').show();
           $('#nav').show();
-          $('#btnsearch').button();
           flash.hide();
         }
 
@@ -86,14 +84,15 @@
 
         function doSearch() {
           $.when(flash.set('Searching...'))
-           .done(function () {
-             var results = root.search.execute($('#search').val(), true);
-             $('#results')
-               .empty()
-               .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: results }));
-             resultTable.init();
-             flash.hide();
-           });
+            .done(function () {
+              var results = root.search.execute($('#search').val(), true);
+              $('#results')
+                .empty()
+                .append($.tmpl('croaker-table', { defs: Croaker.metricDefs, rows: results }));
+              resultTable.init();
+              flash.hide();
+            });
+          return false;
         }
 
         function init() {
@@ -116,13 +115,15 @@
     </script>
 
   </head>
-  <body class="ui-helper-reset">
-    <div id="main" class="ui-widget">
+  <body>
+    <div id="main">
       <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all" style="display:none"></div>
       <div id="nav" class="ui-widget-content ui-corner-all" style="display:none">
-        <label for="search">Search</label>
-        <input id="search" type="text" />
-        <button id="btnsearch">Search</button>
+        <form>
+          <label for="search">Search</label>
+          <input id="search" type="text" />
+          <button id="btnsearch" class="ui-state-default ui-corner-all">Search</button>
+        </form>
       </div>
       <div id="results" class="ui-widget-content ui-corner-all" style="display:none"></div>
     </div>

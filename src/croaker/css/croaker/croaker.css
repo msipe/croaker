@@ -8,7 +8,7 @@ table {
 }
 
 #main > div {
-  margin-bottom:1em;
+  margin-bottom:.5em;
 }
 
 #nav, #flash {
@@ -16,14 +16,10 @@ table {
 }
 
 #main {
-  padding:.5em;
+  padding:.25em;
 }
 
-table thead th {
- font-size :small;
+button {
+  
 }
 
-table td.ui-state-hover, table td.ui-widget, table td.ui-widget-content {
-  font-weight: normal;
-  font-size:small;
-}
