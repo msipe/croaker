@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeMetricsReport Version="10.0">
+  <Targets>
+    <Target Name="C:\some\path\Sample.Assembly.dll">
+      <Modules>
+        <Module Name="Some.dll" AssemblyVersion="1.0.2.3">
+          <Metrics>
+            <Metric Name="MaintainabilityIndex" Value="1" />
+            <Metric Name="CyclomaticComplexity" Value="2" />
+          </Metrics>
+          <Namespaces>
+            <Namespace Name="Sample.Core">
+              <Metrics>
+                <Metric Name="MaintainabilityIndex" Value="3" />
+                <Metric Name="CyclomaticComplexity" Value="4" />
+              </Metrics>
+              <Types>
+                <Type Name="SampleClass">
+                  <Metrics>
+                    <Metric Name="MaintainabilityIndex" Value="5" />
+                    <Metric Name="CyclomaticComplexity" Value="6" />
+                  </Metrics>
+                  <Members />
+                </Type>
+              </Types>
+            </Namespace>
+          </Namespaces>
+        </Module>
+      </Modules>
+    </Target>
+  </Targets>
+</CodeMetricsReport>  
