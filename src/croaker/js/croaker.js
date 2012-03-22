@@ -3,12 +3,23 @@ function Parser() {
   
   function parse(string) {
     var domparser = new DOMParser(), xmlDoc = domparser.parseFromString(string,"text/xml"),   
-	  name = xmlDoc.documentElement.nodeName,
+	  root = xmlDoc.documentElement;
+	  
+	/* console.log(root.hasAttributes());
+	console.log(root.attributes.length);
+	console.log(root.attributes.item(0).name);
+    console.log(root.attributes.item(0).value); */
 	
-    return {
-	   name: name,
+    var atrs = {};
+	if (root.hasAttributes()) {
+      for (x=0; x < root.attributes.length; x++) {
+	    atrs[root.attributes.item(x).name] = root.attributes.item(x).value;
+	  }
+	}
+	return {
+	   name: root.nodeName,
 	   children: [],
-	   attributes: {}
+	   attributes: atrs
 	};
   }
   
