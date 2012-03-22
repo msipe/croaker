@@ -13,7 +13,9 @@
     </player>
     <player name="Wade">
       <stat name="Average Points" value="25"/>
-      <stat name="Rebounds" value="1"/>
+      <stat name="Rebounds" value="1">
+	    <comment text="wade wuz injured"/> 
+	  </stat>
     </player>    
   </team>
 </bballteams>
@@ -32,3 +34,25 @@
 <bballteams name="test1">
 [CDATA]
 </bballteams>
+
+obj = {
+  name: 'bbballteams',
+  attributes:{},
+  children: [
+    {name:'team',
+	 attributes: {name:'Thunder'},
+	 children: [
+	   {name: 'player',
+	    attributes:{name:'Durant'},
+		children: [
+		  {name: 'stat', attributes:{name: 'Average points', value: '10'}, children: []},
+		  {name: 'stat', attributes:{name: 'Rebounds', value: '25'}, children: []}
+		]
+	  }
+	 },
+	 
+	    
+		
+	 ]
+  ]
+}

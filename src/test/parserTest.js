@@ -28,10 +28,12 @@ TestCase("Croaker.ParserTest.Tests", {
 	assertThat(tree.attributes, hasMember('gender', 'male'));
   },
 
-  testParseWithAttributesWithChildren:  function() {
-    
+  testParseWithAttributesAndChildren:  function() {
+    var parser = new Parser();
+	
+	var tree = parser.parse('<?xml version="1.0"?><players name="bob"><stats type="catches" value="3"/></players>');
   
-  }
+  },
   
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
