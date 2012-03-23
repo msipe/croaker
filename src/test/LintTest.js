@@ -1,25 +1,29 @@
 var LintTest = TestCase('Lint.Tests');
 
-var files = {
-  'src/croaker/js/croaker.js': {
-    sloppy: true,
-    white: true,
-    regexp: true,
-    plusplus: true,    
-    maxerr: 50,
-    indent: 2,
-    predef: ['DOMParser']
+var defs = [
+  {
+    file: 'src/croaker/js/croaker.js',
+    name: 'croaker_js',
+    config: {
+      sloppy: true,
+      white: true,
+      regexp: true,
+      plusplus: true,    
+      maxerr: 50,
+      indent: 2,
+      predef: ['DOMParser']
+    }
   }
-};
+];
 
-$.each(files, function (key, value) {
-  var filename = key;
-
+for (var x=0; x < defs.length; ++x) {
+  var entry = defs[x];
+  
   function testFunc() {
     var fileData = '';
 
     function worker() {
-      return $.ajax('/test/' + filename, {
+      return $.ajax('/test/' + entry.file, {
         cache: false,
         dataType: 'text',
         mimeType: 'text/plain',
@@ -33,8 +37,7 @@ $.each(files, function (key, value) {
     function validator() {
       assert('file data not found', fileData.length > 0);
      
-      var result = JSLINT(fileData, value),
-          msg;
+      var result = JSLINT(fileData, entry.config), msg;
 
       if (!result) {
         msg = 'JSLint failed.  First 5 errors:\n';
@@ -52,14 +55,10 @@ $.each(files, function (key, value) {
       }
     }
 
-    function errorHandler() {
-      fail('error retrieving data');
-    }
-
     $.when(worker(this))
      .done(validator)
-     .fail(errorHandler);
+     .fail(function() {fail('error retrieving data');});
   }
 
-  LintTest.prototype['test_' + filename] = testFunc;
-});
+  LintTest.prototype['testLint' + entry.name] = testFunc;
+}
