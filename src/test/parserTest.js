@@ -35,8 +35,10 @@ TestCase("Croaker.ParserTest.Tests", {
   
   var tree = parser.parse('<?xml version="1.0"?><players name="bob"><stats type="catches" value="3"/></players>');
     
-  assertThat(tree.children, hasMember('stats', 'pop'));
-  assertThat(tree.attributes, hasMember('name', 'bob'));
+  assertThat(tree.name, equalTo('players'));
+  assertThat(tree.attributes.name, equalTo('bob'));
+  assertThat(tree.children.length, equalTo(1))  
+  assertThat(tree.children[0].name, equalTo('stats'));
 
   
   },
