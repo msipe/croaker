@@ -40,7 +40,40 @@ function Parser() {
 }
 
 
-function ParserTemplate(name, children) {
-  return {name:name, children:children};
-
+function ParserTemplate(name) {
+  var that = {
+    name:name,
+    attributes:{},
+    children: []    
+  };
+  
+  
+  function addAttribute(property, value) {
+    that.attributes[property] = value;
+  
+  }
+  
+  that.addAttribute = addAttribute;
+  
+  
+  return that;
 }
+
+ /*  {parserTemplate(name, attributes, children)
+   [ child 1) ParserTemplate
+              [child 1) parserTemplate
+               
+              child 2) parserTemplate
+               ]       [ child 1) ParserTemplate]
+    
+    child 2) Parser Template
+             [child 1) parserTemplate
+               
+             child 2) parserTemplate
+                       [child 1) ParserTemplate]
+    ]
+              ]
+  
+  
+  
+  } */

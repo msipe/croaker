@@ -1,13 +1,22 @@
 TestCase("Croaker.ParserTemplateTest.Tests", {
 
   testDefaults: function() {
-  var template = new ParserTemplate('bob','dance');
+  var parse = new StandardParse('bob');
+    
+  assertThat(parse.name, 'bob');
+  assertThat(parse.attributes, object());
+  assertThat(parse.children, empty());
   
-  assertThat(template, object());
+  },
   
-  assertThat(template.name, 'bob');
-  assertThat(template.children, 'dance');
-  
+  testAddingAttributes: function() {
+    var parse = new StandardParse('years');
+    
+    parse.addAttribute('day','5');
+    
+    assertThat(parse.attributes, hasMember('day');
+    assertThat(parse.attributes.day, equalTo('5'));
+ 
   },
   
   setUp: function () {

@@ -15,6 +15,7 @@ TestCase("Croaker.ParserTest.Tests", {
   assertThat(tree.name, equalTo('players'));
   assertThat(tree.children, object());
   assertThat(tree.attributes, hasMember('name', 'bob'));
+
   }, 
   
   testParseWithThreeAttributes: function() {
