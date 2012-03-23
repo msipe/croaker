@@ -8,7 +8,7 @@ var files = {
     plusplus: true,    
     maxerr: 50,
     indent: 2,
-    predef: ['console']
+    predef: ['DOMParser']
   }
 };
 
