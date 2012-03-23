@@ -8,12 +8,12 @@ function Parser() {
    
     /* if(root.hasChildNodes()) {
       console.log(root.hasChildNodes());
-      console.log(root.childNodes.length);
-      console.log(root.childNodes.item(0).nodeName);
-      console.log(root.childNodes.item(0).attributes.item(0).value); 
-      console.log(root.childNodes.item(0).attributes.item(1).name); 
-      console.log(root.childNodes.item(0).attributes.item(1).value); 
-    } */
+      console.log(root.childNodes);
+      
+      for(x=0;x<root.childNodes.length; x++) {
+        console.log(root.childNodes.item(x).nodeName);
+      }
+    } */ 
   
     
     if (root.hasAttributes()) {
@@ -21,8 +21,6 @@ function Parser() {
         atrs[root.attributes.item(x).name] = root.attributes.item(x).value;
       }
     }
-  
-    
   
     if(root.hasChildNodes()) {
       for(x=0; x < root.childNodes.length; x++) {
