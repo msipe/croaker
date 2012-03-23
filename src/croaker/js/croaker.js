@@ -2,8 +2,9 @@ function Parser() {
   var that = {};
   
   function parse(string) {
-    var domparser = new DOMParser(), xmlDoc = domparser.parseFromString(string,"text/xml"),   
-    root = xmlDoc.documentElement;
+    var domparser = new DOMParser(),
+      xmlDoc = domparser.parseFromString(string,"text/xml"),      
+      root = xmlDoc.documentElement, atrs = {}, x, children = {};
    
     if(root.hasChildNodes()) {
       console.log(root.hasChildNodes());
@@ -14,14 +15,14 @@ function Parser() {
       console.log(root.childNodes.item(0).attributes.item(1).value); 
     }
   
-    var atrs = {};
+    
     if (root.hasAttributes()) {
         for (x=0; x < root.attributes.length; x++) {
         atrs[root.attributes.item(x).name] = root.attributes.item(x).value;
       }
     }
   
-    var children = {};
+    
   
     if(root.hasChildNodes()) {
       for(x=0; x < root.childNodes.length; x++) {
