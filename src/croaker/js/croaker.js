@@ -38,3 +38,9 @@ function Parser() {
   that.parse = parse;
   return that;
 }
+
+
+function ParserTemplate(name, children) {
+  return {name:name, children:children};
+
+}
