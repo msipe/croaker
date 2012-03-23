@@ -6,14 +6,14 @@ function Parser() {
       xmlDoc = domparser.parseFromString(string,"text/xml"),      
       root = xmlDoc.documentElement, atrs = {}, x, children = {};
    
-    if(root.hasChildNodes()) {
+    /* if(root.hasChildNodes()) {
       console.log(root.hasChildNodes());
       console.log(root.childNodes.length);
       console.log(root.childNodes.item(0).nodeName);
       console.log(root.childNodes.item(0).attributes.item(0).value); 
       console.log(root.childNodes.item(0).attributes.item(1).name); 
       console.log(root.childNodes.item(0).attributes.item(1).value); 
-    }
+    } */
   
     
     if (root.hasAttributes()) {
