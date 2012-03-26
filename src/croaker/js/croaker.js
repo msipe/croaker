@@ -1,5 +1,5 @@
 var croaker = (function () {
-  function StandardParse(name, attributes, children) {
+  function NodeEntry(name, attributes, children) {
     var that = {
       name: name,
       attributes: attributes,
@@ -37,7 +37,7 @@ var croaker = (function () {
     }
 
     function processNode(node) {
-      return new StandardParse(node.nodeName, parseAttributes(node), parseChildNodes(processNode, node));
+      return new NodeEntry(node.nodeName, parseAttributes(node), parseChildNodes(processNode, node));
     }
 
     function parse(string) {
@@ -53,7 +53,7 @@ var croaker = (function () {
   }
 
   return {
-    StandardParse: StandardParse,
+    NodeEntry: NodeEntry,
     Parser: Parser
   };
 } ());
