@@ -16,11 +16,9 @@ var defs = [
   }
 ];
 
-for (var x=0; x < defs.length; ++x) {
-  var entry = defs[x];
-  
-  function testFunc() {
-    var fileData = '';
+for (var x = 0; x < defs.length; ++x) {
+  var testFunc = (function () {
+    var fileData = '', entry = defs[x];
 
     function worker() {
       return $.ajax('/test/' + entry.file, {
@@ -36,7 +34,7 @@ for (var x=0; x < defs.length; ++x) {
 
     function validator() {
       assert('file data not found', fileData.length > 0);
-     
+
       var result = JSLINT(fileData, entry.config), msg;
 
       if (!result) {
@@ -55,10 +53,14 @@ for (var x=0; x < defs.length; ++x) {
       }
     }
 
-    $.when(worker())
-     .done(validator)
-     .fail(function() {fail('error retrieving data');});
-  }
+    return function () {
+      console.log(entry.file);
 
-  LintTest.prototype['testLint' + entry.name] = testFunc;
+      $.when(worker())
+        .done(validator)
+        .fail(function () { fail('error retrieving data'); });
+    };
+  } ());
+
+  LintTest.prototype['testLint' + defs[x].name] = testFunc;
 }
