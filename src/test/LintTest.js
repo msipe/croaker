@@ -54,8 +54,6 @@ for (var x = 0; x < defs.length; ++x) {
     }
 
     return function () {
-      console.log(entry.file);
-
       $.when(worker())
         .done(validator)
         .fail(function () { fail('error retrieving data'); });
