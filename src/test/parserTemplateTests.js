@@ -1,7 +1,9 @@
 TestCase("Croaker.ParserTemplateTest.Tests", {
 
   testDefaults: function() {
-    var attributes = {'a': '1', 'b': '2'}, children = [], parse = new StandardParse('bob', attributes, children);
+    var attributes = { 'a': '1', 'b': '2' },
+      children = [], 
+      parse = new croaker.StandardParse('bob', attributes, children);
     
     assertThat(parse.name, 'bob');
     assertThat(parse.attributes, attributes);
