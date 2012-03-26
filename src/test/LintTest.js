@@ -55,7 +55,7 @@ for (var x=0; x < defs.length; ++x) {
       }
     }
 
-    $.when(worker(this))
+    $.when(worker())
      .done(validator)
      .fail(function() {fail('error retrieving data');});
   }
