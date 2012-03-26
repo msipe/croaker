@@ -44,7 +44,7 @@ var croaker = (function () {
       var domparser = new DOMParser(),
         xmlDoc = domparser.parseFromString(string, "text/xml"),
         root = xmlDoc.documentElement;
-
+        
       return processNode(root);
     }
 
