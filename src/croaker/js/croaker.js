@@ -79,13 +79,22 @@ var croaker = (function () {
     };
   }
   
+  function NameSpace(name, types, metrics) {
+    return {
+      name:name,
+      types:types,
+      metrics:metrics
+    }
+  }
+  
   
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
     Metric: Metric,
     Member: Member,
-    Type: Type
+    Type: Type,
+    NameSpace:NameSpace
   }; 
   
   
