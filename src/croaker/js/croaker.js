@@ -87,6 +87,15 @@ var croaker = (function () {
     }
   }
   
+  function Module(name, version, metrics, nameSpaces) {
+    return {
+      name:name,
+      version: version,
+      metrics: metrics,
+      nameSpaces: nameSpaces
+    }
+  }
+  
   
   return {
     NodeEntry: NodeEntry,
@@ -94,7 +103,8 @@ var croaker = (function () {
     Metric: Metric,
     Member: Member,
     Type: Type,
-    NameSpace:NameSpace
+    NameSpace:NameSpace,
+    Module: Module
   }; 
   
   
