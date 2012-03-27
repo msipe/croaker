@@ -60,3 +60,16 @@ var croaker = (function () {
     Parser: Parser
   };
 } ());
+
+
+function Modeler(parsedData) {
+  var that = {};
+  
+  function getMetric {
+  
+  }
+  
+  that.getMetric = getMetric;
+  
+  return that;
+}
