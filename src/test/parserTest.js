@@ -1,11 +1,10 @@
-TestCase("Croaker.ParserTest.Tests", {
+TestCase("Croaker.Parser.Tests", {
   testSimpleParseWithEmpty: function() {
     var parser = new croaker.Parser(),
       tree = parser.parse('<?xml version="1.0"?><players></players>');
 
     assertThat(tree.name, equalTo('players'));
-    assertThat(tree.children, object());
-    assertThat(tree.attributes, object());
+    assertThat(tree.children, empty());
   },
   
   testComplexParses: function() {

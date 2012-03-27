@@ -1,4 +1,4 @@
-TestCase("Croaker.ChildrenTest.Tests", {
+TestCase("Croaker.Parer.Children.Tests", {
   
   testChildren: function() {
     var parser = new croaker.Parser(),
