@@ -1,10 +1,10 @@
-TestCase("Croaker.Model.metric.Tests", {
+TestCase("Croaker.Metric.Tests", {
   testMetrics: function() {
-    var parser = new croaker.Parser(),
-      tree = parser.parse('<?xml version="1.0"?><players></players>');
+    var metric = new croaker.Metric('joe',3);
+    
+    assertThat(metric.value, 3);
+    assertThat(metric.name, 'joe');
 
-    assertThat(tree.name, equalTo('players'));
-    assertThat(tree.children, empty());
   },
 
   setUp: function () {

@@ -55,8 +55,19 @@ var croaker = (function () {
     return that;
   }
 
+  function Metric(name,value) {
+    return {
+      name:name, 
+      value:value
+    };
+  }
+  
+  
   return {
     NodeEntry: NodeEntry,
-    Parser: Parser
-  };
+    Parser: Parser,
+    Metric: Metric
+  }; 
+  
+  
 } ());
