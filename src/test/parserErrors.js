@@ -1,9 +1,15 @@
 TestCase("Croaker.ParserErrors.Tests", {
-  testXMlErrors: function() {
-    var parser = new croaker.Parser(),
-      tree = parser.parse('<?xml version="1.0"?><players></players>');
+  testInvalidXMLThrowsException: function() {
+    var parser = new croaker.Parser();
+     
+    try {
+      parser.parse('invalid xml');
+      fail('should have failed');
+    } catch (e) {
+      assertThat(e, equalTo('unable to parse xml'));
+    }
   },
-  
+ 
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
   }

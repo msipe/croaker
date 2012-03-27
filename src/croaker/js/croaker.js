@@ -37,12 +37,18 @@ var croaker = (function () {
     function processNode(node) {
       return new NodeEntry(node.nodeName, parseAttributes(node), parseChildNodes(processNode, node));
     }
+    
+    function validateDoc(doc) {
+      if (doc.documentElement.nodeName === 'parsererror') {
+        throw 'unable to parse xml';      
+      }
+    }
 
     function parse(string) {
       var domparser = new DOMParser(),
-        xmlDoc = domparser.parseFromString(string, "text/xml"),
-        root = xmlDoc.documentElement;
-      return processNode(root);
+        xmlDoc = domparser.parseFromString(string, "text/xml");
+      validateDoc(xmlDoc);       
+      return processNode(xmlDoc.documentElement);
     }
 
     that.parse = parse;
