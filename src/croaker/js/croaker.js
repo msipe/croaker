@@ -55,10 +55,27 @@ var croaker = (function () {
     return that;
   }
 
-  function Metric(name,value) {
+  function Metric(name, value) {
     return {
       name:name, 
       value:value
+    };
+  }
+  
+  function Member(name, file, line, metrics) {
+    return {
+      name:name, 
+      file:file,
+      line:line,
+      metrics:metrics
+    };
+  }
+  
+  function Type (name,members,metrics) {
+    return {
+       name:name,
+       members:members,
+       metrics:metrics
     };
   }
   
@@ -66,7 +83,9 @@ var croaker = (function () {
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
-    Metric: Metric
+    Metric: Metric,
+    Member: Member,
+    Type: Type
   }; 
   
   
