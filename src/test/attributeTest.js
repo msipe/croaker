@@ -1,5 +1,4 @@
 TestCase("Croaker.Attribute.Tests", {
-  
   testSimpleParseWithAttributes: function() {
     var parser = new croaker.Parser(),
       tree = parser.parse('<?xml version="1.0"?><players name="bob"></players>');

@@ -1,5 +1,4 @@
 TestCase("Croaker.ParserTest.Tests", {
-  
   testSimpleParseWithEmpty: function() {
     var parser = new croaker.Parser(),
       tree = parser.parse('<?xml version="1.0"?><players></players>');
@@ -21,9 +20,7 @@ TestCase("Croaker.ParserTest.Tests", {
     assertThat(tree.children[0].children[0].children[1].name, equalTo('stat'));
     assertThat(tree.children[0].children[0].children[1].attributes.name, equalTo('Rebounds'));
   },
-  
-  
-  
+ 
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
   }

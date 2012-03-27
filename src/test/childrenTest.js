@@ -7,8 +7,6 @@ TestCase("Croaker.ChildrenTest.Tests", {
     assertThat(tree.children.length, equalTo(2));
     assertThat(tree.children[0].name, equalTo('stats'));
     assertThat(tree.children[1].name, equalTo('powers'));
-  
-  
   },
   
   
