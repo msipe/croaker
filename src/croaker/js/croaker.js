@@ -20,7 +20,6 @@ var croaker = (function () {
           attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
         }
       }
-
       return attributes;
     }
 
@@ -32,7 +31,6 @@ var croaker = (function () {
           children.push(processor(node.childNodes.item(x)));
         }
       }
-
       return children;
     }
 
@@ -44,7 +42,6 @@ var croaker = (function () {
       var domparser = new DOMParser(),
         xmlDoc = domparser.parseFromString(string, "text/xml"),
         root = xmlDoc.documentElement;
-        
       return processNode(root);
     }
 
