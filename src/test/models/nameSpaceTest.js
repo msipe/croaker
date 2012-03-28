@@ -1,10 +1,10 @@
 TestCase("Croaker.NameSpace.Tests", {
   testMember: function() {
-    var metrics = [],  types = [], nameSpace = new croaker.NameSpace('Joe',types, metrics);
+    var metrics = [],  types = [], namespace = new croaker.Namespace('Joe',types, metrics);
     
-    assertThat(nameSpace.name, 'Joe');
-    assertThat(nameSpace.types, sameAs(types));
-    assertThat(nameSpace.metrics, sameAs(metrics));
+    assertThat(namespace.name, 'Joe');
+    assertThat(namespace.types, sameAs(types));
+    assertThat(namespace.metrics, sameAs(metrics));
   },
 
   setUp: function () {

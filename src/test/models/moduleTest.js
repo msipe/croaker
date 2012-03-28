@@ -1,10 +1,10 @@
 TestCase("Croaker.module.Tests", {
   testMember: function() {
-    var metrics = [],  types = [], nameSpaces = [], module = new croaker.Module('Joe','3.4.05',metrics,nameSpaces, metrics);
+    var metrics = [],  types = [], namespace = [], module = new croaker.Module('Joe','3.4.05',metrics,namespace, metrics);
     
     assertThat(module.name, 'Joe');
     assertThat(module.version, '3.4.05');
-    assertThat(module.nameSpaces, sameAs(nameSpaces));
+    assertThat(module.namespace, sameAs(namespace));
     assertThat(module.metrics, sameAs(metrics));
   },
 

@@ -83,7 +83,7 @@ var croaker = (function () {
     };
   }
   
-  function NameSpace(name, types, metrics) {
+  function Namespace(name, types, metrics) {
     return {
       name:name,
       types:types,
@@ -91,13 +91,25 @@ var croaker = (function () {
     }
   }
   
-  function Module(name, version, metrics, nameSpaces) {
+  function Module(name, version, metrics, namespace) {
     return {
       name:name,
       version: version,
       metrics: metrics,
-      nameSpaces: nameSpaces
+      namespace: namespace
     }
+  }
+  
+  function Mapper() {
+    var that = {};
+    
+    function map(entryNode) {
+      var x, entry = entryNode.children[0].children[0].children[0].children[0];
+    
+      return new Module(entry.attributes.Name, entry.attributes.AssemblyVersion, [], []);
+    }  
+    that.map = map;
+    return that;
   }
   
   
@@ -107,8 +119,9 @@ var croaker = (function () {
     Metric: Metric,
     Member: Member,
     Type: Type,
-    NameSpace:NameSpace,
-    Module: Module
+    Namespace:Namespace,
+    Module: Module,
+    Mapper:Mapper
   }; 
   
   
