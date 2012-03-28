@@ -65,7 +65,7 @@ var croaker = (function () {
       value:value
     };
   }
-  
+   
   function Member(name, file, line, metrics) {
     return {
       name:name, 
@@ -104,10 +104,15 @@ var croaker = (function () {
     var that = {};
     
     function map(entryNode) {
-      var x, entry = entryNode.children[0].children[0].children[0].children[0];
+      var x, startPoint = entryNode.children[0].children[0].children[0].children[0], metrics = [];
     
-      return new Module(entry.attributes.Name, entry.attributes.AssemblyVersion, [], []);
-    }  
+      for (x=0; x < startPoint.children[0].children.length; x++) {
+        metrics.push(new Metric(startPoint.children[0].children[x].attributes.Name, 
+                                startPoint.children[0].children[x].attributes.Value));
+      }
+      return new Module(startPoint.attributes.Name, startPoint.attributes.AssemblyVersion, metrics, []);
+    }
+    
     that.map = map;
     return that;
   }
