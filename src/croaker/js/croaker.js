@@ -39,6 +39,10 @@ var croaker = (function () {
     }
     
     function validateDoc(doc) {
+      if(doc.documentElement.innerHTML) {
+        throw ('unable to parse xml');
+      }
+      
       if (doc.documentElement.nodeName === 'parsererror') {
         throw 'unable to parse xml';      
       }

@@ -1,0 +1,9 @@
+TestCase("Croaker.Mapping.Tests", {
+  testMember: function() {
+ 
+  },
+
+  setUp: function () {
+    JsHamcrest.Integration.JsTestDriver();
+  }
+});
