@@ -56,7 +56,7 @@ TestCase("Croaker.Mapping.Tests", {
     assertThat(module.metrics[2].value, sameAs(5) );
   }, 
   
-  testMultiMetricModuleMapping: function() {
+  testNameSpaceModuleMapping: function() {
   var mapper = new croaker.Mapper(),
       entry = new croaker.NodeEntry('CodeMetricsReport', {}, [
         new croaker.NodeEntry('Targets', {}, [
@@ -85,6 +85,7 @@ TestCase("Croaker.Mapping.Tests", {
     module = mapper.map(entry);
     
     assertThat(module.namespace[0].name, 'Sample.Core' );
+    assertThat(module.namespace[0].metrics[0].name, 'MaintainabilityIndex' );
     
   },
 

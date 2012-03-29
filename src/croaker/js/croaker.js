@@ -112,18 +112,25 @@ function Croaker(env) {
   function Mapper() {
     var that = {};
     
+    function formMetrics(moduleNode) {
+      var x, metrics = [], metricsNode = moduleNode.children[0];
+      
+      for (x=0; x < metricsNode.children.length; x++) {
+        metrics.push(
+          new Metric(metricsNode.children[x].attributes.Name, 
+          parseInt(metricsNode.children[x].attributes.Value, 10))
+        );
+      }
+      
+      return metrics;      
+    }
+    
     function map(entryNode) {
       var x, 
         moduleNode = entryNode.children[0].children[0].children[0].children[0], 
         metrics = [],
         namespace = [];
     
-      for (x=0; x < moduleNode.children[0].children.length; x++) {
-        metrics.push(
-          new Metric(moduleNode.children[0].children[x].attributes.Name, 
-          parseInt(moduleNode.children[0].children[x].attributes.Value, 10))
-        );
-      }
       if(moduleNode.children[1]) {
         for (x=0; x < moduleNode.children[1].children.length; x++) {
           namespace.push(new Namespace(moduleNode.children[1].children[x].attributes.Name), [], []); 
@@ -132,7 +139,7 @@ function Croaker(env) {
       
       return new Module(moduleNode.attributes.Name, 
                  moduleNode.attributes.AssemblyVersion, 
-                 metrics, 
+                 formMetrics(moduleNode), 
                  namespace);
     }
     
