@@ -25,6 +25,68 @@ TestCase("Croaker.Mapping.Tests", {
     assertThat(module.namespace, empty());
     assertThat(module.metrics[0].name, 'MaintainabilityIndex' );
   },
+  
+  testMultiMetricModuleMapping: function() {
+  var mapper = new croaker.Mapper(),
+      entry = new croaker.NodeEntry('CodeMetricsReport', {}, [
+        new croaker.NodeEntry('Targets', {}, [
+          new croaker.NodeEntry('Target', {}, [
+            new croaker.NodeEntry('Modules', {}, [
+              new croaker.NodeEntry('Module', {Name:'Some.dll', AssemblyVersion:'1.0.2.3'}, [
+                new croaker.NodeEntry('Metrics', {}, [
+                  new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'1'}, []),
+                  new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'4'}, []),
+                  new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'5'}, [])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      module;
+      
+    module = mapper.map(entry);
+    
+    assertThat(module.metrics[0].name, 'MaintainabilityIndex' );
+    assertThat(module.metrics[1].name, 'CyclomaticComplexifail' );
+    assertThat(module.metrics[2].name, 'BadabaBadabioom' );
+    
+    assertThat(module.metrics[0].value, sameAs(1) );
+    assertThat(module.metrics[1].value, sameAs(4) );
+    assertThat(module.metrics[2].value, sameAs(5) );
+  }, 
+  
+  testMultiMetricModuleMapping: function() {
+  var mapper = new croaker.Mapper(),
+      entry = new croaker.NodeEntry('CodeMetricsReport', {}, [
+        new croaker.NodeEntry('Targets', {}, [
+          new croaker.NodeEntry('Target', {}, [
+            new croaker.NodeEntry('Modules', {}, [
+              new croaker.NodeEntry('Module', {Name:'Some.dll', AssemblyVersion:'1.0.2.3'}, [
+                new croaker.NodeEntry('Metrics', {}, [
+                  new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'1'}, []),
+                  new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'4'}, []),
+                  new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'5'}, [])
+                ]),
+                new croaker.NodeEntry('NameSpaces', {}, [
+                  new croaker.NodeEntry('Namespace', {Name:'Sample.Core'}, [
+                    new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'1'}, []),
+                    new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'4'}, []),
+                    new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'5'}, [])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      module;
+      
+    module = mapper.map(entry);
+    
+    assertThat(module.namespace[0].name, 'Sample.Core' );
+    
+  },
 
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();

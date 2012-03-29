@@ -113,13 +113,27 @@ function Croaker(env) {
     var that = {};
     
     function map(entryNode) {
-      var x, startPoint = entryNode.children[0].children[0].children[0].children[0], metrics = [];
+      var x, 
+        moduleNode = entryNode.children[0].children[0].children[0].children[0], 
+        metrics = [],
+        namespace = [];
     
-      for (x=0; x < startPoint.children[0].children.length; x++) {
-        metrics.push(new Metric(startPoint.children[0].children[x].attributes.Name, 
-                                startPoint.children[0].children[x].attributes.Value));
+      for (x=0; x < moduleNode.children[0].children.length; x++) {
+        metrics.push(
+          new Metric(moduleNode.children[0].children[x].attributes.Name, 
+          parseInt(moduleNode.children[0].children[x].attributes.Value, 10))
+        );
       }
-      return new Module(startPoint.attributes.Name, startPoint.attributes.AssemblyVersion, metrics, []);
+      if(moduleNode.children[1]) {
+        for (x=0; x < moduleNode.children[1].children.length; x++) {
+          namespace.push(new Namespace(moduleNode.children[1].children[x].attributes.Name), [], []); 
+        }
+      }
+      
+      return new Module(moduleNode.attributes.Name, 
+                 moduleNode.attributes.AssemblyVersion, 
+                 metrics, 
+                 namespace);
     }
     
     that.map = map;
