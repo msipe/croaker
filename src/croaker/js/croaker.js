@@ -118,15 +118,26 @@ function Croaker(env) {
     return that;
   }
   
+  function XmlLoader(url, callback) {
+    function execute() {
+      return $.get(url, callback);
+    }
+ 
+    return {
+      execute: execute
+    };
+  }
+  
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
     Metric: Metric,
     Member: Member,
     Type: Type,
-    Namespace:Namespace,
+    Namespace: Namespace,
     Module: Module,
-    Mapper:Mapper
+    Mapper: Mapper,
+    XmlLoader: XmlLoader
   }; 
 }
 
