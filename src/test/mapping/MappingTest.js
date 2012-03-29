@@ -70,9 +70,11 @@ TestCase("Croaker.Mapping.Tests", {
                 ]),
                 new croaker.NodeEntry('NameSpaces', {}, [
                   new croaker.NodeEntry('Namespace', {Name:'Sample.Core'}, [
-                    new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'1'}, []),
-                    new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'4'}, []),
-                    new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'5'}, [])
+                    new croaker.NodeEntry('Metrics', {}, [
+                      new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'10'}, []),
+                      new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'40'}, []),
+                      new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'50'}, [])
+                    ])
                   ])
                 ])
               ])
@@ -86,6 +88,7 @@ TestCase("Croaker.Mapping.Tests", {
     
     assertThat(module.namespace[0].name, 'Sample.Core' );
     assertThat(module.namespace[0].metrics[0].name, 'MaintainabilityIndex' );
+     assertThat(module.namespace[0].metrics[0].value, 10 );
     
   },
 

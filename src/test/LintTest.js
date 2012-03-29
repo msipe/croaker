@@ -11,7 +11,7 @@ var defs = [
       plusplus: true,    
       maxerr: 50,
       indent: 2,
-      predef: ['DOMParser', 'jQuery', 'window']
+      predef: ['DOMParser', 'jQuery', 'window', 'console']
     }
   }
 ];
