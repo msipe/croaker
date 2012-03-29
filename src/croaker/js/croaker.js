@@ -1,4 +1,7 @@
-var croaker = (function () {
+function Croaker(env) {
+  var deps = env || {}, 
+    $ = deps.jQuery || jQuery;
+  
   function NodeEntry(name, attributes, children) {
     return  {
       name: name,
@@ -125,4 +128,6 @@ var croaker = (function () {
     Module: Module,
     Mapper:Mapper
   }; 
-} ());
+}
+
+var croaker = new Croaker();
