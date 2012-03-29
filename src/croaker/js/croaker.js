@@ -1,12 +1,10 @@
 var croaker = (function () {
   function NodeEntry(name, attributes, children) {
-    var that = {
+    return  {
       name: name,
       attributes: attributes,
       children: children
     };
-
-    return that;
   }
 
   function Parser() {
@@ -117,7 +115,6 @@ var croaker = (function () {
     return that;
   }
   
-  
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
@@ -128,6 +125,4 @@ var croaker = (function () {
     Module: Module,
     Mapper:Mapper
   }; 
-  
-  
 } ());
