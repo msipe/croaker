@@ -2,6 +2,13 @@ function Croaker(env) {
   var deps = env || {}, 
     $ = deps.jQuery || jQuery,
     mywindow = deps.window || window;
+    
+  function FatalException(message) {
+    return {
+      name: 'FatalException',
+      message: message
+    };
+  }
   
   function NodeEntry(name, attributes, children) {
     return  {
@@ -130,8 +137,16 @@ function Croaker(env) {
   }
   
   function LocationUrlParser() {
+    function validateUrl(url) {
+      if (!url || url.length <= 1) {
+        throw new FatalException('no path argument provided');
+      }    
+    }
+    
     function parse() {
-      return mywindow.location.search.substring(1).split('=')[1];
+      var url = mywindow.location.search;
+      validateUrl(url);
+      return url.substring(1).split('=')[1];
     }
     
     return {
