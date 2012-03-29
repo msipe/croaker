@@ -1,6 +1,7 @@
 function Croaker(env) {
   var deps = env || {}, 
-    $ = deps.jQuery || jQuery;
+    $ = deps.jQuery || jQuery,
+    mywindow = deps.window || window;
   
   function NodeEntry(name, attributes, children) {
     return  {
@@ -128,6 +129,16 @@ function Croaker(env) {
     };
   }
   
+  function LocationUrlParser() {
+    function parse() {
+      return mywindow.location.search.substring(1).split('=')[1];
+    }
+    
+    return {
+      parse: parse
+    };
+  }
+  
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
@@ -137,7 +148,8 @@ function Croaker(env) {
     Namespace: Namespace,
     Module: Module,
     Mapper: Mapper,
-    DataLoader: DataLoader
+    DataLoader: DataLoader,
+    LocationUrlParser: LocationUrlParser
   }; 
 }
 
