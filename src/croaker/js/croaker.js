@@ -88,7 +88,7 @@ var croaker = (function () {
       name:name,
       types:types,
       metrics:metrics
-    }
+    };
   }
   
   function Module(name, version, metrics, namespace) {
@@ -97,7 +97,7 @@ var croaker = (function () {
       version: version,
       metrics: metrics,
       namespace: namespace
-    }
+    };
   }
   
   function Mapper() {
