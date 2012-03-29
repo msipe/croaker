@@ -1,10 +1,10 @@
-TestCase("Croaker.XmlLoader.Tests", {
+TestCase("Croaker.DataLoader.Tests", {
   testExecute: function() {
     var called = false,
       jq = mockFunction(jQuery),
       env = {jQuery: jq},
       croaker = new Croaker(env),
-      loader = new croaker.XmlLoader('a url', function(data) {
+      loader = new croaker.DataLoader('a url', function(data) {
         assertThat(data, 'some data');
         called = true;
       });

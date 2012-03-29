@@ -118,7 +118,7 @@ function Croaker(env) {
     return that;
   }
   
-  function XmlLoader(url, callback) {
+  function DataLoader(url, callback) {
     function execute() {
       return $.get(url, callback);
     }
@@ -137,7 +137,7 @@ function Croaker(env) {
     Namespace: Namespace,
     Module: Module,
     Mapper: Mapper,
-    XmlLoader: XmlLoader
+    DataLoader: DataLoader
   }; 
 }
 
