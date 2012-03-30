@@ -129,14 +129,26 @@ function Croaker(env) {
       var x, 
         moduleNode = entryNode.children[0].children[0].children[0].children[0], 
         namespacesNode = moduleNode.children[1],
+        typesNode = namespacesNode.children[0].children[1],
         metrics = [],
-        namespace = [];
+        namespace = [],
+        types = [];
+
+      if (typesNode.children.length > 0) {    
+        for (x=0; x < typesNode.children.length; x++) {
+          types.push(
+            new Type (typesNode.children[x].attributes.Name,
+            [],
+            formMetrics(typesNode.children[0],0))
+          );
+        }
+      }
     
-      if(moduleNode.children[1]) {
-        for (x=0; x < moduleNode.children[1].children.length; x++) {
+      if(moduleNode.children.length > 0) {
+        for (x=0; x < namespacesNode.children.length; x++) {
           namespace.push(
             new Namespace(namespacesNode.children[x].attributes.Name, 
-            [], 
+            types, 
             formMetrics(namespacesNode.children[0], 0))
           ); 
         }
