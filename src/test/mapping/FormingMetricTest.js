@@ -24,7 +24,7 @@ TestCase("Croaker.FormMetric.Tests", {
       
     assertThat(module.name, 'Some.dll');
     assertThat(module.version, '1.0.2.3');
-    assertThat(module.namespace, empty());
+    assertThat(module.namespaces, empty());
     assertThat(module.metrics[0].name, 'MaintainabilityIndex' );
     assertThat(module.metrics[1].name, 'CyclomaticComplexifail' );
   },

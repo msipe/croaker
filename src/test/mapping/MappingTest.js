@@ -22,7 +22,7 @@ TestCase("Croaker.Mapping.Tests", {
     
     assertThat(module.name, 'Some.dll');
     assertThat(module.version, '1.0.2.3');
-    assertThat(module.namespace, empty());
+    assertThat(module.namespaces, empty());
     assertThat(module.metrics[0].name, 'MaintainabilityIndex' );
   },
   
@@ -86,9 +86,9 @@ TestCase("Croaker.Mapping.Tests", {
       
     module = mapper.map(entry);
     
-    assertThat(module.namespace[0].name, 'Sample.Core' );
-    assertThat(module.namespace[0].metrics[0].name, 'MaintainabilityIndex' );
-     assertThat(module.namespace[0].metrics[0].value, 10 );
+    assertThat(module.namespaces[0].name, 'Sample.Core' );
+    assertThat(module.namespaces[0].metrics[0].name, 'MaintainabilityIndex' );
+    assertThat(module.namespaces[0].metrics[0].value, 10 );
     
   },
   

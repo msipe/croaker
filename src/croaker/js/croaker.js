@@ -100,12 +100,12 @@ function Croaker(env) {
     };
   }
   
-  function Module(name, version, metrics, namespace) {
+  function Module(name, version, metrics, namespaces) {
     return {
       name:name,
       version: version,
       metrics: metrics,
-      namespace: namespace
+      namespaces: namespaces
     };
   }
   

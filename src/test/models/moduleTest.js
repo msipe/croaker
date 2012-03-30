@@ -4,7 +4,7 @@ TestCase("Croaker.module.Tests", {
     
     assertThat(module.name, 'Joe');
     assertThat(module.version, '3.4.05');
-    assertThat(module.namespace, sameAs(namespace));
+    assertThat(module.namespaces, sameAs(namespace));
     assertThat(module.metrics, sameAs(metrics));
   },
 
