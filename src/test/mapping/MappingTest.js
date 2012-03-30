@@ -48,10 +48,11 @@ TestCase("Croaker.Mapping.Tests", {
     var mapper = new croaker.Mapper(), module;
       
     module = mapper.map(this.entry);
-    
+
     assertThat(module.namespaces[0].types[0].members[0].name, 'Thisis.Core');
-    //assertThat(module.namespaces[0].types[0].metrics[0].name, 'Mantain');
-    //assertThat(module.namespaces[0].types[0].metrics[2].value, 7);
+    assertThat(module.namespaces[0].types[0].members[0].metrics[0].name, 'metricly');
+    assertThat(module.namespaces[0].types[0].members[0].metrics[2].value, 793);
+
   },
   
   setUp: function () {
@@ -82,7 +83,7 @@ TestCase("Croaker.Mapping.Tests", {
                             new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'7'}, [])
                           ]),
                           new croaker.NodeEntry('Members', {}, [
-                            new croaker.NodeEntry('Member', {Name: 'Thisis.Core'}, [
+                            new croaker.NodeEntry('Member', {Name: 'Thisis.Core', File:'50982.jkalhfksdl', Line:'5'}, [
                               new croaker.NodeEntry('Metrics', {}, [
                                 new croaker.NodeEntry('Metric', {Name:'metricly', Value:'43'}, []),
                                 new croaker.NodeEntry('Metric', {Name:'FoulPlay', Value:'98'}, []),

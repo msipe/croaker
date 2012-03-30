@@ -130,15 +130,28 @@ function Croaker(env) {
         moduleNode = entryNode.children[0].children[0].children[0].children[0], 
         namespacesNode = moduleNode.children[1],
         typesNode = namespacesNode.children[0].children[1],
+        membersNode = typesNode.children[0].children[1],
+        members = [],
         metrics = [],
         namespace = [],
         types = [];
+        
+      if (membersNode.children.length > 0) {
+        for (x=0; x < membersNode.children.length; x++) {
+          members.push(
+            new Member (membersNode.children[x].attributes.Name,
+            {}, 
+            {},
+            formMetrics(membersNode.children[0],0))
+          );
+        }
+      }
 
-      if (typesNode.children.length > 0) {    
+      if (typesNode.children.length > 0) {
         for (x=0; x < typesNode.children.length; x++) {
           types.push(
             new Type (typesNode.children[x].attributes.Name,
-            [],
+            members,
             formMetrics(typesNode.children[0],0))
           );
         }
