@@ -125,43 +125,72 @@ function Croaker(env) {
       return metrics;      
     }
     
+    function formMembers(startingNode) {
+      var members = [], x;
+      
+      for (x=0; x < startingNode.children.length; x++) {
+          members.push(
+            new Member (startingNode.children[x].attributes.Name,
+            startingNode.children[x].attributes.File, 
+            startingNode.children[x].attributes.Line,
+            formMetrics(startingNode.children[0],0))
+          );
+      }
+      
+      return members;      
+    }
+    
+    function formTypes(startingNode) {
+      if(startingNode.children.length < 1) {
+        return;
+      }
+      var types = [], x, membersNode;
+      
+      for (x=0; x < startingNode.children.length; x++) {
+        membersNode = startingNode.children[x].children[1];
+        
+        types.push(
+          new Type (startingNode.children[x].attributes.Name,
+          formMembers(membersNode),
+          formMetrics(startingNode.children[0],0))
+        );
+      }
+  
+      return types;   
+    }
+    
+    
+    
+    //use after lower elements have been dealt with
+    /* function formNameSpaces(startingNode) {
+      var namespace = [], x;
+      
+      for (x=0; x < startingNode.children.length; x++) {
+        namespace.push (
+          new Namespace(startingNode.children[x].attributes.Name, 
+          {}, 
+          formMetrics(startingNode.children[0], 0))
+        );
+      }
+      
+      return namespace;
+    
+    } */
+    
     function map(entryNode) {
       var x, 
         moduleNode = entryNode.children[0].children[0].children[0].children[0], 
         namespacesNode = moduleNode.children[1],
         typesNode = namespacesNode.children[0].children[1],
         membersNode = typesNode.children[0].children[1],
-        members = [],
-        metrics = [],
-        namespace = [],
-        types = [];
+        namespace = [];
         
-      if (membersNode.children.length > 0) {
-        for (x=0; x < membersNode.children.length; x++) {
-          members.push(
-            new Member (membersNode.children[x].attributes.Name,
-            membersNode.children[x].attributes.File, 
-            membersNode.children[x].attributes.Line,
-            formMetrics(membersNode.children[0],0))
-          );
-        }
-      }
-
-      if (typesNode.children.length > 0) {
-        for (x=0; x < typesNode.children.length; x++) {
-          types.push(
-            new Type (typesNode.children[x].attributes.Name,
-            members,
-            formMetrics(typesNode.children[0],0))
-          );
-        }
-      }
-    
+        
       if(moduleNode.children.length > 0) {
         for (x=0; x < namespacesNode.children.length; x++) {
           namespace.push(
             new Namespace(namespacesNode.children[x].attributes.Name, 
-            types, 
+            formTypes(typesNode), 
             formMetrics(namespacesNode.children[0], 0))
           ); 
         }

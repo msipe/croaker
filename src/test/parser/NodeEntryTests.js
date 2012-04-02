@@ -12,7 +12,5 @@ TestCase("Croaker.NodeEntry.Tests", {
   
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
-    
-   
   }
 });
