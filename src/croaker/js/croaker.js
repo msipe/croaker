@@ -159,52 +159,39 @@ function Croaker(env) {
       return types;   
     }
     
-    
-    
-    //use after lower elements have been dealt with
-    /* function formNameSpaces(startingNode) {
-      var namespace = [], x;
+    function formNamespaces(startingNode) {
+      var typesNode, namespaces = [], x;
       
-      for (x=0; x < startingNode.children.length; x++) {
-        namespace.push (
-          new Namespace(startingNode.children[x].attributes.Name, 
-          {}, 
-          formMetrics(startingNode.children[0], 0))
-        );
-      }
-      
-      return namespace;
-    
-    } */
+        for (x=0; x < startingNode.children.length; x++) {
+          typesNode = startingNode.children[x].children[1];
+          
+          namespaces.push(
+            new Namespace(startingNode.children[x].attributes.Name, 
+            formTypes(typesNode), 
+            formMetrics(startingNode.children[0], 0))
+          ); 
+        }
+      return namespaces;
+    }
     
     function map(entryNode) {
       var x, 
         moduleNode = entryNode.children[0].children[0].children[0].children[0], 
         namespacesNode = moduleNode.children[1],
         typesNode = namespacesNode.children[0].children[1],
-        membersNode = typesNode.children[0].children[1],
-        namespace = [];
-        
-        
-      if(moduleNode.children.length > 0) {
-        for (x=0; x < namespacesNode.children.length; x++) {
-          namespace.push(
-            new Namespace(namespacesNode.children[x].attributes.Name, 
-            formTypes(typesNode), 
-            formMetrics(namespacesNode.children[0], 0))
-          ); 
-        }
-      }
-      
+        membersNode = typesNode.children[0].children[1];
+
       return new Module(moduleNode.attributes.Name, 
                  moduleNode.attributes.AssemblyVersion, 
                  formMetrics(moduleNode, 0), 
-                 namespace);
+                 formNamespaces(namespacesNode));
     }
     
     that.map = map;
     return that;
   }
+  
+  
   
   function DataLoader(url, callback) {
     function execute() {
