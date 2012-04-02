@@ -49,12 +49,13 @@ function Croaker(env) {
     
     function validateDoc(doc) {
       if(doc.documentElement.innerHTML) {
-        throw ('unable to parse xml');
+        throw new FatalException('unable to parse xml');
       }
       
       if (doc.documentElement.nodeName === 'parsererror') {
-        throw 'unable to parse xml';      
+        throw new FatalException('unable to parse xml');     
       }
+      
     }
 
     function parse(string) {
@@ -129,12 +130,12 @@ function Croaker(env) {
       var members = [], x;
       
       for (x=0; x < startingNode.children.length; x++) {
-          members.push(
-            new Member (startingNode.children[x].attributes.Name,
-            startingNode.children[x].attributes.File, 
-            startingNode.children[x].attributes.Line,
-            formMetrics(startingNode.children[0],0))
-          );
+        members.push(
+          new Member (startingNode.children[x].attributes.Name,
+          startingNode.children[x].attributes.File, 
+          startingNode.children[x].attributes.Line,
+          formMetrics(startingNode.children[0],0))
+        );
       }
       
       return members;      

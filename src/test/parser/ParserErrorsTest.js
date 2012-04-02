@@ -6,7 +6,7 @@ TestCase("Croaker.ParserErrors.Tests", {
       parser.parse('invalid xml');
       fail('should have failed');
     } catch (e) {
-      assertThat(e, equalTo('unable to parse xml'));
+      assertThat(e.message, equalTo('unable to parse xml'));
     }
   },
  
