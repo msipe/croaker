@@ -50,6 +50,7 @@ TestCase("Croaker.Mapping.Tests", {
     module = mapper.map(this.entry);
 
     assertThat(module.namespaces[0].types[0].members[0].name, 'Thisis.Core');
+    assertThat(module.namespaces[0].types[0].members[0].file, '50982.jkalhfksdl');
     assertThat(module.namespaces[0].types[0].members[0].metrics[0].name, 'metricly');
     assertThat(module.namespaces[0].types[0].members[0].metrics[2].value, 793);
 

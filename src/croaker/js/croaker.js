@@ -140,8 +140,8 @@ function Croaker(env) {
         for (x=0; x < membersNode.children.length; x++) {
           members.push(
             new Member (membersNode.children[x].attributes.Name,
-            {}, 
-            {},
+            membersNode.children[x].attributes.File, 
+            membersNode.children[x].attributes.Line,
             formMetrics(membersNode.children[0],0))
           );
         }
