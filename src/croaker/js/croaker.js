@@ -144,6 +144,7 @@ function Croaker(env) {
       if(startingNode.children.length < 1) {
         return;
       }
+      
       var types = [], x, membersNode;
       
       for (x=0; x < startingNode.children.length; x++) {
@@ -160,17 +161,22 @@ function Croaker(env) {
     }
     
     function formNamespaces(startingNode) {
+      if(startingNode.children.length < 1) {
+        return;
+      }
+      
       var typesNode, namespaces = [], x;
       
-        for (x=0; x < startingNode.children.length; x++) {
-          typesNode = startingNode.children[x].children[1];
+      for (x=0; x < startingNode.children.length; x++) {
+        typesNode = startingNode.children[x].children[1];
           
-          namespaces.push(
-            new Namespace(startingNode.children[x].attributes.Name, 
-            formTypes(typesNode), 
-            formMetrics(startingNode.children[0], 0))
-          ); 
-        }
+        namespaces.push(
+          new Namespace(startingNode.children[x].attributes.Name, 
+          formTypes(typesNode), 
+          formMetrics(startingNode.children[0], 0))
+        ); 
+      }
+      
       return namespaces;
     }
     
