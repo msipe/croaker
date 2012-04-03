@@ -10,7 +10,7 @@ TestCase("Croaker.DataLoader.Tests", {
       });
       
       jq.get = mockFunction(jQuery.get);   
-      when(jq.get)('a url', func()).then(function(url, callback) {callback('some data');});
+      when(jq.get)('a url', func(), 'text').then(function(url, callback, type) {callback('some data');});
       loader.execute();
       assertThat(called, true);
   },

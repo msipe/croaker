@@ -199,7 +199,7 @@ function Croaker(env) {
   
   function DataLoader(url, callback) {
     function execute() {
-      return $.get(url, callback);
+      return $.get(url, callback, 'text');
     }
  
     return {

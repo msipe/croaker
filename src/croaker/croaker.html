@@ -3,13 +3,39 @@
   <head>
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script tyoe="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>   
-    <script type="text/javascript" src="js/croaker/croaker.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>   
+    <script type="text/javascript" src="js/croaker.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/croaker/croaker.css" />
+    <link rel="stylesheet" type="text/css" href="css/croaker.css" />
 
     <script type="text/javascript">
+      function parseData(xml) {
+        console.log('parseData enter');
+        try {
+          var node = new croaker.Parser().parse(xml);
+          var module = new croaker.Mapper().map(node);
+          console.log('success');
+        } catch (e) {
+          console.log('failed');
+          console.log(e.message);
+        }
+      }
 
+      function init() {
+        var url = new croaker.LocationUrlParser().parse();
+        console.log('url: ', url);
+        var loader = new croaker.DataLoader(url, parseData);
+        loader
+          .execute()
+          .done(function () { console.log('done'); })
+          .fail(function (jqxhr, status, error) {
+            console.log('error');
+            console.log(status);
+            console.log(error);
+          });
+      }
+
+      $(window).load(init);
     </script>
   </head>
   <body>
