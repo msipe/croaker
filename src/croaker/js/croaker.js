@@ -71,39 +71,39 @@ function Croaker(env) {
 
   function Metric(name, value) {
     return {
-      name:name, 
-      value:value
+      name: name, 
+      value: value
     };
   }
    
   function Member(name, file, line, metrics) {
     return {
-      name:name, 
-      file:file,
-      line:line,
-      metrics:metrics
+      name: name, 
+      file: file,
+      line: line,
+      metrics: metrics
     };
   }
   
   function Type (name,members,metrics) {
     return {
-       name:name,
-       members:members,
-       metrics:metrics
+       name: name,
+       members: members,
+       metrics: metrics
     };
   }
   
   function Namespace(name, types, metrics) {
     return {
-      name:name,
-      types:types,
-      metrics:metrics
+      name: name,
+      types: types,
+      metrics: metrics
     };
   }
   
   function Module(name, version, metrics, namespaces) {
     return {
-      name:name,
+      name: name,
       version: version,
       metrics: metrics,
       namespaces: namespaces
