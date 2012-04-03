@@ -150,10 +150,6 @@ function Croaker(env) {
     }
     
     function formTypes(startingNode) {
-      if(startingNode.children.length < 1) {
-        return;
-      }
-      
       var types = [], x, membersNode;
       
       for (x=0; x < startingNode.children.length; x++) {
@@ -170,10 +166,6 @@ function Croaker(env) {
     }
     
     function formNamespaces(startingNode) {
-      if(startingNode.children.length < 1) {
-        return;
-      }
-      
       var typesNode, namespaces = [], x;
       
       for (x=0; x < startingNode.children.length; x++) {
