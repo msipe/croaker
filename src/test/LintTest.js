@@ -1,4 +1,4 @@
-var LintTest = TestCase('Lint.Tests');
+var LintTest = TestCase('Croaker.Lint.Tests');
 
 var defs = [
   {
