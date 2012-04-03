@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeMetricsReport Version="10.0">
+  <Targets>
+    <Target Name="C:\some\path\Sample.Assembly.dll">
+      <Modules>
+        <Module Name="Some.dll" AssemblyVersion="1.0.2.3">
+          <Metrics>
+            <Metric Name="MaintainabilityIndex" Value="1" />
+            <Metric Name="CyclomaticComplexity" Value="2" />
+            <Metric Name="ClassCoupling" Value="11" />
+            <Metric Name="DepthOfInheritance" Value="2" />
+            <Metric Name="LinesOfCode" Value="6" />
+          </Metrics>
+          <Namespaces>
+            <Namespace Name="Sample.Core">
+              <Metrics>
+                <Metric Name="MaintainabilityIndex" Value="3" />
+                <Metric Name="CyclomaticComplexity" Value="4" />
+                <Metric Name="ClassCoupling" Value="11" />
+                <Metric Name="DepthOfInheritance" Value="2" />
+                <Metric Name="LinesOfCode" Value="6" />
+              </Metrics>
+              <Types>
+                <Type Name="SampleClass">
+                  <Metrics>
+                    <Metric Name="MaintainabilityIndex" Value="5" />
+                    <Metric Name="CyclomaticComplexity" Value="6" />
+                    <Metric Name="ClassCoupling" Value="11" />
+                    <Metric Name="DepthOfInheritance" Value="2" />
+                    <Metric Name="LinesOfCode" Value="6" />
+                  </Metrics>
+                  <Members>
+                    <Member Name="Method1(String) : void" File="d:\some\path\SampleClass.cs" Line="5">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="7" />
+                        <Metric Name="CyclomaticComplexity" Value="8" />
+                        <Metric Name="ClassCoupling" Value="11" />
+                        <Metric Name="DepthOfInheritance" Value="2" />
+                        <Metric Name="LinesOfCode" Value="6" />
+                      </Metrics>
+                    </Member>
+                    <Member Name="SampleClass()">
+                      <Metrics>
+                        <Metric Name="MaintainabilityIndex" Value="9" />
+                        <Metric Name="CyclomaticComplexity" Value="10" />
+                      </Metrics>
+                    </Member>
+                  </Members>
+                </Type>
+              </Types>
+            </Namespace>
+          </Namespaces>
+        </Module>
+      </Modules>
+    </Target>
+  </Targets>
+</CodeMetricsReport>  
