@@ -1,9 +1,7 @@
 TestCase("Croaker.Mapping.Tests", {      
-      
   testAdditionalModuleMapping: function() {
-    var mapper = new croaker.Mapper(), module;
-      
-    module = mapper.map(this.entry);
+    var mapper = new croaker.Mapper(), 
+      module = mapper.map(this.entry);
     
     assertThat(module.name, 'Some.dll');
     assertThat(module.version, '1.0.2.3');
@@ -12,9 +10,8 @@ TestCase("Croaker.Mapping.Tests", {
   },
   
   testMultiMetricModuleMapping: function() {
-    var mapper = new croaker.Mapper(), module;
-      
-    module = mapper.map(this.entry);
+    var mapper = new croaker.Mapper(), 
+      module = mapper.map(this.entry);
     
     assertThat(module.metrics[0].name, 'MaintainabilityIndex' );
     assertThat(module.metrics[1].name, 'CyclomaticComplexifail' );
@@ -26,8 +23,8 @@ TestCase("Croaker.Mapping.Tests", {
   }, 
   
   testNameSpaceModuleMapping: function() {
-    var mapper = new croaker.Mapper(), module;
-    module = mapper.map(this.entry);
+    var mapper = new croaker.Mapper(),
+      module = mapper.map(this.entry);
     
     assertThat(module.namespaces[0].name, 'Sample.Core' );
     assertThat(module.namespaces[0].metrics[0].name, 'MaintainabilityIndex' );
@@ -35,9 +32,8 @@ TestCase("Croaker.Mapping.Tests", {
   },
   
   testTypeMapping: function() {
-    var mapper = new croaker.Mapper(), module;
-      
-    module = mapper.map(this.entry);
+    var mapper = new croaker.Mapper(),
+      module = mapper.map(this.entry);
     
     assertThat(module.namespaces[0].types[0].name, 'SampleType.Core');
     assertThat(module.namespaces[0].types[0].metrics[0].name, 'Mantain');
@@ -45,15 +41,13 @@ TestCase("Croaker.Mapping.Tests", {
   },
   
   testTypeMapping: function() {
-    var mapper = new croaker.Mapper(), module;
-      
-    module = mapper.map(this.entry);
+    var mapper = new croaker.Mapper(),
+      module = mapper.map(this.entry);
 
     assertThat(module.namespaces[0].types[0].members[0].name, 'Thisis.Core');
     assertThat(module.namespaces[0].types[0].members[0].file, '50982.jkalhfksdl');
     assertThat(module.namespaces[0].types[0].members[0].metrics[0].name, 'metricly');
     assertThat(module.namespaces[0].types[0].members[0].metrics[2].value, 793);
-
   },
   
   setUp: function () {
