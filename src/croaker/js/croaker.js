@@ -182,11 +182,8 @@ function Croaker(env) {
     }
     
     function map(entryNode) {
-      var x, 
-        moduleNode = entryNode.children[0].children[0].children[0].children[0], 
-        namespacesNode = moduleNode.children[1],
-        typesNode = namespacesNode.children[0].children[1],
-        membersNode = typesNode.children[0].children[1];
+      var moduleNode = entryNode.children[0].children[0].children[0].children[0], 
+        namespacesNode = moduleNode.children[1];
 
       return new Module(moduleNode.attributes.Name, 
                  moduleNode.attributes.AssemblyVersion, 
