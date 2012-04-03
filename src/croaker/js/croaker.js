@@ -20,13 +20,19 @@ function Croaker(env) {
 
   function Parser() {
     var that = {};
-
+    
+    function isNodeValid(node) {
+      return node.nodeType === 1 || node.nodeType === 2;
+    }
+    
     function parseAttributes(node) {
       var attributes = {}, x;
 
       if (node.hasAttributes()) {
         for (x = 0; x < node.attributes.length; x++) {
-          attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
+          if(isNodeValid(node.attributes.item(x))) { 
+            attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
+          }
         }
       }
       return attributes;
@@ -37,7 +43,9 @@ function Croaker(env) {
 
       if (node.hasChildNodes()) {
         for (x = 0; x < node.childNodes.length; x++) {
-          children.push(processor(node.childNodes.item(x)));
+          if(isNodeValid(node.childNodes.item(x))) { 
+            children.push(processor(node.childNodes.item(x)));
+          }
         }
       }
       return children;
@@ -57,7 +65,7 @@ function Croaker(env) {
       }
       
     }
-
+    
     function parse(string) {
       var domparser = new DOMParser(),
         xmlDoc = domparser.parseFromString(string, "text/xml");
