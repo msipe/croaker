@@ -40,7 +40,7 @@ TestCase("Croaker.Mapping.Tests", {
     assertThat(module.namespaces[0].types[0].metrics[2].value, 7);
   },
   
-  testTypeMapping: function() {
+  testMemberMapping: function() {
     var mapper = new croaker.Mapper(),
       module = mapper.map(this.entry);
 

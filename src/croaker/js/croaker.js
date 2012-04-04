@@ -84,20 +84,20 @@ function Croaker(env) {
     };
   }
    
-  function Member(name, file, line, metrics) {
+  function Member(name, file, line, metrics, status) {
     return {
       name: name, 
       file: file,
       line: line,
-      metrics: metrics
+      metrics: metrics,
     };
   }
   
-  function Type (name,members,metrics) {
+  function Type (name,members,metrics, status) {
     return {
        name: name,
        members: members,
-       metrics: metrics
+       metrics: metrics,
     };
   }
   
@@ -137,6 +137,15 @@ function Croaker(env) {
     function formMembers(startingNode) {
       var members = [], x;
       
+      
+      if(startingNode.children[1]) {
+        startingNode = startingNode.children[1];
+      }
+      else {
+        members.push(new Member(false));
+        return members;
+      }
+      
       for (x=0; x < startingNode.children.length; x++) {
         members.push(
           new Member (startingNode.children[x].attributes.Name,
@@ -152,9 +161,16 @@ function Croaker(env) {
     function formTypes(startingNode) {
       var types = [], x, membersNode;
       
+      if(startingNode.children[1]) {
+        startingNode = startingNode.children[1];
+      }
+      else {
+        types.push(new Type());
+        return types;
+      }
+      
       for (x=0; x < startingNode.children.length; x++) {
-        membersNode = startingNode.children[x].children[1];
-        
+        membersNode = startingNode.children[x];
         types.push(
           new Type (startingNode.children[x].attributes.Name,
           formMembers(membersNode),
@@ -166,10 +182,10 @@ function Croaker(env) {
     }
     
     function formNamespaces(startingNode) {
-      var typesNode, namespaces = [], x;
+      var typesNode, namespaces = [], x, blankNode;
       
       for (x=0; x < startingNode.children.length; x++) {
-        typesNode = startingNode.children[x].children[1];
+        typesNode = startingNode.children[x];
           
         namespaces.push(
           new Namespace(startingNode.children[x].attributes.Name, 
@@ -194,7 +210,6 @@ function Croaker(env) {
     that.map = map;
     return that;
   }
-  
   
   
   function DataLoader(url, callback) {
