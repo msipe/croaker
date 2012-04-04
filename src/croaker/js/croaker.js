@@ -89,7 +89,7 @@ function Croaker(env) {
       name: name, 
       file: file,
       line: line,
-      metrics: metrics,
+      metrics: metrics
     };
   }
   
@@ -97,7 +97,7 @@ function Croaker(env) {
     return {
        name: name,
        members: members,
-       metrics: metrics,
+       metrics: metrics
     };
   }
   

@@ -1,6 +1,6 @@
 TestCase("Croaker.MappingStrangeParse.Tests", {      
   
-  testStrangeParse: function() {
+  testParseWithoutMembers: function() {
     var mapper = new croaker.Mapper(),
       module = mapper.map(this.entry);
 
