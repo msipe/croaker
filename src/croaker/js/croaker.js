@@ -1,5 +1,5 @@
 function Croaker(env) {
-  var deps = env || {}, 
+  var deps = env || {},
     $ = deps.jQuery || jQuery,
     mywindow = deps.window || window;
     
@@ -11,7 +11,7 @@ function Croaker(env) {
   }
   
   function NodeEntry(name, attributes, children) {
-    return  {
+    return {
       name: name,
       attributes: attributes,
       children: children
@@ -30,7 +30,7 @@ function Croaker(env) {
 
       if (node.hasAttributes()) {
         for (x = 0; x < node.attributes.length; x++) {
-          if(isNodeValid(node.attributes.item(x))) { 
+          if(isNodeValid(node.attributes.item(x))) {
             attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
           }
         }
@@ -43,7 +43,7 @@ function Croaker(env) {
 
       if (node.hasChildNodes()) {
         for (x = 0; x < node.childNodes.length; x++) {
-          if(isNodeValid(node.childNodes.item(x))) { 
+          if(isNodeValid(node.childNodes.item(x))) {
             children.push(processor(node.childNodes.item(x)));
           }
         }
@@ -61,7 +61,7 @@ function Croaker(env) {
       }
       
       if (doc.documentElement.nodeName === 'parsererror') {
-        throw new FatalException('unable to parse xml');     
+        throw new FatalException('unable to parse xml');
       }
       
     }
@@ -69,7 +69,7 @@ function Croaker(env) {
     function parse(string) {
       var domparser = new DOMParser(),
         xmlDoc = domparser.parseFromString(string, "text/xml");
-      validateDoc(xmlDoc);       
+      validateDoc(xmlDoc);
       return processNode(xmlDoc.documentElement);
     }
 
@@ -79,21 +79,21 @@ function Croaker(env) {
 
   function Metric(name, value) {
     return {
-      name: name, 
+      name: name,
       value: value
     };
   }
    
-  function Member(name, file, line, metrics, status) {
+  function Member(name, file, line, metrics) {
     return {
-      name: name, 
+      name: name,
       file: file,
       line: line,
       metrics: metrics
     };
   }
   
-  function Type (name,members,metrics, status) {
+  function Type (name,members,metrics) {
     return {
        name: name,
        members: members,
@@ -126,51 +126,45 @@ function Croaker(env) {
 
       for (x=0; x < metricsNode.children.length; x++) {
         metrics.push(
-          new Metric(metricsNode.children[x].attributes.Name, 
+          new Metric(metricsNode.children[x].attributes.Name,
           parseInt(metricsNode.children[x].attributes.Value, 10))
         );
       }
       
-      return metrics;      
+      return metrics;
     }
     
     function formMembers(startingNode) {
       var members = [], x;
       
-      
-      if(startingNode.children[1]) {
-        startingNode = startingNode.children[1];
-      }
-      else {
-        members.push(new Member(false));
+      if(startingNode.children.length < 1) {
+        members.push([]);
         return members;
       }
       
       for (x=0; x < startingNode.children.length; x++) {
         members.push(
           new Member (startingNode.children[x].attributes.Name,
-          startingNode.children[x].attributes.File, 
+          startingNode.children[x].attributes.File,
           startingNode.children[x].attributes.Line,
           formMetrics(startingNode.children[0],0))
         );
       }
       
-      return members;      
+      return members;
     }
     
     function formTypes(startingNode) {
       var types = [], x, membersNode;
       
-      if(startingNode.children[1]) {
-        startingNode = startingNode.children[1];
-      }
-      else {
-        types.push(new Type());
+      if(startingNode.children.length < 1) {
+        types.push([]);
         return types;
       }
       
       for (x=0; x < startingNode.children.length; x++) {
-        membersNode = startingNode.children[x];
+        membersNode = startingNode.children[x].children[1];
+        
         types.push(
           new Type (startingNode.children[x].attributes.Name,
           formMembers(membersNode),
@@ -178,38 +172,44 @@ function Croaker(env) {
         );
       }
   
-      return types;   
+      return types;
     }
     
     function formNamespaces(startingNode) {
-      var typesNode, namespaces = [], x, blankNode;
+      var typesNode, namespaces = [], x;
+      
+      if(startingNode.children.length < 1) {
+        namespaces.push([]);
+        return namespaces;
+      }
       
       for (x=0; x < startingNode.children.length; x++) {
-        typesNode = startingNode.children[x];
+        typesNode = startingNode.children[x].children[1];
           
         namespaces.push(
-          new Namespace(startingNode.children[x].attributes.Name, 
-          formTypes(typesNode), 
+          new Namespace(startingNode.children[x].attributes.Name,
+          formTypes(typesNode),
           formMetrics(startingNode.children[0], 0))
-        ); 
+        );
       }
       
       return namespaces;
     }
     
     function map(entryNode) {
-      var moduleNode = entryNode.children[0].children[0].children[0].children[0], 
+      var moduleNode = entryNode.children[0].children[0].children[0].children[0],
         namespacesNode = moduleNode.children[1];
 
-      return new Module(moduleNode.attributes.Name, 
-                 moduleNode.attributes.AssemblyVersion, 
-                 formMetrics(moduleNode, 0), 
+      return new Module(moduleNode.attributes.Name,
+                 moduleNode.attributes.AssemblyVersion,
+                 formMetrics(moduleNode, 0),
                  formNamespaces(namespacesNode));
     }
     
     that.map = map;
     return that;
   }
+  
   
   
   function DataLoader(url, callback) {
@@ -226,7 +226,7 @@ function Croaker(env) {
     function validateUrl(url) {
       if (!url || url.length <= 1) {
         throw new FatalException('no path argument provided');
-      }    
+      }
     }
     
     function parse() {
@@ -251,7 +251,7 @@ function Croaker(env) {
     Mapper: Mapper,
     DataLoader: DataLoader,
     LocationUrlParser: LocationUrlParser
-  }; 
+  };
 }
 
 var croaker = new Croaker();
