@@ -134,76 +134,89 @@ function Croaker(env) {
       return metrics;
     }
     
-    function formMembers(startingNode) {
+    function formMember(startingNode) {
       var members = [], x;
       
-      if(startingNode.children.length < 1) {
-        members.push([]);
-        return members;
-      }
-      
-      for (x=0; x < startingNode.children.length; x++) {
-        members.push(
-          new Member (startingNode.children[x].attributes.Name,
-          startingNode.children[x].attributes.File,
-          startingNode.children[x].attributes.Line,
-          formMetrics(startingNode.children[0],0))
-        );
-      }
-      
-      return members;
+      return new Member(
+                   startingNode.attributes.Name,
+                   startingNode.attributes.File,
+                   startingNode.attributes.Line, 
+                   formMetrics(startingNode, 0)
+      ); 
     }
     
-    function formTypes(startingNode) {
-      var types = [], x, membersNode;
+    function formType(startingNode) {
+      var types = [], x, membersNode, membersArray = [];
       
-      if(startingNode.children.length < 1) {
-        types.push([]);
-        return types;
-      }
-      
-      for (x=0; x < startingNode.children.length; x++) {
-        membersNode = startingNode.children[x].children[1];
-        
-        types.push(
-          new Type (startingNode.children[x].attributes.Name,
-          formMembers(membersNode),
-          formMetrics(startingNode.children[0],0))
-        );
-      }
-  
-      return types;
-    }
-    
-    function formNamespaces(startingNode) {
-      var typesNode, namespaces = [], x;
-      
-      if(startingNode.children.length < 1) {
-        namespaces.push([]);
-        return namespaces;
-      }
-      
-      for (x=0; x < startingNode.children.length; x++) {
-        typesNode = startingNode.children[x].children[1];
+      if (startingNode.children[1].children.length < 1) {
+        membersArray.push([]);
           
-        namespaces.push(
-          new Namespace(startingNode.children[x].attributes.Name,
-          formTypes(typesNode),
-          formMetrics(startingNode.children[0], 0))
-        );
-      }
+        return new Type(startingNode.attributes.Name,
+                   membersArray,
+                   formMetrics(startingNode, 0));
+      } 
       
-      return namespaces;
+      membersNode = startingNode.children[1];
+      
+      for(x=0; x < membersNode.children.length; x++) {
+        membersArray.push(formMember(membersNode.children[x]));
+      }
+ 
+      return new Type(startingNode.attributes.Name,
+                   membersArray,
+                   formMetrics(startingNode, 0)
+                 );
+    }
+
+    
+    function formNamespace(startingNode) {
+      var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
+        
+        if(typesNode.children.length < 1) {
+          typesArray.push([]);
+          
+          return new Namespace(
+                    startingNode.attributes.Name,
+                    typesArray,
+                    formMetrics(startingNode, 0)
+          );
+        }
+      
+      
+        for (x=0; x < typesNode.children.length; x++) {
+          typesArray.push(formType(typesNode.children[x]));
+        }
+      
+       return new Namespace(
+                    startingNode.attributes.Name,
+                    typesArray,
+                    formMetrics(startingNode, 0)
+       );       
     }
     
     function map(entryNode) {
       var moduleNode = entryNode.children[0].children[0].children[0].children[0],
-        namespacesNode = moduleNode.children[1];
-
+        namespacesNode = moduleNode.children[1], nsArray = [], x;
+        
+        if(namespacesNode.children.length < 1) {
+          nsArray.push([]);
+          
+          return new Module(moduleNode.attributes.Name,
+                   moduleNode.attributes.AssemblyVersion,
+                   formMetrics(moduleNode,0),
+                   nsArray);
+        }
+    
+        for (x=0; x < namespacesNode.children.length; x++) {
+          nsArray.push(formNamespace(namespacesNode.children[x]));
+        } 
+       
+       
       return new Module(moduleNode.attributes.Name,
-                 moduleNode.attributes.AssemblyVersion,
-                 formMetrics(moduleNode, 0),
-                 formNamespaces(namespacesNode));
+                   moduleNode.attributes.AssemblyVersion,
+                   formMetrics(moduleNode,0),
+                   nsArray
+      );
     }
     
     that.map = map;

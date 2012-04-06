@@ -1,4 +1,4 @@
-TestCase("Croaker.MappingDifficultParse.Tests", {      
+TestCase("Croaker.MappingAdvancedParses.Tests", {      
   
   testParseWithoutMembers: function() {
     var mapper = new croaker.Mapper(),
@@ -7,15 +7,15 @@ TestCase("Croaker.MappingDifficultParse.Tests", {
     assertThat(module.namespaces[0].types[0].members[0], empty());
   },
   
-  /*  AtestParseWithMultipleTypes: function() {
+  testParseWithMultipleNamespaces: function() {
     var mapper = new croaker.Mapper(),
-      module = mapper.map(this.entryMultipleTypes);
+      module = mapper.map(this.entryMultipleNS);
 
-    assertThat(module.namespaces[0].types[1].name, 'OtherType.Core' );
-  }, */ 
+    assertThat(module.namespaces[0].name, 'Sample.Core' );
+    assertThat(module.namespaces[1].name, 'Other.Core' );
+  },  
   
   setUp: function () {
-    JsHamcrest.Integration.JsTestDriver();
     JsHamcrest.Integration.JsTestDriver();
     
     this.entryNoMembers = new croaker.NodeEntry('CodeMetricsReport', {}, [
@@ -54,7 +54,7 @@ TestCase("Croaker.MappingDifficultParse.Tests", {
           ])
         ]);
         
-    this.entryMultipleTypes = new croaker.NodeEntry('CodeMetricsReport', {}, [
+    this.entryMultipleNS = new croaker.NodeEntry('CodeMetricsReport', {}, [
       new croaker.NodeEntry('Targets', {}, [
         new croaker.NodeEntry('Target', {}, [
           new croaker.NodeEntry('Modules', {}, [
@@ -71,6 +71,14 @@ TestCase("Croaker.MappingDifficultParse.Tests", {
                         new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'40'}, []),
                         new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'50'}, [])
                       ]),
+                      new croaker.NodeEntry('Types', {}, [])
+                    ]),
+                    new croaker.NodeEntry('Namespace', {Name:'Other.Core'}, [
+                      new croaker.NodeEntry('Metrics', {}, [
+                        new croaker.NodeEntry('Metric', {Name:'MaintainabilityIndex', Value:'11'}, []),
+                        new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'43'}, []),
+                        new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'4'}, [])
+                      ]),
                       new croaker.NodeEntry('Types', {}, [
                         new croaker.NodeEntry('Type', {Name: 'SampleType.Core'}, [
                           new croaker.NodeEntry('Metrics', {}, [
@@ -78,15 +86,17 @@ TestCase("Croaker.MappingDifficultParse.Tests", {
                             new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'42'}, []),
                             new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'7'}, [])
                           ]),
+                          new croaker.NodeEntry('Members', {}, [
+                            new croaker.NodeEntry('Member', {Name: 'Thisis.Core', File:'50982.jkalhfksdl', Line:'5'}, [
+                              new croaker.NodeEntry('Metrics', {}, [
+                                new croaker.NodeEntry('Metric', {Name:'metricly', Value:'43'}, []),
+                                new croaker.NodeEntry('Metric', {Name:'FoulPlay', Value:'98'}, []),
+                                new croaker.NodeEntry('Metric', {Name:'Rajo-Rajey', Value:'793'}, [])
+                              ])
+                            ])
+                          ])
                         ])
-                      ]),
-                        new croaker.NodeEntry('Type', {Name: 'OtherType.Core'}, [
-                          new croaker.NodeEntry('Metrics', {}, [
-                            new croaker.NodeEntry('Metric', {Name:'Mantain', Value:'12'}, []),
-                            new croaker.NodeEntry('Metric', {Name:'CyclomaticComplexifail', Value:'2'}, []),
-                            new croaker.NodeEntry('Metric', {Name:'BadabaBadabioom', Value:'37'}, [])
-                          ]),
-                        ])
+                      ])
                     ])
                   ])
                 ])
@@ -94,7 +104,6 @@ TestCase("Croaker.MappingDifficultParse.Tests", {
             ])
           ])
         ]);
-     
   }
   
 });
