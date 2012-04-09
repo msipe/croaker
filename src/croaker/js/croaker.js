@@ -125,9 +125,8 @@ function Croaker(env) {
       var x, metrics = [], metricsNode = startingNode.children[index];
 
       for (x=0; x < metricsNode.children.length; x++) {
-        metrics.push(
-          new Metric(metricsNode.children[x].attributes.Name,
-          parseInt(metricsNode.children[x].attributes.Value, 10))
+        metrics.push(new Metric(metricsNode.children[x].attributes.Name,
+                     parseInt(metricsNode.children[x].attributes.Value, 10))
         );
       }
       
@@ -137,11 +136,10 @@ function Croaker(env) {
     function formMember(startingNode) {
       var members = [], x;
       
-      return new Member(
-                   startingNode.attributes.Name,
-                   startingNode.attributes.File,
-                   startingNode.attributes.Line, 
-                   formMetrics(startingNode, 0)
+      return new Member(startingNode.attributes.Name,
+                        startingNode.attributes.File,
+                        startingNode.attributes.Line, 
+                        formMetrics(startingNode, 0)
       ); 
     }
     
@@ -152,8 +150,8 @@ function Croaker(env) {
         membersArray.push([]);
           
         return new Type(startingNode.attributes.Name,
-                   membersArray,
-                   formMetrics(startingNode, 0));
+                        membersArray,
+                        formMetrics(startingNode, 0));
       } 
       
       membersNode = startingNode.children[1];
@@ -163,11 +161,12 @@ function Croaker(env) {
       }
  
       return new Type(startingNode.attributes.Name,
-                   membersArray,
-                   formMetrics(startingNode, 0)
+                      membersArray,
+                      formMetrics(startingNode, 0)
                  );
     }
-
+//formatting;
+//remove empty slot checks;
     
     function formNamespace(startingNode) {
       var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
@@ -175,10 +174,9 @@ function Croaker(env) {
         if(typesNode.children.length < 1) {
           typesArray.push([]);
           
-          return new Namespace(
-                    startingNode.attributes.Name,
-                    typesArray,
-                    formMetrics(startingNode, 0)
+          return new Namespace(startingNode.attributes.Name,
+                               typesArray,
+                               formMetrics(startingNode, 0)
           );
         }
       
@@ -187,10 +185,9 @@ function Croaker(env) {
           typesArray.push(formType(typesNode.children[x]));
         }
       
-       return new Namespace(
-                    startingNode.attributes.Name,
-                    typesArray,
-                    formMetrics(startingNode, 0)
+       return new Namespace(startingNode.attributes.Name,
+                            typesArray,
+                            formMetrics(startingNode, 0)
        );       
     }
     
