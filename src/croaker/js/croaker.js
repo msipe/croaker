@@ -144,17 +144,12 @@ function Croaker(env) {
     }
     
     function formType(startingNode) {
-      var types = [], x, membersNode, membersArray = [];
+      var types = [], x,  membersNode = startingNode.children[1], membersArray = [];
       
       if (startingNode.children[1].children.length < 1) {
         membersArray.push([]);
-          
-        return new Type(startingNode.attributes.Name,
-                        membersArray,
-                        formMetrics(startingNode, 0));
-      } 
-      
-      membersNode = startingNode.children[1];
+      }  
+
       
       for(x=0; x < membersNode.children.length; x++) {
         membersArray.push(formMember(membersNode.children[x]));
@@ -165,22 +160,12 @@ function Croaker(env) {
                       formMetrics(startingNode, 0)
                  );
     }
-//formatting;
+
 //remove empty slot checks;
     
     function formNamespace(startingNode) {
       var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
-        
-        if(typesNode.children.length < 1) {
-          typesArray.push([]);
-          
-          return new Namespace(startingNode.attributes.Name,
-                               typesArray,
-                               formMetrics(startingNode, 0)
-          );
-        }
-      
-      
+              
         for (x=0; x < typesNode.children.length; x++) {
           typesArray.push(formType(typesNode.children[x]));
         }
@@ -194,16 +179,7 @@ function Croaker(env) {
     function map(entryNode) {
       var moduleNode = entryNode.children[0].children[0].children[0].children[0],
         namespacesNode = moduleNode.children[1], nsArray = [], x;
-        
-        if(namespacesNode.children.length < 1) {
-          nsArray.push([]);
-          
-          return new Module(moduleNode.attributes.Name,
-                   moduleNode.attributes.AssemblyVersion,
-                   formMetrics(moduleNode,0),
-                   nsArray);
-        }
-    
+            
         for (x=0; x < namespacesNode.children.length; x++) {
           nsArray.push(formNamespace(namespacesNode.children[x]));
         } 
