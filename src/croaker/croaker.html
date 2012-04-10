@@ -14,7 +14,7 @@
         <thead>
           <tr>
             <td>
-              {{name}} --- {{version}} 
+              {{name}}---{{version}} 
             </td>
           </tr>
         </thead>
@@ -25,7 +25,8 @@
                 {{name}} - {{value}}
               </td>
             </tr>            
-          {{/metrics}}        
+          {{/metrics}}  
+
           {{#namespaces}}
             <tr>
               <td>
@@ -98,6 +99,8 @@
           <input id="filter" type="text" />
           <button id="btnsearch" class="ui-state-default ui-corner-all">Search</button>
         </form>
+        </br>
+        </br>
       </div>
       <div id="results" class="ui-widget-content ui-corner-all"></div>
     </div>

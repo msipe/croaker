@@ -122,20 +122,23 @@ function Croaker(env) {
     var that = {};
     
     function formMetrics(startingNode, index) {
-      var x, metrics = [], metricsNode = startingNode.children[index];
-
-      for (x=0; x < metricsNode.children.length; x++) {
-        metrics.push(new Metric(metricsNode.children[x].attributes.Name,
-                     parseInt(metricsNode.children[x].attributes.Value, 10))
-        );
-      }
+       var x, metrics = [], metricsNode = startingNode.children[index];
+       
+       function formMetric(startingNode) {
+          return new Metric( startingNode.children[x].attributes.Name, 
+                                          parseInt(startingNode.children[x].attributes.Value, 10));
+        }
       
-      return metrics;
-    }
+       for (x=0; x < metricsNode.children.length; x++) {
+         metrics.push(formMetric(metricsNode));
+       }
+       
+       return metrics;
+     }
+
     
     function formMember(startingNode) {
-      var members = [], x;
-      
+    
       return new Member(startingNode.attributes.Name,
                         startingNode.attributes.File,
                         startingNode.attributes.Line, 
