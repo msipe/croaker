@@ -121,16 +121,16 @@ function Croaker(env) {
   function Mapper() {
     var that = {};
     
+    function formMetric(startingNodeChild) {
+          return new Metric( startingNodeChild.attributes.Name, 
+                                          parseInt(startingNodeChild.attributes.Value, 10));
+    }
+    
     function formMetrics(startingNode, index) {
        var x, metrics = [], metricsNode = startingNode.children[index];
        
-       function formMetric(startingNode) {
-          return new Metric( startingNode.children[x].attributes.Name, 
-                                          parseInt(startingNode.children[x].attributes.Value, 10));
-        }
-      
        for (x=0; x < metricsNode.children.length; x++) {
-         metrics.push(formMetric(metricsNode));
+         metrics.push(formMetric(metricsNode.children[x]));
        }
        
        return metrics;
