@@ -8,69 +8,63 @@
     <script type="text/javascript" src="js/croaker.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
-    
+    <script id="metrics" type="text-x-mustache-tmpl">
+          {{#metrics}}  
+            <td>
+              {{value}}
+            </td>            
+            
+            {{/metrics}}
+    </script>
     <script id="sampletable" type="text-x-mustache-tmpl">
       <table border="1" cellpadding="10">
         <thead>
-        <tr>
-          <td>
-          Name
-          </td>
-          <td>
-            Maintainability Index
-          </td>
-          <td>
-            Cyclomatic Complexity
-          </td>
-          <td>
-            Class Coupling
-          </td>
-          <td>
-            Depth Of Inheritance
-          </td>
-          <td>
-            Lines Of Code
-          </td>
-        </tr>
-        </tr>
+          <tr>
+            <td>
+              Name
+            </td>
+            <td>
+              Maintainability Index
+            </td>
+            <td>
+              Cyclomatic Complexity
+            </td>
+            <td>
+              Class Coupling
+            </td>
+            <td>
+              Depth Of Inheritance
+            </td>
+            <td>
+              Lines Of Code
+            </td>
+          </tr>
           <tr>
             <td>
               {{name}}---{{version}} 
             </td>
             
-          {{#metrics}}
-              <td>
-                {{value}}
-              </td>            
-          {{/metrics}}
-          
+            {{> metrics}}
+
           </thead>
           <tbody>                  
           </tr>
-          {{#namespaces}}
+            {{#namespaces}}
             <tr>
               <td>
                 {{name}}
               </td>
               
-            {{#metrics}}
-                <td>
-                  {{value}}
-                </td>            
-            {{/metrics}}
+              {{> metrics}}
             
             </tr>
-            
+          
             {{#types}}
               <tr>
                 <td>
                   {{name}}
                 </td>
-                {{#metrics}}
-                  <td>
-                    {{value}}
-                  </td>            
-                {{/metrics}}
+                {{> metrics}}
                </tr>
                
               {{#members}}
@@ -79,11 +73,7 @@
                      {{name}} 
                     
                    </td>
-                   {{#metrics}}
-                    <td>
-                      {{value}}
-                    </td>            
-                {{/metrics}}
+                   {{> metrics}}
                   </tr> 
               {{/members}}                  
             {{/types}}            
@@ -100,7 +90,7 @@
           results = $('#results'),
           template = $('#sampletable').html();
      
-        results.html(Mustache.to_html(template, module));
+        results.html(Mustache.to_html(template, module, {metrics: $('#metrics').html()}));
       }
       
       function load(e) {
