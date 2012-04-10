@@ -4,35 +4,81 @@
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>   
+    <script type="text/javascript" src="js/lib/mustache.js"></script>   
     <script type="text/javascript" src="js/croaker.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
+    
+    <script id="sampletable" type="text-x-mustache-tmpl">
+      <table>
+        <thead>
+          <tr>
+            <td>
+              {{name}} --- {{version}} 
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#metrics}}
+            <tr>
+              <td>
+                {{name}} - {{value}}
+              </td>
+            </tr>            
+          {{/metrics}}        
+          {{#namespaces}}
+            <tr>
+              <td>
+                {{name}}
+              </td>
+            </tr>
+            {{#metrics}}
+              <tr>
+                <td>
+                  {{name}} - {{value}}
+                </td>
+              </tr>            
+            {{/metrics}}
+            {{#types}}
+              <tr>
+                <td>
+                  {{name}}
+                </td>
+              </tr>            
+            {{/types}}            
+          {{/namespaces}}          
+        </tbody>
+      </table>
+    </script>    
 
     <script type="text/javascript">
       function parseData(xml) {
-        console.log('parseData enter');
-        try {
-          var node = new croaker.Parser().parse(xml);
-          var module = new croaker.Mapper().map(node);
-          console.log('success');
-        } catch (e) {
-          console.log('failed');
-          console.log(e.message);
-        }
+        var nodes = new croaker.Parser().parse(xml),
+          module = new croaker.Mapper().map(nodes),
+          results = $('#results'),
+          template = $('#sampletable').html();
+     
+        results.html(Mustache.to_html(template, module));
       }
-
-      function init() {
-        var url = new croaker.LocationUrlParser().parse();
+      
+      function load(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        //var url = new croaker.LocationUrlParser().parse();
+        var url = $('#file').val();
         console.log('url: ', url);
         var loader = new croaker.DataLoader(url, parseData);
         loader
           .execute()
-          .done(function () { console.log('done'); })
           .fail(function (jqxhr, status, error) {
             console.log('error');
             console.log(status);
             console.log(error);
-          });
+          });      
+      }
+
+      function init() {
+        $('#btnload').click(load);
       }
 
       $(window).load(init);
@@ -42,6 +88,11 @@
     <div id="main">
       <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all" style="display:none"></div>
       <div id="nav" class="ui-widget-content ui-corner-all">
+        <form>
+          <label for="file">File</label>
+          <input id="file" type="text" value="sample.xml"/>
+          <button id="btnload" class="ui-state-default ui-corner-all">Load</button>
+        </form>      
         <form>
           <label for="filter">Filter</label>
           <input id="filter" type="text" />
