@@ -10,44 +10,88 @@
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
     
     <script id="sampletable" type="text-x-mustache-tmpl">
-      <table>
+      <table border="1" cellpadding="10">
         <thead>
+        <tr>
+          <td>
+          Name
+          </td>
+          <td>
+            Maintainability Index
+          </td>
+          <td>
+            Cyclomatic Complexity
+          </td>
+          <td>
+            Class Coupling
+          </td>
+          <td>
+            Depth Of Inheritance
+          </td>
+          <td>
+            Lines Of Code
+          </td>
+        </tr>
+        </tr>
           <tr>
             <td>
               {{name}}---{{version}} 
             </td>
-          </tr>
-        </thead>
-        <tbody>
+            
           {{#metrics}}
-            <tr>
               <td>
-                {{name}} - {{value}}
-              </td>
-            </tr>            
-          {{/metrics}}  
-
+                {{value}}
+              </td>            
+          {{/metrics}}
+          
+          </thead>
+          <tbody>                  
+          </tr>
           {{#namespaces}}
             <tr>
               <td>
                 {{name}}
               </td>
-            </tr>
+              
             {{#metrics}}
-              <tr>
                 <td>
-                  {{name}} - {{value}}
-                </td>
-              </tr>            
+                  {{value}}
+                </td>            
             {{/metrics}}
+            
+            </tr>
+            
             {{#types}}
               <tr>
                 <td>
                   {{name}}
                 </td>
-              </tr>            
+                {{#metrics}}
+                  <td>
+                    {{value}}
+                  </td>            
+                {{/metrics}}
+               </tr>
+               
+              {{#members}}
+                 <tr>
+                   <td>
+                     {{name}} 
+                     </br>
+                       FileName: {{file}}
+                     </br>
+                       Lines: {{line}}
+                   </td>
+                   {{#metrics}}
+                    <td>
+                      {{value}}
+                    </td>            
+                {{/metrics}}
+                  </tr> 
+              {{/members}}                  
             {{/types}}            
-          {{/namespaces}}          
+          {{/namespaces}}   
+       
         </tbody>
       </table>
     </script>    

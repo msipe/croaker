@@ -23,9 +23,9 @@
               <Types>
                 <Type Name="SampleClass">
                   <Metrics>
-                    <Metric Name="MaintainabilityIndex" Value="5" />
+                    <Metric Name="MaintainabilityIndex" Value="52" />
                     <Metric Name="CyclomaticComplexity" Value="6" />
-                    <Metric Name="ClassCoupling" Value="11" />
+                    <Metric Name="ClassCoupling" Value="113" />
                     <Metric Name="DepthOfInheritance" Value="2" />
                     <Metric Name="LinesOfCode" Value="6" />
                   </Metrics>
@@ -33,7 +33,7 @@
                     <Member Name="Method1(String) : void" File="d:\some\path\SampleClass.cs" Line="5">
                       <Metrics>
                         <Metric Name="MaintainabilityIndex" Value="7" />
-                        <Metric Name="CyclomaticComplexity" Value="8" />
+                        <Metric Name="CyclomaticComplexity" Value="81" />
                         <Metric Name="ClassCoupling" Value="11" />
                         <Metric Name="DepthOfInheritance" Value="2" />
                         <Metric Name="LinesOfCode" Value="6" />
