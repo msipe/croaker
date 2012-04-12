@@ -47,6 +47,8 @@ TestCase("Croaker.Mapping.Tests", {
     assertThat(module.namespaces[0].types[0].members[0].name, 'Thisis.Core');
     assertThat(module.namespaces[0].types[0].members[0].file, '50982.jkalhfksdl');
     assertThat(module.namespaces[0].types[0].members[0].metrics[0].name, 'metricly');
+    assertThat(module.namespaces[0].types[0].members[0].metrics[0].value, 43);
+    assertThat(module.namespaces[0].types[0].members[0].metrics[1].value, 98);
     assertThat(module.namespaces[0].types[0].members[0].metrics[2].value, 793);
   },
   
@@ -80,9 +82,9 @@ TestCase("Croaker.Mapping.Tests", {
                           new croaker.NodeEntry('Members', {}, [
                             new croaker.NodeEntry('Member', {Name: 'Thisis.Core', File:'50982.jkalhfksdl', Line:'5'}, [
                               new croaker.NodeEntry('Metrics', {}, [
-                                new croaker.NodeEntry('Metric', {Name:'metricly', Value:'43'}, []),
-                                new croaker.NodeEntry('Metric', {Name:'FoulPlay', Value:'98'}, []),
-                                new croaker.NodeEntry('Metric', {Name:'Rajo-Rajey', Value:'793'}, [])
+                                new croaker.NodeEntry('Metric', {Name:'metricly', Value:'4,3'}, []),
+                                new croaker.NodeEntry('Metric', {Name:'FoulPlay', Value:'9,8'}, []),
+                                new croaker.NodeEntry('Metric', {Name:'Rajo-Rajey', Value:'7,9,3'}, [])
                               ])
                             ])
                           ])

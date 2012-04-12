@@ -56,6 +56,7 @@ function Croaker(env) {
     }
     
     function validateDoc(doc) {
+      
       if(doc.documentElement.innerHTML) {
         throw new FatalException('unable to parse xml');
       }
@@ -122,8 +123,14 @@ function Croaker(env) {
     var that = {};
     
     function formMetric(startingNodeChild) {
-          return new Metric( startingNodeChild.attributes.Name, 
-                                          parseInt(startingNodeChild.attributes.Value, 10));
+      var x, val = startingNodeChild.attributes.Value, endArray = [];
+      
+      for (x=0; x < val.length; x++) {
+        val = val.replace(',','');
+      }
+      
+      return new Metric(startingNodeChild.attributes.Name, 
+                        parseInt(val, 10));
     }
     
     function formMetrics(startingNode, index) {
