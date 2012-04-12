@@ -21,6 +21,9 @@
         <thead>
           <tr>
             <td>
+              Element Type
+            </td>
+            <td>
               Name
             </td>
             <td>
@@ -40,6 +43,7 @@
             </td>
           </tr>
           <tr>
+            <td> {{strain}}  </td>
             <td>
               {{name}}---{{version}} 
             </td>
@@ -49,8 +53,10 @@
           </thead>
           <tbody>                  
           </tr>
+            
             {{#namespaces}}
             <tr>
+              <td> {{strain}}  </td>
               <td>
                 {{name}}
               </td>
@@ -61,6 +67,7 @@
           
             {{#types}}
               <tr>
+               <td> {{strain}}  </td>
                 <td>
                   {{name}}
                 </td>
@@ -69,6 +76,7 @@
                
               {{#members}}
                  <tr>
+                   <td> {{strain}}  </td>
                    <td>
                      {{name}} 
                     
@@ -85,13 +93,20 @@
 
     <script type="text/javascript">
       function parseData(xml) {
+        try {
         var nodes = new croaker.Parser().parse(xml),
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#sampletable').html();
      
         results.html(Mustache.to_html(template, module, {metrics: $('#metrics').html()}));
+        }   
+        catch(e) {
+        alert(e);
+
+        }        
       }
+      
       
       function load(e) {
         e.stopPropagation();

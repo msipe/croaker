@@ -87,6 +87,7 @@ function Croaker(env) {
    
   function Member(name, file, line, metrics) {
     return {
+      strain: 'Member',
       name: name,
       file: file,
       line: line,
@@ -96,6 +97,7 @@ function Croaker(env) {
   
   function Type (name,members,metrics) {
     return {
+       strain: 'Type',
        name: name,
        members: members,
        metrics: metrics
@@ -103,7 +105,8 @@ function Croaker(env) {
   }
   
   function Namespace(name, types, metrics) {
-    return {
+    return { 
+      strain: 'Namespace',
       name: name,
       types: types,
       metrics: metrics
@@ -112,6 +115,7 @@ function Croaker(env) {
   
   function Module(name, version, metrics, namespaces) {
     return {
+      strain: 'Module',
       name: name,
       version: version,
       metrics: metrics,
