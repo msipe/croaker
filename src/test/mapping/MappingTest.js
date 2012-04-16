@@ -51,7 +51,7 @@ TestCase("Croaker.Mapping.Tests", {
     assertThat(module.namespaces[0].types[0].members[0].metrics[1].value, 98);
     assertThat(module.namespaces[0].types[0].members[0].metrics[2].value, 793);
   },
-  
+    
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     

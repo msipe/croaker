@@ -1,9 +1,64 @@
 TestCase("Croaker.Type.Tests", {
-  testMember: function() {
-    var metrics2 = [],  members = [], type = new croaker.Type('Joe',members, metrics2);
+  testDefaults: function() {
+    var type = new croaker.Type('Joe',[], []);
     
     assertThat(type.name, 'Joe');
-    assertThat(type.metrics, sameAs(metrics2));
+    assertThat(type.metrics, empty());
+    assertThat(type.members, empty());
+  },
+  
+  testGetFullMetrics: function() {
+    var type = new croaker.Type('Joe', [], [])
+      actual = type.getFullMetrics();
+    
+    assertThat(actual.length, 5);
+    
+    assertThat(actual[0].name, 'MaintainabilityIndex');
+    assertThat(actual[0].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[0].getFormattedValue(), '');
+    
+    assertThat(actual[1].name, 'CyclomaticComplexity');
+    assertThat(actual[1].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[1].getFormattedValue(), '');
+    
+    assertThat(actual[2].name, 'ClassCoupling');
+    assertThat(actual[2].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[2].getFormattedValue(), '');
+    
+    assertThat(actual[3].name, 'DepthOfInheritance');
+    assertThat(actual[3].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[3].getFormattedValue(), '');
+    
+    assertThat(actual[4].name, 'LinesOfCode');
+    assertThat(actual[4].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[4].getFormattedValue(), '');
+  },
+  
+   testGetSomeMetrics: function() {
+    var type = new croaker.Type('Joe', [], [new croaker.Metric('MaintainabilityIndex', 32), new croaker.Metric('ClassCoupling', 3)])
+      actual = type.getFullMetrics();
+    
+    assertThat(actual.length, 5);
+    
+    assertThat(actual[0].name, 'MaintainabilityIndex');
+    assertThat(actual[0].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[0].getFormattedValue(), '');
+    
+    assertThat(actual[1].name, 'CyclomaticComplexity');
+    assertThat(actual[1].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[1].getFormattedValue(), '');
+    
+    assertThat(actual[2].name, 'ClassCoupling');
+    assertThat(actual[2].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[2].getFormattedValue(), '');
+    
+    assertThat(actual[3].name, 'DepthOfInheritance');
+    assertThat(actual[3].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[3].getFormattedValue(), '');
+    
+    assertThat(actual[4].name, 'LinesOfCode');
+    assertThat(actual[4].value, croaker.MISSING_METRIC_VALUE);
+    assertThat(actual[4].getFormattedValue(), '');
   },
 
   setUp: function () {

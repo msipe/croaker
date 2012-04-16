@@ -1,7 +1,8 @@
 function Croaker(env) {
   var deps = env || {},
     $ = deps.jQuery || jQuery,
-    mywindow = deps.window || window;
+    mywindow = deps.window || window,
+    MISSING_METRIC_VALUE = -99999;
     
   function FatalException(message) {
     return {
@@ -77,15 +78,23 @@ function Croaker(env) {
     that.parse = parse;
     return that;
   }
+  
 
   function Metric(name, value) {
+
+    function getFormattedValue() {
+        return (value === -99999) ? '' : value.toString();
+    }
+    
     return {
+      getFormattedValue: getFormattedValue,
       name: name,
       value: value
     };
   }
    
   function Member(name, file, line, metrics) {
+        
     return {
       strain: 'Member',
       name: name,
@@ -96,11 +105,25 @@ function Croaker(env) {
   }
   
   function Type (name,members,metrics) {
+    
+    function getFullMetrics() {
+      var x, results = [new Metric('MaintainabilityIndex', -99999), new Metric('CyclomaticComplexity', -99999), new Metric('ClassCoupling', -99999),
+                new Metric('DepthOfInheritance', -99999), new Metric('LinesOfCode', -99999)];
+                
+     for(x=0; x < 4; x++) {
+       if(metrics[x].name === results[x].name) {
+         results[x] = metrics[x];
+       }
+     }     
+      return results;      
+    }
+    
     return {
        strain: 'Type',
        name: name,
        members: members,
-       metrics: metrics
+       metrics: metrics,
+       getFullMetrics: getFullMetrics
     };
   }
   
@@ -138,12 +161,14 @@ function Croaker(env) {
     }
     
     function formMetrics(startingNode, index) {
-       var x, metrics = [], metricsNode = startingNode.children[index];
-       
+       var x, metrics = [], metricsNode = startingNode.children[index], 
+         vals = ['MaintainabilityIndex', 'CyclomaticComplexity', 'ClassCoupling', 'DepthOfInheritance', 'LinesOfCode'];
+         
        for (x=0; x < metricsNode.children.length; x++) {
          metrics.push(formMetric(metricsNode.children[x]));
-       }
+       } 
        
+              
        return metrics;
      }
 
@@ -175,7 +200,6 @@ function Croaker(env) {
                  );
     }
 
-//remove empty slot checks;
     
     function formNamespace(startingNode) {
       var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
@@ -250,7 +274,8 @@ function Croaker(env) {
     Module: Module,
     Mapper: Mapper,
     DataLoader: DataLoader,
-    LocationUrlParser: LocationUrlParser
+    LocationUrlParser: LocationUrlParser,
+    MISSING_METRIC_VALUE: MISSING_METRIC_VALUE
   };
 }
 
