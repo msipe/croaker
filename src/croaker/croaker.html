@@ -13,8 +13,7 @@
             <td>
               {{value}}
             </td>            
-            
-            {{/metrics}}
+          {{/metrics}}
     </script>
     <script id="sampletable" type="text-x-mustache-tmpl">
       <table border="1" cellpadding="10">
@@ -47,24 +46,18 @@
             <td>
               {{name}}---{{version}} 
             </td>
-            
             {{> metrics}}
-
           </thead>
           <tbody>                  
           </tr>
-            
             {{#namespaces}}
             <tr>
               <td> {{strain}}  </td>
               <td>
                 {{name}}
               </td>
-              
               {{> metrics}}
-            
             </tr>
-          
             {{#types}}
               <tr>
                <td> {{strain}}  </td>
@@ -73,20 +66,17 @@
                 </td>
                 {{> metrics}}
                </tr>
-               
               {{#members}}
                  <tr>
                    <td> {{strain}}  </td>
                    <td>
                      {{name}} 
-                    
                    </td>
                    {{> metrics}}
                   </tr> 
               {{/members}}                  
             {{/types}}            
           {{/namespaces}}   
-       
         </tbody>
       </table>
     </script>    
@@ -98,15 +88,12 @@
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#sampletable').html();
-     
-        results.html(Mustache.to_html(template, module, {metrics: $('#metrics').html()}));
+          results.html(Mustache.to_html(template, module, {metrics: $('#metrics').html()}));
         }   
         catch(e) {
-        alert(e);
-
+          alert(e);
         }        
       }
-      
       
       function load(e) {
         e.stopPropagation();
