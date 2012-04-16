@@ -8,14 +8,14 @@
     <script type="text/javascript" src="js/croaker.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
-    <script id="metrics" type="text-x-mustache-tmpl">
+    <script id="metrics-template" type="text-x-mustache-tmpl">
       {{#metrics}}  
         <td>
           {{value}}
         </td>            
       {{/metrics}}
     </script>
-    <script id="entry" type="text-x-mustache-tmpl">
+    <script id="entry-template" type="text-x-mustache-tmpl">
       <tr>
         <td>
           {{strain}}
@@ -26,7 +26,7 @@
         {{> metrics}}
       </tr>       
     </script>    
-    <script id="sampletable" type="text-x-mustache-tmpl">
+    <script id="main-template" type="text-x-mustache-tmpl">
       <table border="1" cellpadding="10">
         <thead>
           <tr>
@@ -82,8 +82,8 @@
         var nodes = new croaker.Parser().parse(xml),
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
-          template = $('#sampletable').html();
-          results.html(Mustache.to_html(template, module, {metrics: $('#metrics').html(), entry: $('#entry').html()}));
+          template = $('#main-template').html();
+          results.html(Mustache.to_html(template, module, {metrics: $('#metrics-template').html(), entry: $('#entry-template').html()}));
         }   
         catch(e) {
           alert(e);
