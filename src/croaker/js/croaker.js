@@ -107,14 +107,20 @@ function Croaker(env) {
   function Type (name,members,metrics) {
     
     function getFullMetrics() {
-      var x, results = [new Metric('MaintainabilityIndex', -99999), new Metric('CyclomaticComplexity', -99999), new Metric('ClassCoupling', -99999),
-                new Metric('DepthOfInheritance', -99999), new Metric('LinesOfCode', -99999)];
-                
-     for(x=0; x < 4; x++) {
-       if(metrics[x].name === results[x].name) {
-         results[x] = metrics[x];
-       }
-     }     
+      var x, y, results = ['MaintainabilityIndex', 'CyclomaticComplexity', 'ClassCoupling',
+                           'DepthOfInheritance', 'LinesOfCode'];
+    
+    for(x=0; x < results.length; x++) {            
+      for(y=0; y < metrics.length; y++) {
+        if(metrics[y].name === results[x]) {
+          results[x] = metrics[y];
+        }
+      }
+      
+      if(!results[x].name) {
+        results[x] = new Metric(results[x], MISSING_METRIC_VALUE);
+      }
+    }    
       return results;      
     }
     
