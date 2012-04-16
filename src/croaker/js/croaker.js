@@ -79,77 +79,89 @@ function Croaker(env) {
     return that;
   }
   
-
-  function Metric(name, value) {
-
-    function getFormattedValue() {
-        return (value === -99999) ? '' : value.toString();
-    }
-    
+  function BaseNamed(name, strain) {
     return {
-      getFormattedValue: getFormattedValue,
-      name: name,
-      value: value
-    };
-  }
-   
-  function Member(name, file, line, metrics) {
-        
-    return {
-      strain: 'Member',
-      name: name,
-      file: file,
-      line: line,
-      metrics: metrics
+      name: name
     };
   }
   
-  function Type (name,members,metrics) {
+  function Metric(name, value) {
+    var that = new BaseNamed(name);
+    
+    function getFormattedValue() {
+      return (value === -99999) ? '' : value.toString();
+    }
+    
+    that.value = value;
+    that.getFormattedValue = getFormattedValue;
+    
+    return that;
+  }  
+  
+  function BaseMetrics (name, metrics) {
+    var that = new BaseNamed(name);
     
     function getFullMetrics() {
       var x, y, results = ['MaintainabilityIndex', 'CyclomaticComplexity', 'ClassCoupling',
                            'DepthOfInheritance', 'LinesOfCode'];
-    
-    for(x=0; x < results.length; x++) {            
-      for(y=0; y < metrics.length; y++) {
-        if(metrics[y].name === results[x]) {
-          results[x] = metrics[y];
+       
+      for(x=0; x < results.length; x++) {            
+        for(y=0; y < metrics.length; y++) {
+          if(metrics[y].name === results[x]) {
+            results[x] = metrics[y];
+          }
+        }
+      
+        if(!results[x].name) {
+          results[x] = new Metric(results[x], MISSING_METRIC_VALUE);
         }
       }
       
-      if(!results[x].name) {
-        results[x] = new Metric(results[x], MISSING_METRIC_VALUE);
-      }
-    }    
       return results;      
     }
     
-    return {
-       strain: 'Type',
-       name: name,
-       members: members,
-       metrics: metrics,
-       getFullMetrics: getFullMetrics
-    };
+    that.metrics = metrics;
+    that.getFullMetrics = getFullMetrics;
+    
+    return that;    
+  }
+    
+  function Member(name, file, line, metrics) {
+    var that = new BaseMetrics(name, metrics);     
+    
+    that.strain = 'Member';
+    that.file = file;
+    that.line = line;
+    
+    return that;
+  }
+  
+  function Type (name,members,metrics) {
+    var that = new BaseMetrics(name, metrics);
+  
+    that.strain = 'Type';
+    that.members = members;
+       
+    return that;
   }
   
   function Namespace(name, types, metrics) {
-    return { 
-      strain: 'Namespace',
-      name: name,
-      types: types,
-      metrics: metrics
-    };
+    var that = new BaseMetrics(name, metrics);
+    
+    that.strain = 'NameSpace';
+    that.types = types;
+    
+    return that;
   }
   
   function Module(name, version, metrics, namespaces) {
-    return {
-      strain: 'Module',
-      name: name,
-      version: version,
-      metrics: metrics,
-      namespaces: namespaces
-    };
+    var that = new BaseMetrics(name, metrics);
+    
+    that.strain = 'NameSpace';
+    that.version = version;
+    that.namespaces = namespaces;
+    
+    return that;
   }
   
   function Mapper() {
