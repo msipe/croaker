@@ -9,11 +9,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
     <script id="metrics-template" type="text-x-mustache-tmpl">
-      {{#metrics}}  
+      {{#getFullMetrics}}  
         <td>
-          {{value}}
+          {{getFormattedValue}}
         </td>            
-      {{/metrics}}
+      {{/getFullMetrics}}
     </script>
     <script id="entry-template" type="text-x-mustache-tmpl">
       <tr>

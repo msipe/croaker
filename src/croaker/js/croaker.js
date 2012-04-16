@@ -129,7 +129,7 @@ function Croaker(env) {
   function Member(name, file, line, metrics) {
     var that = new BaseMetrics(name, metrics);     
     
-    that.strain = 'Member';
+    that.strain = 'MB';
     that.file = file;
     that.line = line;
     
@@ -139,7 +139,7 @@ function Croaker(env) {
   function Type (name,members,metrics) {
     var that = new BaseMetrics(name, metrics);
   
-    that.strain = 'Type';
+    that.strain = 'TY';
     that.members = members;
        
     return that;
@@ -148,7 +148,7 @@ function Croaker(env) {
   function Namespace(name, types, metrics) {
     var that = new BaseMetrics(name, metrics);
     
-    that.strain = 'NameSpace';
+    that.strain = 'NS';
     that.types = types;
     
     return that;
@@ -157,7 +157,7 @@ function Croaker(env) {
   function Module(name, version, metrics, namespaces) {
     var that = new BaseMetrics(name, metrics);
     
-    that.strain = 'NameSpace';
+    that.strain = 'MD';
     that.version = version;
     that.namespaces = namespaces;
     
