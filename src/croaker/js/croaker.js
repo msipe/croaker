@@ -2,7 +2,12 @@ function Croaker(env) {
   var deps = env || {},
     $ = deps.jQuery || jQuery,
     mywindow = deps.window || window,
-    MISSING_METRIC_VALUE = -99999;
+    MISSING_METRIC_VALUE = -99999,
+    MaintainabilityIndex,
+    CyclomaticComplexity,
+    ClassCoupling,
+    DepthOfInheritance,
+    LinesOfCode;
     
   function FatalException(message) {
     return {
@@ -253,6 +258,17 @@ function Croaker(env) {
     return that;
   }
   
+  function MetricDefinition(abrev) {
+    return {
+      abbreviation:abrev
+    };
+  }
+  
+  MaintainabilityIndex = new MetricDefinition('MI');
+  CyclomaticComplexity = new MetricDefinition('CyC');
+  ClassCoupling = new MetricDefinition('CC');
+  DepthOfInheritance = new MetricDefinition('DI');
+  LinesOfCode = new MetricDefinition('LC');
   
   
   
@@ -295,7 +311,17 @@ function Croaker(env) {
     Mapper: Mapper,
     DataLoader: DataLoader,
     LocationUrlParser: LocationUrlParser,
-    MISSING_METRIC_VALUE: MISSING_METRIC_VALUE
+    MISSING_METRIC_VALUE: MISSING_METRIC_VALUE,
+    MetricDefinition: MetricDefinition,
+    MaintainabilityIndex :MaintainabilityIndex,
+    CyclomaticComplexity: CyclomaticComplexity,
+    ClassCoupling: ClassCoupling,
+    DepthOfInheritance: DepthOfInheritance,
+    LinesOfCode: LinesOfCode
+    
+    
+    
+    
   };
 }
 
