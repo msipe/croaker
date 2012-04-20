@@ -23,6 +23,18 @@ function Croaker(env) {
       children: children
     };
   }
+  
+  function MetricDefinition(abrev, name) {
+    return {
+      abbreviation:abrev
+    };
+  }
+  
+  MaintainabilityIndex = new MetricDefinition('MI');
+  CyclomaticComplexity = new MetricDefinition('CyC');
+  ClassCoupling = new MetricDefinition('CC');
+  DepthOfInheritance = new MetricDefinition('DI');
+  LinesOfCode = new MetricDefinition('LC');
 
   function Parser() {
     var that = {};
@@ -185,13 +197,11 @@ function Croaker(env) {
     }
     
     function formMetrics(startingNode, index) {
-       var x, metrics = [], metricsNode = startingNode.children[index], 
-         vals = ['MaintainabilityIndex', 'CyclomaticComplexity', 'ClassCoupling', 'DepthOfInheritance', 'LinesOfCode'];
+       var x, metrics = [], metricsNode = startingNode.children[index];    
          
        for (x=0; x < metricsNode.children.length; x++) {
          metrics.push(formMetric(metricsNode.children[x]));
        } 
-       
               
        return metrics;
      }
@@ -258,19 +268,8 @@ function Croaker(env) {
     return that;
   }
   
-  function MetricDefinition(abrev) {
-    return {
-      abbreviation:abrev
-    };
-  }
   
-  MaintainabilityIndex = new MetricDefinition('MI');
-  CyclomaticComplexity = new MetricDefinition('CyC');
-  ClassCoupling = new MetricDefinition('CC');
-  DepthOfInheritance = new MetricDefinition('DI');
-  LinesOfCode = new MetricDefinition('LC');
-  
-  
+
   
   function DataLoader(url, callback) {
     function execute() {
@@ -318,10 +317,6 @@ function Croaker(env) {
     ClassCoupling: ClassCoupling,
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode
-    
-    
-    
-    
   };
 }
 
