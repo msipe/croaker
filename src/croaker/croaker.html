@@ -1,60 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-    
-    #heading {
-      font-weight:bold;
-      font-size:220%;
-      font-style:oblique;
-    }
-    
-    #table {
-      width:100%;
-    }    
-    
-    
-    thead td {
-      border-right-width:0em;
-      border-left-width:.05em;
-      border-bottom-width:0px;
-      text-align:center;
-      width:5%
-    }
-        
-    thead tr td:nth-child(2) {
-      text-align:left;
-      width:69%;
-    }
-    
-    tbody td {
-      text-align:right;
-      padding-right:.32em;
-      border-left-width:0px;
-      border-right-width:1px;
-      border-bottom-width:0px;
-      padding:1px;
-    }
-    
-    tbody tr td:first-child {
-      text-align:center;
-      border-right-width: 1px;
-    }
-    
-    tbody tr td:nth-child(2) {
-      text-align:left;
-      padding-left:.32em;
-    }
-    
-    tbody tr td:nth-child(3), nth-child(4), nth-child(5) {
-      border-left-width:1px;
-      padding-left:.32em;
-    }
-    
-
-    
-    
-    </style>
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>   
@@ -62,6 +8,8 @@
     <script type="text/javascript" src="js/croaker.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.19.custom.css" />
+    
     <script id="metrics-template" type="text-x-mustache-tmpl">
       {{#getFullMetrics}}  
         <td>
@@ -81,7 +29,7 @@
       </tr>       
     </script>    
     <script id="main-template" type="text-x-mustache-tmpl">
-      <table border="1" cellpadding="0" cellspacing="0"  id="table">
+      <table border="0" cellpadding="0" cellspacing="0"  id="table">
         <thead>
           <tr>
             <td>
@@ -176,13 +124,8 @@
           <input id="file" type="text" value="sample.xml"/>
           <button id="btnload" class="ui-state-default ui-corner-all">Load</button>
         </form>      
-        <form>
-          <label for="filter">Filter</label>
-          <input id="filter" type="text" />
-          <button id="btnsearch" class="ui-state-default ui-corner-all">Search</button>
-        </form>
       </div>
-      <div id="heading" align="center"> Croaker </div>
+      <div id="heading"> Croaker </div>
       </br>
       <div id="results" class="ui-widget-content ui-corner-all"></div>
     </div>

@@ -1,0 +1,55 @@
+<style type="text/css">
+    
+    #heading {
+      font-weight:bold;
+      font-size:220%;
+      font-style:oblique;
+    }
+    
+    #table {
+      width:100%;
+    }    
+    
+    
+    thead td {
+      border-style:solid;
+      border-right-width:0em;
+      border-top-width:0em;
+      border-left-width:.05em;
+      border-bottom-width:1px;
+      text-align:center;
+      width:5%
+    }
+        
+    thead tr td:nth-child(2) {
+      text-align:left;
+      width:69%;
+    }
+    
+    tbody tr:nth-child(odd) {
+     background-color: #F2F2F2
+    }
+    
+    
+    tbody td {
+      text-align:right;
+      padding-right:.32em;
+      border-left-style:solid;
+      border-left-width:.05em;
+    }
+
+    tbody tr td:first-child {
+      text-align:center;
+      border-right-width: 1px;
+    }
+    
+    tbody tr td:nth-child(2) {
+      text-align:left;
+      padding-left:.32em;
+    }
+    
+    tbody tr td:nth-child(3), nth-child(4), nth-child(5) {
+      border-left-width:1px;
+      padding-left:.32em;
+    }
+ </style>
