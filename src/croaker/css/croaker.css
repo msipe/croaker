@@ -11,18 +11,19 @@
     }    
     
     
-    thead td {
+    thead th {
       border-style:solid;
       border-right-width:0em;
       border-top-width:0em;
       border-left-width:.05em;
       border-bottom-width:1px;
       text-align:center;
-      width:5%
+      width:5%;
     }
         
-    thead tr td:nth-child(2) {
+    thead th:nth-child(2) {
       text-align:left;
+      padding-left: .08em;
       width:69%;
     }
     
