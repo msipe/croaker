@@ -33,8 +33,8 @@ function Croaker(env) {
   MaintainabilityIndex = new MetricDefinition('MI');
   CyclomaticComplexity = new MetricDefinition('CyC');
   ClassCoupling = new MetricDefinition('CC');
-  DepthOfInheritance = new MetricDefinition('DI');
   LinesOfCode = new MetricDefinition('LC');
+  DepthOfInheritance = new MetricDefinition('DI');
 
   function Parser() {
     var that = {};
