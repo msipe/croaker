@@ -81,7 +81,7 @@
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#main-template').html(),
-          metricdefs = [croaker.MaintainabilityIndex, croaker.CyclomaticComplexity, croaker.ClassCoupling, croaker.DepthOfInheritance, croaker.LinesOfCode];
+          metricdefs = [croaker.defArray[0],croaker.defArray[1], croaker.defArray[2], croaker.defArray[3], croaker.defArray[4]];
           
           results.html(Mustache.to_html(template, {module:module, metricdefs: metricdefs}, 
                       {metrics: $('#metrics-template').html(), 

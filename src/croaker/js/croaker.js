@@ -7,7 +7,8 @@ function Croaker(env) {
     CyclomaticComplexity,
     ClassCoupling,
     DepthOfInheritance,
-    LinesOfCode;
+    LinesOfCode,
+    defArray = [];
     
   function FatalException(message) {
     return {
@@ -35,6 +36,12 @@ function Croaker(env) {
   ClassCoupling = new MetricDefinition('CC');
   LinesOfCode = new MetricDefinition('LC');
   DepthOfInheritance = new MetricDefinition('DI');
+  
+  defArray.push(MaintainabilityIndex);
+  defArray.push(CyclomaticComplexity);
+  defArray.push(ClassCoupling);
+  defArray.push(LinesOfCode);
+  defArray.push(DepthOfInheritance);
 
   function Parser() {
     var that = {};
@@ -312,7 +319,8 @@ function Croaker(env) {
     CyclomaticComplexity: CyclomaticComplexity,
     ClassCoupling: ClassCoupling,
     DepthOfInheritance: DepthOfInheritance,
-    LinesOfCode: LinesOfCode
+    LinesOfCode: LinesOfCode,
+    defArray: defArray
   };
 }
 
