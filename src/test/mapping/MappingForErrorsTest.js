@@ -4,7 +4,8 @@ TestCase("Croaker.MappingAdvancedParses.Tests", {
     var mapper = new croaker.Mapper(),
       module = mapper.map(this.entryNoMembers);
 
-    assertThat(module.namespaces[0].types[0].members[0], empty());
+    assertThat(module.namespaces[0].types[0].members, empty());
+    assertThat(module.namespaces[0].types[0].members.length, 0);
   },
   
   testParseWithMultipleNamespaces: function() {
@@ -199,6 +200,7 @@ TestCase("Croaker.MappingAdvancedParses.Tests", {
             ])
           ])
         ]);
+        
   }
   
 });

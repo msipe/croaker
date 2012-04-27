@@ -219,10 +219,6 @@ function Croaker(env) {
     function formType(startingNode) {
       var types = [], x,  membersNode = startingNode.children[1], membersArray = [];
       
-      if (startingNode.children[1].children.length < 1) {
-        membersArray.push([]);
-      }  
-
       
       for(x=0; x < membersNode.children.length; x++) {
         membersArray.push(formMember(membersNode.children[x]));
