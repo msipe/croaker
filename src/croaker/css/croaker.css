@@ -1,16 +1,13 @@
 <style type="text/css">
-    
-    #heading {
-      font-weight:bold;
-      font-size:220%;
-      font-style:oblique;
-    }
-    
+  
+  nothing {
+  
+  }
+
     #table {
       width:100%;
-    }    
-    
-    
+    }
+   
     thead th {
       border-style:solid;
       border-right-width:0em;
@@ -28,7 +25,7 @@
     }
     
     tbody tr:nth-child(odd) {
-     background-color: #F2F2F2
+     background-color: #F2F2F1;
     }
     
     
@@ -53,4 +50,23 @@
       border-left-width:1px;
       padding-left:.32em;
     }
+    
+     #heading {
+      width:35%;
+      float:right;
+      text-align:right;
+      padding-right:.5em;
+      font-size:larger;
+    }
+    
+    #flash {
+      width:50%;
+      float:left;
+    }
+    
+    #main {
+      clear:both;
+    }
+  
+
  </style>
