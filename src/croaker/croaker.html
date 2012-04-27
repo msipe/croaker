@@ -28,6 +28,26 @@
         {{> metrics}}
       </tr>       
     </script>    
+    <script id="module-template" type="text-x-mustache-tmpl">
+      <tr>
+        <td>
+          {{strain}}
+        </td>
+        <td>
+          {{name}} -- {{version}}
+        </td>
+        {{> metrics}}
+      </tr>       
+      {{#namespaces}}
+        {{> entry}}
+        {{#types}}
+          {{> entry}}
+          {{#members}}
+            {{> entry}}
+          {{/members}}                  
+        {{/types}}            
+      {{/namespaces}}        
+    </script>     
     <script id="main-template" type="text-x-mustache-tmpl">
       <table border="0" cellpadding="0" cellspacing="0"  id="table">
         <thead>
@@ -38,42 +58,18 @@
             <th>
               Name
             </th>
-            <th>
-              MI
-            </th>
-            <th>
-              CyC
-            </th>
-            <th>
-              CC
-            </th>
-            <th>
-              DI
-            </th>
-            <th>
-              LC
+            {{#metricdefs}}
+              <th>
+                {{abbreviation}}
+              </th>
+            {{/metricdefs}}
             </th>
           </tr>
         </thead>          
         <tbody>
-          <tr>
-            <td>
-              {{strain}}
-            </td>
-            <td>
-              {{name}}---{{version}} 
-            </td>
-            {{> metrics}}
-          </tr>  
-            {{#namespaces}}
-              {{> entry}}
-              {{#types}}
-                {{> entry}}
-                {{#members}}
-                  {{> entry}}
-                {{/members}}                  
-              {{/types}}            
-            {{/namespaces}}   
+          {{#module}}
+            {{> module}}
+          {{/module}}
         </tbody>
       </table>
     </script>    
@@ -84,8 +80,13 @@
         var nodes = new croaker.Parser().parse(xml),
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
-          template = $('#main-template').html();
-          results.html(Mustache.to_html(template, module, {metrics: $('#metrics-template').html(), entry: $('#entry-template').html()}));
+          template = $('#main-template').html(),
+          metricdefs = [croaker.MaintainabilityIndex, croaker.CyclomaticComplexity, croaker.ClassCoupling, croaker.DepthOfInheritance, croaker.LinesOfCode];
+          
+          results.html(Mustache.to_html(template, {module:module, metricdefs: metricdefs}, 
+                      {metrics: $('#metrics-template').html(), 
+                       entry: $('#entry-template').html(),
+                       module: $('#module-template').html()}));
         }   
         catch(e) {
           alert(e);
@@ -115,19 +116,25 @@
       $(window).load(init);
     </script>
   </head>
-  <body>
+  <body >
 
     <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all">doing work</div>    
     <div id="heading">Croaker</div>  
 
     <div id="main">
      
-      <div id="nav" class="ui-widget-content ui-corner-all">
-        <form>
+      <div id="nav">
+        <form class="ui-corner-all">
           <label for="file">File</label>
           <input id="file" type="text" value="sample.xml"/>
-          <button id="btnload" class="ui-state-default ui-corner-all">Load</button>
+          <button id="btnload">Load</button>
         </form>      
+        </br>
+        <form class="ui-corner-all">
+          <label for="filter">Filter</label>
+          <input id="filter" type="text" value=""/>
+          <button id="filterBtn"> Filter </button>
+        </form>
       </div>
 
       </br>
