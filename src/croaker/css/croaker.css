@@ -2,6 +2,18 @@
     #table {
       width:100%;
     }
+    
+    #flash {
+      width: 45%
+    }
+    
+    #logo {
+      float:right;
+      position:absolute;
+      top:2px;
+      bottom:0;
+      right:14px;
+    }
    
     thead th {
       border-style:solid;
