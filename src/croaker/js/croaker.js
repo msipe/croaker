@@ -53,13 +53,12 @@ function Croaker(env) {
     function parseAttributes(node) {
       var attributes = {}, x;
 
-      if (node.hasAttributes()) {
-        for (x = 0; x < node.attributes.length; x++) {
-          if(isNodeValid(node.attributes.item(x))) {
-            attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
-          }
+      for (x = 0; x < node.attributes.length; x++) {
+        if(isNodeValid(node.attributes.item(x))) {
+          attributes[node.attributes.item(x).name] = node.attributes.item(x).value;
         }
       }
+        
       return attributes;
     }
 
@@ -81,7 +80,10 @@ function Croaker(env) {
     }
     
     function validateDoc(doc) {
-      
+      if (!doc.documentElement) {
+        throw new FatalException('unable to parse xml');
+      }
+    
       if(doc.documentElement.innerHTML) {
         throw new FatalException('unable to parse xml');
       }
@@ -89,14 +91,22 @@ function Croaker(env) {
       if (doc.documentElement.nodeName === 'parsererror') {
         throw new FatalException('unable to parse xml');
       }
-      
     }
     
     function parse(string) {
-      var domparser = new DOMParser(),
-        xmlDoc = domparser.parseFromString(string, "text/xml");
-      validateDoc(xmlDoc);
-      return processNode(xmlDoc.documentElement);
+      var domparser, xmldoc;
+    
+      if (window.DOMParser) {
+        domparser = new DOMParser();
+        xmldoc = domparser.parseFromString(string, "text/xml");
+      }
+      else {
+        xmldoc=new ActiveXObject("Microsoft.XMLDOM");
+        xmldoc.async=false;
+        xmldoc.loadXML(string);
+      }
+      validateDoc(xmldoc);
+      return processNode(xmldoc.documentElement);
     }
 
     that.parse = parse;
