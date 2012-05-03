@@ -47,7 +47,8 @@
           {{/members}}                  
         {{/types}}            
       {{/namespaces}}        
-    </script>     
+    </script>   
+    
     <script id="main-template" type="text-x-mustache-tmpl">
       <table border="0" cellpadding="0" cellspacing="0"  id="table">
         <thead>
@@ -81,7 +82,7 @@
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#main-template').html(),
-          metricdefs = [croaker.defArray[0],croaker.defArray[1], croaker.defArray[2], croaker.defArray[3], croaker.defArray[4]];
+          metricdefs = [croaker.allDefinitions[0],croaker.allDefinitions[1], croaker.allDefinitions[2], croaker.allDefinitions[3], croaker.allDefinitions[4]];
           
           results.html(Mustache.to_html(template, {module:module, metricdefs: metricdefs}, 
                       {metrics: $('#metrics-template').html(), 
@@ -98,14 +99,13 @@
         e.preventDefault();
         //var url = new croaker.LocationUrlParser().parse();
         var url = $('#file').val();
-        console.log('url: ', url);
         var loader = new croaker.DataLoader(url, parseData);
         loader
           .execute()
           .fail(function (jqxhr, status, error) {
-            console.log('error');
-            console.log(status);
-            console.log(error);
+            alert('error');
+            alert(status);
+            alert(error);
           });      
       }
 
@@ -126,6 +126,7 @@
     <div id="main">
      
       <div id="nav">
+        
         <form>
           <label for="file">File</label>
           <input id="file" type="text" value="sample.xml"/>
@@ -136,6 +137,15 @@
           <label for="filter">Filter</label>
           <input id="filter" type="text" value=""/>
           <button id="filterBtn"> Filter </button>
+        </form>
+        </br>
+        <form>
+           NS
+          <input type="checkbox" id="NS"/>
+          TY
+          <input type="checkbox" id="TY"/>
+          MB
+          <input type="checkbox" id="MB"/>
         </form>
       </div>
 

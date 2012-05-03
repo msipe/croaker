@@ -8,7 +8,7 @@ function Croaker(env) {
     ClassCoupling,
     DepthOfInheritance,
     LinesOfCode,
-    defArray = [];
+    allDefinitions;
     
   function FatalException(message) {
     return {
@@ -37,12 +37,8 @@ function Croaker(env) {
   LinesOfCode = new MetricDefinition('LC');
   DepthOfInheritance = new MetricDefinition('DI');
   
-  defArray.push(MaintainabilityIndex);
-  defArray.push(CyclomaticComplexity);
-  defArray.push(ClassCoupling);
-  defArray.push(LinesOfCode);
-  defArray.push(DepthOfInheritance);
-
+  allDefinitions = [MaintainabilityIndex, CyclomaticComplexity, ClassCoupling, LinesOfCode, DepthOfInheritance];
+  
   function Parser() {
     var that = {};
     
@@ -90,21 +86,27 @@ function Croaker(env) {
       
       if (doc.documentElement.nodeName === 'parsererror') {
         throw new FatalException('unable to parse xml');
-      }
+      } 
     }
     
     function parse(string) {
       var domparser, xmldoc;
     
       if (window.DOMParser) {
+        try {
         domparser = new DOMParser();
         xmldoc = domparser.parseFromString(string, "text/xml");
+        } catch(e) {
+          throw new FatalException('unable to parse xml');
+        }
       }
       else {
+        console.log('ie here');
         xmldoc=new ActiveXObject("Microsoft.XMLDOM");
         xmldoc.async=false;
-        xmldoc.loadXML(string);
+        xmldoc.loadXML(string); 
       }
+      
       validateDoc(xmldoc);
       return processNode(xmldoc.documentElement);
     }
@@ -132,7 +134,6 @@ function Croaker(env) {
     return that;
   }  
   
-
   function BaseMetrics (name, metrics) {
     var that = new BaseNamed(name);
     
@@ -223,7 +224,6 @@ function Croaker(env) {
        return metrics;
      }
 
-    
     function formMember(startingNode) {
     
       return new Member(startingNode.attributes.Name,
@@ -247,7 +247,6 @@ function Croaker(env) {
                  );
     }
 
-    
     function formNamespace(startingNode) {
       var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
               
@@ -280,9 +279,6 @@ function Croaker(env) {
     that.map = map;
     return that;
   }
-  
-  
-
   
   function DataLoader(url, callback) {
     function execute() {
@@ -330,7 +326,7 @@ function Croaker(env) {
     ClassCoupling: ClassCoupling,
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode,
-    defArray: defArray
+    allDefinitions: allDefinitions
   };
 }
 
