@@ -27,15 +27,16 @@ function Croaker(env) {
   
   function MetricDefinition(abrev, name) {
     return {
+      name:name,
       abbreviation:abrev
     };
   }
   
-  MaintainabilityIndex = new MetricDefinition('MI');
-  CyclomaticComplexity = new MetricDefinition('CyC');
-  ClassCoupling = new MetricDefinition('CC');
-  LinesOfCode = new MetricDefinition('LC');
-  DepthOfInheritance = new MetricDefinition('DI');
+  MaintainabilityIndex = new MetricDefinition('MI', 'MaintainabilityIndex');
+  CyclomaticComplexity = new MetricDefinition('CyC', 'CyclomaticComplexity');
+  ClassCoupling = new MetricDefinition('CC', 'ClassCoupling');
+  LinesOfCode = new MetricDefinition('LC', 'LinesOfCode');
+  DepthOfInheritance = new MetricDefinition('DI', 'DepthOfInheritance');
   
   allDefinitions = [MaintainabilityIndex, CyclomaticComplexity, ClassCoupling, LinesOfCode, DepthOfInheritance];
   
@@ -138,8 +139,8 @@ function Croaker(env) {
     var that = new BaseNamed(name);
     
     function getFullMetrics() {
-      var x, y, results = ['MaintainabilityIndex', 'CyclomaticComplexity', 'ClassCoupling',
-                           'DepthOfInheritance', 'LinesOfCode'];
+      var x, y, results = [MaintainabilityIndex.name, CyclomaticComplexity.name, ClassCoupling.name,
+                           DepthOfInheritance.name, LinesOfCode.name];
        
       for(x=0; x < results.length; x++) {            
         for(y=0; y < metrics.length; y++) {
