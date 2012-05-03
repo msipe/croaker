@@ -8,7 +8,8 @@ function Croaker(env) {
     ClassCoupling,
     DepthOfInheritance,
     LinesOfCode,
-    allDefinitions;
+    allDefinitions,
+    strains;
     
   function FatalException(message) {
     return {
@@ -327,7 +328,8 @@ function Croaker(env) {
     ClassCoupling: ClassCoupling,
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode,
-    allDefinitions: allDefinitions
+    allDefinitions: allDefinitions,
+    strains, strains
   };
 }
 
