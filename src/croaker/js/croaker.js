@@ -39,7 +39,7 @@ function Croaker(env) {
   LinesOfCode = new MetricDefinition('LC', 'LinesOfCode');
   DepthOfInheritance = new MetricDefinition('DI', 'DepthOfInheritance');
   
-  allDefinitions = [MaintainabilityIndex, CyclomaticComplexity, ClassCoupling, LinesOfCode, DepthOfInheritance];
+  allDefinitions = [MaintainabilityIndex, CyclomaticComplexity, ClassCoupling, DepthOfInheritance, LinesOfCode];
   
   function Parser() {
     var that = {};
@@ -140,18 +140,20 @@ function Croaker(env) {
     var that = new BaseNamed(name);
     
     function getFullMetrics() {
-      var x, y, results = [MaintainabilityIndex.name, CyclomaticComplexity.name, ClassCoupling.name,
-                           DepthOfInheritance.name, LinesOfCode.name];
+      var x, y, results = [], marker;
        
-      for(x=0; x < results.length; x++) {            
+      for(x=0; x < allDefinitions.length; x++) {
+        marker = false;
+        
         for(y=0; y < metrics.length; y++) {
-          if(metrics[y].name === results[x]) {
-            results[x] = metrics[y];
+          if(metrics[y].name === allDefinitions[x].name) {
+            results.push(metrics[y]);
+            marker = true;
           }
         }
-      
-        if(!results[x].name) {
-          results[x] = new Metric(results[x], MISSING_METRIC_VALUE);
+        
+        if(marker === false) {
+          results.push(new Metric(allDefinitions[x].name, MISSING_METRIC_VALUE));
         }
       }
       
@@ -329,7 +331,7 @@ function Croaker(env) {
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
-    strains, strains
+    strains: strains
   };
 }
 
