@@ -28,6 +28,7 @@
         {{> metrics}}
       </tr>       
     </script>    
+    
     <script id="module-template" type="text-x-mustache-tmpl">
       <tr>
         <td>
@@ -73,7 +74,23 @@
           {{/module}}
         </tbody>
       </table>
-    </script>    
+    </script>  
+
+   <script id="type-template" type="text-x-mustache-tmpl">   
+     <tr>
+        <td>
+          {{strain}}
+        </td>
+        <td>
+          {{name}} -- {{version}}
+        </td>
+        {{> metrics}}
+      </tr>       
+        {{#types}}
+          {{> entry}}            
+        {{/types}}              
+   </script>
+      
 
     <script type="text/javascript">
       function parseData(xml) {
@@ -87,7 +104,8 @@
           results.html(Mustache.to_html(template, {module:module, metricdefs: metricdefs}, 
                       {metrics: $('#metrics-template').html(), 
                        entry: $('#entry-template').html(),
-                       module: $('#module-template').html()}));
+                       module: $('#module-template').html(),
+                       types: $('type-template').html()}));
         }   
         catch(e) {
           alert(e);
@@ -126,7 +144,6 @@
     <div id="main">
      
       <div id="nav">
-        
         <form>
           <label for="file">File</label>
           <input id="file" type="text" value="sample.xml"/>
