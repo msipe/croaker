@@ -312,6 +312,17 @@ function Croaker(env) {
     };
   }
   
+  function Filter() {
+    var that = {};
+    
+    function getTypes() {
+      return 'true';
+    
+    }
+    
+    return that;
+  }
+  
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
