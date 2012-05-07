@@ -320,6 +320,8 @@ function Croaker(env) {
     
     }
     
+    that.getTypes = getTypes;
+    
     return that;
   }
   
@@ -342,6 +344,7 @@ function Croaker(env) {
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
+    Filter:Filter,
     strains: strains
   };
 }
