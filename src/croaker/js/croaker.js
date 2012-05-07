@@ -312,12 +312,18 @@ function Croaker(env) {
     };
   }
   
-  function Filter() {
+  function Filter(mappedNodeSet) {
     var that = {};
     
     function getTypes() {
-      return 'true';
-    
+      var x, types = mappedNodeSet.namespaces[0].types, 
+        typesArray = [];
+      
+      for (x=0; x < types.length; x++) {
+        typesArray.push(types[x]);
+      }
+      
+      return typesArray;
     }
     
     that.getTypes = getTypes;
@@ -338,7 +344,7 @@ function Croaker(env) {
     LocationUrlParser: LocationUrlParser,
     MISSING_METRIC_VALUE: MISSING_METRIC_VALUE,
     MetricDefinition: MetricDefinition,
-    MaintainabilityIndex :MaintainabilityIndex,
+    MaintainabilityIndex: MaintainabilityIndex,
     CyclomaticComplexity: CyclomaticComplexity,
     ClassCoupling: ClassCoupling,
     DepthOfInheritance: DepthOfInheritance,
