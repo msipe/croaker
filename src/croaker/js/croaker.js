@@ -312,15 +312,15 @@ function Croaker(env) {
     };
   }
   
-  function Filter(mappedNodeSet) {
+  function FilteredList(module) {
     var that = {};
     
     function getTypes() {
-      var x, y, NS = mappedNodeSet.namespaces, types, 
+      var x, y, NS = module.namespaces, types, 
         typesArray = [], NSArray = [];
       
       for (y=0; y < NS.length; y++) {
-        types = mappedNodeSet.namespaces[y].types;
+        types = module.namespaces[y].types;
         typesArray.push([]);
         
         for (x=0; x < types.length; x++) {
@@ -355,7 +355,7 @@ function Croaker(env) {
     DepthOfInheritance: DepthOfInheritance,
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
-    Filter:Filter,
+    FilteredList:FilteredList,
     strains: strains
   };
 }

@@ -1,7 +1,7 @@
 TestCase("Croaker.Filter.Tests", {
   testGetTypes: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
-      filter = new croaker.Filter(module);
+      filter = new croaker.FilteredList(module);
     
     assertThat(module.namespaces[0].types[0].name, 'SampleType.Core');
     assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
@@ -11,7 +11,7 @@ TestCase("Croaker.Filter.Tests", {
   
   testGetTypesWithMultipleTypes: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
-      filter = new croaker.Filter(module);
+      filter = new croaker.FilteredList(module);
     
     assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
     assertThat(filter.getTypes()[0][1].name, 'OtherType.Core');
@@ -25,7 +25,7 @@ TestCase("Croaker.Filter.Tests", {
   
   testGetTypesFromMultipleNSRoots: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filter = new croaker.Filter(module);
+      filter = new croaker.FilteredList(module);
     
     assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
     assertThat(filter.getTypes()[1][0].name, 'OtherType.Core');
