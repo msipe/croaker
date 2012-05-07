@@ -36,11 +36,19 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filter.getTypes()[1][0].metrics[1].value, 42);
   },
   
-  testNSFilter: function () {
+  testNSFilterSingleNS: function () {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filter = new croaker.FilteredList(module);
     
     assertThat(filter.getNamespaces()[0].name, 'Sample.Core');
+  },
+  
+  testNSFilterMultipleNS: function () {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filter = new croaker.FilteredList(module);
+    
+    assertThat(filter.getNamespaces()[0].name, 'Sample.Core');
+    assertThat(filter.getNamespaces()[1].name, 'Other.Core');
   },
 
   setUp: function () {
