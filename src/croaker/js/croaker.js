@@ -316,11 +316,16 @@ function Croaker(env) {
     var that = {};
     
     function getTypes() {
-      var x, types = mappedNodeSet.namespaces[0].types, 
-        typesArray = [];
+      var x, y, NS = mappedNodeSet.namespaces, types, 
+        typesArray = [], NSArray = [];
       
-      for (x=0; x < types.length; x++) {
-        typesArray.push(types[x]);
+      for (y=0; y < NS.length; y++) {
+        types = mappedNodeSet.namespaces[y].types;
+        typesArray.push([]);
+        
+        for (x=0; x < types.length; x++) {
+          typesArray[y].push(types[x]);
+        }
       }
       
       return typesArray;
