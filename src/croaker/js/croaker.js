@@ -140,19 +140,19 @@ function Croaker(env) {
     var that = new BaseNamed(name);
     
     function getFullMetrics() {
-      var x, y, results = [], marker;
+      var x, y, results = [], found;
        
       for(x=0; x < allDefinitions.length; x++) {
-        marker = false;
+        found = false;
         
         for(y=0; y < metrics.length; y++) {
           if(metrics[y].name === allDefinitions[x].name) {
             results.push(metrics[y]);
-            marker = true;
+            found = true;
           }
         }
         
-        if(marker === false) {
+        if(found === false) {
           results.push(new Metric(allDefinitions[x].name, MISSING_METRIC_VALUE));
         }
       }
@@ -253,7 +253,7 @@ function Croaker(env) {
 
     function formNamespace(startingNode) {
       var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
-              
+    
         for (x=0; x < typesNode.children.length; x++) {
           typesArray.push(formType(typesNode.children[x]));
         }
