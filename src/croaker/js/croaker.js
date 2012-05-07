@@ -316,10 +316,10 @@ function Croaker(env) {
     var that = {};
     
     function getTypes() {
-      var x, y, NS = module.namespaces, types, 
+      var x, y, namespace = module.namespaces, types, 
         typesArray = [], NSArray = [];
       
-      for (y=0; y < NS.length; y++) {
+      for (y=0; y < namespace.length; y++) {
         types = module.namespaces[y].types;
         typesArray.push([]);
         
@@ -332,7 +332,14 @@ function Croaker(env) {
     }
     
     function getNamespaces() {
-      return(['Sample.core']);
+      var x, namespaces = [], 
+        namespacesNode = module.namespaces;
+        
+      for (x=0; x < namespacesNode.length; x++) {
+        namespaces.push(namespacesNode[x]);
+      }
+        
+      return namespaces;
     }
     
     that.getNamespaces = getNamespaces;

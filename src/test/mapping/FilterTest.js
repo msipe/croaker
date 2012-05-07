@@ -40,7 +40,7 @@ TestCase("Croaker.Filter.Tests", {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filter = new croaker.FilteredList(module);
     
-    assertThat(filter.getNamespaces()[0], 'Sample.core');
+    assertThat(filter.getNamespaces()[0].name, 'Sample.Core');
   },
 
   setUp: function () {
