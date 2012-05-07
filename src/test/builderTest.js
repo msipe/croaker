@@ -1,4 +1,4 @@
-TestCase("Croaker.Builder.Tests", {
+/* TestCase("Croaker.Builder.Tests", {
   testSimpleBuild: function() {
     var builder = new Builder();
 
@@ -7,4 +7,4 @@ TestCase("Croaker.Builder.Tests", {
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
   }
-});
+}); */

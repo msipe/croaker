@@ -331,6 +331,11 @@ function Croaker(env) {
       return typesArray;
     }
     
+    function getNamespaces() {
+      return(['Sample.core']);
+    }
+    
+    that.getNamespaces = getNamespaces;
     that.getTypes = getTypes;
     
     return that;

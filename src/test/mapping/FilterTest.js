@@ -34,7 +34,13 @@ TestCase("Croaker.Filter.Tests", {
     
     assertThat(filter.getTypes()[0][1].metrics[0].name, 'Mantain');
     assertThat(filter.getTypes()[1][0].metrics[1].value, 42);
+  },
+  
+  testNSFilter: function () {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filter = new croaker.FilteredList(module);
     
+    assertThat(filter.getNamespaces()[0], 'Sample.core');
   },
 
   setUp: function () {
