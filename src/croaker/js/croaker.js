@@ -314,39 +314,50 @@ function Croaker(env) {
   
   function FilteredList(module) {
     var that = {};
+  }  
     
-    function getTypes() {
-      var x, y, namespace = module.namespaces, types, 
-        typesArray = [], NSArray = [];
+    function TypeFilter(module) {
+      var that = {};
       
-      for (y=0; y < namespace.length; y++) {
-        types = module.namespaces[y].types;
-        typesArray.push([]);
+      function getTypes() {
+        var x, y, namespace = module.namespaces, types, 
+          typesArray = [], NSArray = [];
+      
+        for (y=0; y < namespace.length; y++) {
+          types = module.namespaces[y].types;
+          typesArray.push([]);
         
-        for (x=0; x < types.length; x++) {
-          typesArray[y].push(types[x]);
+          for (x=0; x < types.length; x++) {
+            typesArray[y].push(types[x]);
+          }
         }
-      }
       
-      return typesArray;
-    }
-    
-    function getNamespaces() {
-      var x, namespaces = [], 
-        namespacesNode = module.namespaces;
-        
-      for (x=0; x < namespacesNode.length; x++) {
-        namespaces.push(namespacesNode[x]);
+        return typesArray;
       }
-        
-      return namespaces;
+    
+      that.getTypes = getTypes;
+    
+      return that;
     }
     
-    that.getNamespaces = getNamespaces;
-    that.getTypes = getTypes;
+    function NamespaceFilter(module){
+      var that = {};
+      
+      function getNamespaces() {
+        var x, namespaces = [], 
+          namespacesNode = module.namespaces;
+        
+        for (x=0; x < namespacesNode.length; x++) {
+          namespaces.push(namespacesNode[x]);
+        }
+        
+        return namespaces;
+      }
     
-    return that;
-  }
+      that.getNamespaces = getNamespaces;
+    
+      return that;
+    }
   
   return {
     NodeEntry: NodeEntry,
@@ -368,6 +379,8 @@ function Croaker(env) {
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
+    NamespaceFilter: NamespaceFilter,
+    TypeFilter: TypeFilter,
     strains: strains
   };
 }
