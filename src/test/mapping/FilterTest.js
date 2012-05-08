@@ -11,7 +11,22 @@ TestCase("Croaker.Filter.Tests", {
       
       assertThat(filteredList.getFilters(), []);
   },
-
+  
+  /* testNSStrainFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      namespaceFilter = new NSFIlter();
+      
+      filteredList.addFilter(namespaceFilter);
+      
+      filteredList.applyFilters();
+      
+      assertThat(filteredList.getAppliedArray()[0].name, 'Sample.core');
+      
+      
+  
+  }, */
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     

@@ -327,12 +327,29 @@ function Croaker(env) {
       appliedFilters = [];
     }
     
+    function applyFilters() {
+    
+    }
+    
     that.clearFilters = clearFilters;
     that.addFilter = addFilter;
     that.getFilters = getFilters;
     
     return that;
   }  
+  
+  function NSFilter() {
+    var that = {};
+    
+    function filter(node) {
+      return(node.straing === 'NS');
+    }
+    
+    
+    that.filter = filter;
+    
+    return that;
+  }
     
     
     
@@ -357,7 +374,8 @@ function Croaker(env) {
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
-    strains: strains
+    strains: strains,
+    NSFilter: NSFilter
   };
 }
 
