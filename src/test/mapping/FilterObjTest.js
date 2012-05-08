@@ -1,11 +1,9 @@
 TestCase("Croaker.FilterObj.Tests", {
   
   testNSFilter: function() {
-    //var nsFilter = new NSFilter(), ns = new Namespace('joe');
+    var nsFilter = new croaker.NSFilter(), ns = new croaker.Namespace('joe');
     
-   // assertThat(nsFilter.filter(ns), true);
-      
-      
+    assertThat(nsFilter.filter(ns), true);
   },
   
   setUp: function () {

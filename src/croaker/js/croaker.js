@@ -342,7 +342,7 @@ function Croaker(env) {
     var that = {};
     
     function filter(node) {
-      return(node.straing === 'NS');
+      return(node.strain === 'NS');
     }
     
     
