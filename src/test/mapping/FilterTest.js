@@ -1,44 +1,11 @@
 TestCase("Croaker.Filter.Tests", {
-  testGetTypes: function() {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
-      filter = new croaker.TypeFilter(module);
-    
-    assertThat(module.namespaces[0].types[0].name, 'SampleType.Core');
-    assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
-  },
   
-  testGetTypesWithMultipleTypes: function() {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
-      filter = new croaker.TypeFilter(module);
-    
-    assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
-    assertThat(filter.getTypes()[0][1].name, 'OtherType.Core');
-   
-  },
-  
-  testGetTypesFromMultipleNSRoots: function() {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filter = new croaker.TypeFilter(module);
-    
-    assertThat(filter.getTypes()[0][0].name, 'SampleType.Core');
-    assertThat(filter.getTypes()[1][0].name, 'OtherType.Core');
-    assertThat(filter.getTypes()[0][1].name, 'SecondType.Core');
-
-  },
-  
-  testNSFilterSingleNS: function () {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
-      filter = new croaker.NamespaceFilter(module);
-    
-    assertThat(filter.getNamespaces()[0].name, 'Sample.Core');
-  },
-  
-  testNSFilterMultipleNS: function () {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filter = new croaker.NamespaceFilter(module);
-    
-    assertThat(filter.getNamespaces()[0].name, 'Sample.Core');
-    assertThat(filter.getNamespaces()[1].name, 'Other.Core');
+  testSimpleFilteredListFunctionality: function() {
+    var filteredList = new croaker.FilteredList();
+      
+      filteredList.addFilter('oatmeal');
+      
+      assertThat(filteredList.getFilters(), ['oatmeal']);
   },
 
   setUp: function () {

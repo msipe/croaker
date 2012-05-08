@@ -313,51 +313,24 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {};
+    var that = {}, appliedFilters = [];
+    
+    function addFilter(newFilter) {
+      appliedFilters.push(newFilter);
+    }
+    
+    function getFilters() {
+      return appliedFilters;
+    }
+    
+    that.addFilter = addFilter;
+    that.getFilters = getFilters;
+    
+    return that;
   }  
     
-    function TypeFilter(module) {
-      var that = {};
-      
-      function getTypes() {
-        var x, y, namespace = module.namespaces, types, 
-          typesArray = [], NSArray = [];
-      
-        for (y=0; y < namespace.length; y++) {
-          types = module.namespaces[y].types;
-          typesArray.push([]);
-        
-          for (x=0; x < types.length; x++) {
-            typesArray[y].push(types[x]);
-          }
-        }
-      
-        return typesArray;
-      }
     
-      that.getTypes = getTypes;
     
-      return that;
-    }
-    
-    function NamespaceFilter(module){
-      var that = {};
-      
-      function getNamespaces() {
-        var x, namespaces = [], 
-          namespacesNode = module.namespaces;
-        
-        for (x=0; x < namespacesNode.length; x++) {
-          namespaces.push(namespacesNode[x]);
-        }
-        
-        return namespaces;
-      }
-    
-      that.getNamespaces = getNamespaces;
-    
-      return that;
-    }
   
   return {
     NodeEntry: NodeEntry,
@@ -379,8 +352,6 @@ function Croaker(env) {
     LinesOfCode: LinesOfCode,
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
-    NamespaceFilter: NamespaceFilter,
-    TypeFilter: TypeFilter,
     strains: strains
   };
 }
