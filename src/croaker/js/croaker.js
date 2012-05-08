@@ -323,6 +323,11 @@ function Croaker(env) {
       return appliedFilters;
     }
     
+    function clearFilters() {
+      appliedFilters = [];
+    }
+    
+    that.clearFilters = clearFilters;
     that.addFilter = addFilter;
     that.getFilters = getFilters;
     

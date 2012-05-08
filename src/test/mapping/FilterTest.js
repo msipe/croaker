@@ -6,6 +6,10 @@ TestCase("Croaker.Filter.Tests", {
       filteredList.addFilter('oatmeal');
       
       assertThat(filteredList.getFilters(), ['oatmeal']);
+      
+      filteredList.clearFilters();
+      
+      assertThat(filteredList.getFilters(), []);
   },
 
   setUp: function () {
