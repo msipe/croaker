@@ -55,6 +55,21 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[0].name, 'SampleType.Core');
   },
   
+  testMultiTypeFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filteredList = new croaker.FilteredList(module),
+      typeFilter = new croaker.TypeFilter();
+    
+    filteredList.addFilter(typeFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'SampleType.Core');
+    assertThat(filteredList.getAccepted()[1].name, 'SecondType.Core');
+    assertThat(filteredList.getAccepted()[2].name, 'OtherType.Core');
+    assertThat(filteredList.getAccepted()[3].name, 'SomeType.Core');
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     
@@ -178,7 +193,7 @@ TestCase("Croaker.Filter.Tests", {
                       new croaker.NodeEntry('Metrics', {}, [
                       ]),
                       new croaker.NodeEntry('Types', {}, [
-                        new croaker.NodeEntry('Type', {Name: 'OtherType.Core'}, [
+                        new croaker.NodeEntry('Type', {Name: 'SomeType.Core'}, [
                           new croaker.NodeEntry('Metrics', {}, [
                           ]),
                           new croaker.NodeEntry('Members', {}, [
