@@ -409,6 +409,8 @@ function Croaker(env) {
     var that = {};
     
     function filter(compareTo) {
+      compareTo = compareTo.name;
+      
       return (compareTo.indexOf(searchFor) !== -1);
     }
    

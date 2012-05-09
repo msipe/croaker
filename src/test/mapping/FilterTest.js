@@ -113,7 +113,14 @@ TestCase("Croaker.Filter.Tests", {
   },
   
   testSimpleNameMatching: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filteredList = new croaker.FilteredList(module), nameSearch = new croaker.NameFilter('Thisis.Core')
+  
+    filteredList.addFilter(nameSearch);
     
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
   },
   
   setUp: function () {
