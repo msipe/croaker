@@ -6,6 +6,15 @@ TestCase("Croaker.FilterObj.Tests", {
     assertThat(nsFilter.filter(ns), true);
   },
   
+  testNameMatchingFilter: function() {
+    var nameFilter = new croaker.NameFilter(), joe = 'joe', fred = 'fred', ns = new croaker.Namespace('joe');
+    
+    assertThat(nameFilter.match('joe',joe),  true);
+    //assertThat(nameFilter.match('joe',joe),  false);
+    
+    
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     

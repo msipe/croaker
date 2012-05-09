@@ -112,6 +112,10 @@ TestCase("Croaker.Filter.Tests", {
      assertThat(filteredList.getAccepted()[10].name, 'weard.Core');
   },
   
+  testSimpleNameMatching: function() {
+    
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     

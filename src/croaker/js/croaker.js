@@ -402,7 +402,18 @@ function Croaker(env) {
     that.filter = filter;
     
     return that;
+  }
   
+  function NameFilter() {
+    var that = {};
+    
+    function match(searchFor, compare) {
+      return true;
+    }
+   
+    that.match = match;
+   
+    return that;
   }
     
     
@@ -431,7 +442,8 @@ function Croaker(env) {
     strains: strains,
     NSFilter: NSFilter,
     TypeFilter: TypeFilter,
-    MemberFilter: MemberFilter
+    MemberFilter: MemberFilter,
+    NameFilter: NameFilter
   };
 }
 
