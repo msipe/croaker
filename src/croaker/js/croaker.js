@@ -313,19 +313,24 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, appliedFilters = [], accepted = [], nsArray = [], x;
+    var that = {}, filters = [], accepted = [], elements = [], x, y, temp;
     
     
     for (x=0; x < module.namespaces.length; x++) {
-      nsArray.push(module.namespaces[x]);
+      temp = module.namespaces[x];
+      elements.push(temp);
+      
+      for (y=0; y < temp.types.length; y++) {
+        elements.push(temp.types[y]);
+      }
     }
     
     function addFilter(newFilter) {
-      appliedFilters.push(newFilter);
+      filters.push(newFilter);
     }
     
     function getFilters() {
-      return appliedFilters;
+      return filters;
     }
     
     function getAccepted() {
@@ -333,16 +338,18 @@ function Croaker(env) {
     }
     
     function clearFilters() {
-      appliedFilters = [];
+      filters = [];
       accepted = [];
     }
     
     function applyFilters() {
-      var x;
+      var x, y;
       
-      for (x=0; x < nsArray.length; x++) {
-        if (appliedFilters[0].filter(nsArray[x])) {
-          accepted.push(nsArray[x]);
+      for (y=0; y < elements.length; y++) {
+        for (x=0; x < filters.length; x++) {
+          if (filters[x].filter(elements[y])) {
+            accepted.push(elements[y]);
+          }
         }
       }      
     }
@@ -372,8 +379,13 @@ function Croaker(env) {
   function TypeFilter() {
     var that = {};
     
+    function filter(node) {
+      return(node.strain === 'TY');
+    }
+    
+    that.filter = filter;
+    
     return that;
-  
   }
     
     

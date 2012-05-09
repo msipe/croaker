@@ -29,7 +29,7 @@ TestCase("Croaker.Filter.Tests", {
       assertThat(filteredList.getFilters(), []);
   }, 
   
-  testNSStrainFilterMultipleNS: function() {
+  testFilterMultipleNS: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
       namespaceFilter = new croaker.NSFilter();
@@ -48,6 +48,11 @@ TestCase("Croaker.Filter.Tests", {
       filteredList = new croaker.FilteredList(module),
       typeFilter = new croaker.TypeFilter();
     
+    filteredList.addFilter(typeFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'SampleType.Core');
   },
   
   setUp: function () {
