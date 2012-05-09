@@ -95,12 +95,12 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[1].name, 'Tested.Core');
   },
   
-  testIntegrateFilters: function() {
+  testIntegrateStrainFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
       memberFilter = new croaker.MemberFilter(),
       typeFilter = new croaker.TypeFilter(),
-      nsFilter = new croaker.NSFilter;
+      nsFilter = new croaker.NSFilter();
     
     filteredList.addFilter(memberFilter);
     filteredList.addFilter(typeFilter);
@@ -117,10 +117,31 @@ TestCase("Croaker.Filter.Tests", {
       filteredList = new croaker.FilteredList(module), nameSearch = new croaker.NameFilter('Thisis.Core')
   
     filteredList.addFilter(nameSearch);
+  
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
+  },
+  
+  testComplexNameMatching: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.MemberFilter(),
+      typeFilter = new croaker.TypeFilter(),
+      nsFilter = new croaker.NSFilter(),
+      nameSearch1 = new croaker.NameFilter('weard.Core');
+      nameSearch2 = new croaker.NameFilter('Thisis.Core');
+      nameSearch3 = new croaker.NameFilter('SomeType.Core');
+  
+    filteredList.addFilter(nameSearch1);
+    filteredList.addFilter(nameSearch2);
+    filteredList.addFilter(nameSearch3);
     
     filteredList.applyFilters();
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted()[1].name, 'weard.Core');
+    assertThat(filteredList.getAccepted()[2].name, 'SomeType.Core');
   },
   
   setUp: function () {
