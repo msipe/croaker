@@ -40,6 +40,7 @@ TestCase("Croaker.Filter.Tests", {
       
       assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
       assertThat(filteredList.getAccepted()[1].name, 'Other.Core');      
+      assertThat(filteredList.getAccepted()[2].name, 'Third.Core'); 
 
   }, 
   
@@ -143,6 +144,26 @@ TestCase("Croaker.Filter.Tests", {
                       ])
                     ]),
                     new croaker.NodeEntry('Namespace', {Name:'Other.Core'}, [
+                      new croaker.NodeEntry('Metrics', {}, [
+                      ]),
+                      new croaker.NodeEntry('Types', {}, [
+                        new croaker.NodeEntry('Type', {Name: 'OtherType.Core'}, [
+                          new croaker.NodeEntry('Metrics', {}, [
+                          ]),
+                          new croaker.NodeEntry('Members', {}, [
+                            new croaker.NodeEntry('Member', {Name: 'Thisis.Core', File:'50982.jkalhfksdl', Line:'5'}, [
+                              new croaker.NodeEntry('Metrics', {}, [
+                              ])
+                            ]),
+                            new croaker.NodeEntry('Member', {Name: 'weard.Core', File:'50982.jkalhfksdl', Line:'5'}, [
+                              new croaker.NodeEntry('Metrics', {}, [
+                              ])
+                            ])
+                          ])
+                        ])
+                      ])
+                    ]),
+                    new croaker.NodeEntry('Namespace', {Name:'Third.Core'}, [
                       new croaker.NodeEntry('Metrics', {}, [
                       ]),
                       new croaker.NodeEntry('Types', {}, [
