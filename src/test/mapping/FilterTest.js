@@ -82,6 +82,19 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
   },
   
+  testMultiMemberFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.MemberFilter();
+    
+    filteredList.addFilter(memberFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted()[1].name, 'Tested.Core');
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     
@@ -142,7 +155,7 @@ TestCase("Croaker.Filter.Tests", {
                           new croaker.NodeEntry('Metrics', {}, [
                           ]),
                           new croaker.NodeEntry('Members', {}, [
-                            new croaker.NodeEntry('Member', {Name: 'Thisis.Core', File:'50982.jkalhfksdl', Line:'5'}, [
+                            new croaker.NodeEntry('Member', {Name: 'Tested.Core', File:'50982.jkalhfksdl', Line:'5'}, [
                               new croaker.NodeEntry('Metrics', {}, [
                               ])
                             ])
