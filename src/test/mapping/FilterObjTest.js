@@ -9,8 +9,8 @@ TestCase("Croaker.FilterObj.Tests", {
   testNameMatchingFilter: function() {
     var nameFilter = new croaker.NameFilter(), joe = 'joe', fred = 'fred', ns = new croaker.Namespace('joe');
     
-    assertThat(nameFilter.match('joe',joe),  true);
-    //assertThat(nameFilter.match('joe',joe),  false);
+    assertThat(nameFilter.match('joe', joe),  true);
+    assertThat(nameFilter.match('joe', fred),  false);
     
     
   },

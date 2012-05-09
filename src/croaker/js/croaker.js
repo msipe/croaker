@@ -407,11 +407,11 @@ function Croaker(env) {
   function NameFilter() {
     var that = {};
     
-    function match(searchFor, compare) {
-      return true;
+    function filter(searchFor, compareTo) {
+      return (searchFor === compareTo);
     }
    
-    that.match = match;
+    that.filter = filter;
    
     return that;
   }
