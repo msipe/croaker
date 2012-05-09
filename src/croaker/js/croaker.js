@@ -313,7 +313,7 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, filters = [], accepted = [], elements = [], x, y, temp;
+    var that = {}, filters = [], accepted = [], elements = [], x, y, z, temp;
     
     
     for (x=0; x < module.namespaces.length; x++) {
@@ -322,6 +322,10 @@ function Croaker(env) {
       
       for (y=0; y < temp.types.length; y++) {
         elements.push(temp.types[y]);
+      
+        for (z=0; z < temp.types[y].members.length; z++) {
+          elements.push(temp.types[y].members[z]);
+        }
       }
     }
     
@@ -387,6 +391,19 @@ function Croaker(env) {
     
     return that;
   }
+  
+  function MemberFilter() {
+    var that = {};
+    
+    function filter(node) {
+      return (node.strain === 'MB');
+    }
+    
+    that.filter = filter;
+    
+    return that;
+  
+  }
     
     
     
@@ -413,7 +430,8 @@ function Croaker(env) {
     FilteredList:FilteredList,
     strains: strains,
     NSFilter: NSFilter,
-    TypeFilter: TypeFilter
+    TypeFilter: TypeFilter,
+    MemberFilter: MemberFilter
   };
 }
 

@@ -70,6 +70,18 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[3].name, 'SomeType.Core');
   },
   
+  testMemberFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.MemberFilter();
+    
+    filteredList.addFilter(memberFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     
