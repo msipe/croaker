@@ -7,10 +7,10 @@ TestCase("Croaker.FilterObj.Tests", {
   },
   
   testNameMatchingFilter: function() {
-    var nameFilter = new croaker.NameFilter(), joe = 'joe', fred = 'fred', ns = new croaker.Namespace('joe');
+    var nameFilter = new croaker.NameFilter('joe'), joe = 'joe', fred = 'fred', ns = new croaker.Namespace('joe');
     
-    assertThat(nameFilter.filter('joe', joe),  true);
-    assertThat(nameFilter.filter('joe', fred),  false);
+    assertThat(nameFilter.filter(joe),  true);
+    assertThat(nameFilter.filter(fred),  false);
     
     
   },

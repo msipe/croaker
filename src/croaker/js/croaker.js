@@ -372,6 +372,7 @@ function Croaker(env) {
     var that = {};
     
     function filter(node) {
+      
       return(node.strain === 'NS');
     }
     
@@ -384,7 +385,7 @@ function Croaker(env) {
     var that = {};
     
     function filter(node) {
-      return(node.strain === 'TY');
+      return (node.strain === 'TY');
     }
     
     that.filter = filter;
@@ -404,11 +405,11 @@ function Croaker(env) {
     return that;
   }
   
-  function NameFilter() {
+  function NameFilter(searchFor) {
     var that = {};
     
-    function filter(searchFor, compareTo) {
-      return (searchFor === compareTo);
+    function filter(compareTo) {
+      return (compareTo.indexOf(searchFor) !== -1);
     }
    
     that.filter = filter;
