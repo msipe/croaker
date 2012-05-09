@@ -347,11 +347,11 @@ function Croaker(env) {
     }
     
     function applyFilters() {
-      var x, y;
+      var x, y, temp;
       
       for (y=0; y < elements.length; y++) {
         for (x=0; x < filters.length; x++) {
-          if (filters[x].filter(elements[y])) {
+          if (filters[x].filter(elements[y]) && elements[y] !== accepted[accepted.length -1]) {
             accepted.push(elements[y]);
           }
         }

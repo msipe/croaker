@@ -1,11 +1,25 @@
 TestCase("Croaker.FilterError.Tests", {
   
-  testEmptyFilterFunctonality: function() {
+  testOverlappingFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filteredList = new croaker.FilteredList(module);
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.MemberFilter(),
+      typeFilter = new croaker.TypeFilter(),
+      nsFilter = new croaker.NSFilter(),
+      nameSearch = new croaker.NameFilter('weard.Core');
+  
+    filteredList.addFilter(nameSearch);
+    filteredList.addFilter(memberFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted().length, 4);
+    
+      
+      
       
   },
-  
+  //check for if you have two filters that overlap, make sure they dont duplicate an element
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
         
