@@ -315,6 +315,7 @@ function Croaker(env) {
   function FilteredList(module) {
     var that = {}, appliedFilters = [], accepted = [], nsArray = [], x;
     
+    
     for (x=0; x < module.namespaces.length; x++) {
       nsArray.push(module.namespaces[x]);
     }
@@ -363,10 +364,16 @@ function Croaker(env) {
       return(node.strain === 'NS');
     }
     
-    
     that.filter = filter;
     
     return that;
+  }
+  
+  function TypeFilter() {
+    var that = {};
+    
+    return that;
+  
   }
     
     
@@ -393,7 +400,8 @@ function Croaker(env) {
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
     strains: strains,
-    NSFilter: NSFilter
+    NSFilter: NSFilter,
+    TypeFilter: TypeFilter
   };
 }
 

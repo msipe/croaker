@@ -41,8 +41,14 @@ TestCase("Croaker.Filter.Tests", {
       assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
       assertThat(filteredList.getAccepted()[1].name, 'Other.Core');      
       assertThat(filteredList.getAccepted()[2].name, 'Third.Core'); 
-
   }, 
+  
+  testTypeFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      typeFilter = new croaker.TypeFilter();
+    
+  },
   
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
