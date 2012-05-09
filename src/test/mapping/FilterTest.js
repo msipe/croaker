@@ -83,6 +83,24 @@ TestCase("Croaker.Filter.Tests", {
   },
   
   testMultiMemberFilter: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.MemberFilter(),
+      typeFilter = new croaker.TypeFilter(),
+      nsFilter = new croaker.NSFilter();
+    
+    filteredList.addFilter(memberFilter);
+    filteredList.addFilter(typeFilter);
+    filteredList.addFilter(nsFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
+    assertThat(filteredList.getAccepted()[1].name, 'SampleType.Core');
+    assertThat(filteredList.getAccepted()[2].name, 'Thisis.Core');
+  },
+  
+  testSimpleIntegrateFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
       filteredList = new croaker.FilteredList(module),
       memberFilter = new croaker.MemberFilter();
