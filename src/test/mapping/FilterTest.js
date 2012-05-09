@@ -12,20 +12,24 @@ TestCase("Croaker.Filter.Tests", {
       assertThat(filteredList.getFilters(), []);
   },
   
-  /* testNSStrainFilter: function() {
+   testNSStrainFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      namespaceFilter = new NSFIlter();
+      namespaceFilter = new croaker.NSFilter();
       
       filteredList.addFilter(namespaceFilter);
       
       filteredList.applyFilters();
       
-      assertThat(filteredList.getAppliedArray()[0].name, 'Sample.core');
+      assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
+      
+      filteredList.clearFilters();
+      
+      assertThat(filteredList.getFilters(), []);
       
       
   
-  }, */
+  }, 
   
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
