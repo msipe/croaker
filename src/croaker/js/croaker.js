@@ -313,7 +313,11 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, appliedFilters = [], accepted = [];
+    var that = {}, appliedFilters = [], accepted = [], nsArray = [], x;
+    
+    for (x=0; x < module.namespaces.length; x++) {
+      nsArray.push(module.namespaces[x]);
+    }
     
     function addFilter(newFilter) {
       appliedFilters.push(newFilter);
@@ -333,9 +337,13 @@ function Croaker(env) {
     }
     
     function applyFilters() {
-      if (appliedFilters[0].filter(module.namespaces[0])) {
-        accepted.push(module.namespaces[0]);
-      }        
+      var x;
+      
+      for (x=0; x < nsArray.length; x++) {
+        if (appliedFilters[0].filter(nsArray[x])) {
+          accepted.push(nsArray[x]);
+        }
+      }      
     }
     
     that.getAccepted = getAccepted;

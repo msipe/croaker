@@ -1,7 +1,8 @@
 TestCase("Croaker.Filter.Tests", {
   
   testSimpleFilteredListFunctionality: function() {
-    var filteredList = new croaker.FilteredList();
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filteredList = new croaker.FilteredList(module);
       
       filteredList.addFilter('oatmeal');
       
@@ -26,9 +27,20 @@ TestCase("Croaker.Filter.Tests", {
       filteredList.clearFilters();
       
       assertThat(filteredList.getFilters(), []);
-      
-      
+  }, 
   
+  testNSStrainFilterMultipleNS: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
+      filteredList = new croaker.FilteredList(module),
+      namespaceFilter = new croaker.NSFilter();
+      
+      filteredList.addFilter(namespaceFilter);
+      
+      filteredList.applyFilters();
+      
+      assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
+      assertThat(filteredList.getAccepted()[1].name, 'Other.Core');      
+
   }, 
   
   setUp: function () {
