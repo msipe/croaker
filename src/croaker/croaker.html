@@ -112,6 +112,11 @@
         }        
       }
       
+      function addFilters() {
+        
+      
+      }
+      
       function load(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -145,25 +150,25 @@
      
       <div id="nav">
         <form>
-          <label for="file">File</label>
+          <label for="file"></label>
           <input id="file" type="text" value="sample.xml"/>
           <button id="btnload">Load</button>
         </form>      
         </br>
         <form class="ui-corner-all">
-          <label for="filter">Filter</label>
           <input id="filter" type="text" value=""/>
-          <button id="filterBtn"> Filter </button>
-        </form>
-        </br>
-        <form>
            NS
           <input type="checkbox" id="NS"/>
           TY
           <input type="checkbox" id="TY"/>
           MB
           <input type="checkbox" id="MB"/>
+          
+          <button id="filterBtn"> Filter </button>
+          
         </form>
+        </br>
+        
       </div>
 
       </br>

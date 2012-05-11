@@ -14,12 +14,8 @@ TestCase("Croaker.FilterError.Tests", {
     filteredList.applyFilters();
     
     assertThat(filteredList.getAccepted().length, 4);
-    
-      
-      
-      
   },
-  //check for if you have two filters that overlap, make sure they dont duplicate an element
+
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
         
