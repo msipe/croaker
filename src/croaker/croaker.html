@@ -89,9 +89,8 @@
         {{#types}}
           {{> entry}}            
         {{/types}}              
-   </script>
-      
-
+   </script>      
+   
     <script type="text/javascript">
       function parseData(xml) {
         try {
@@ -99,23 +98,23 @@
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#main-template').html(),
-          metricdefs = [croaker.allDefinitions[0],croaker.allDefinitions[1], croaker.allDefinitions[2], croaker.allDefinitions[3], croaker.allDefinitions[4]];
+          metricdefs = [croaker.allDefinitions[0],croaker.allDefinitions[1], croaker.allDefinitions[2], 
+                        croaker.allDefinitions[3], croaker.allDefinitions[4]],
+          list = new croaker.FilteredList(module),
+          appliedList = list.applyFilters();
           
-          results.html(Mustache.to_html(template, {module:module, metricdefs: metricdefs}, 
+          results.html(Mustache.to_html(template, {module: module, metricdefs: metricdefs }, 
                       {metrics: $('#metrics-template').html(), 
                        entry: $('#entry-template').html(),
                        module: $('#module-template').html(),
                        types: $('type-template').html()}));
-        }   
+        }
+        
         catch(e) {
           alert(e);
         }        
       }
       
-      function addFilters() {
-        
-      
-      }
       
       function load(e) {
         e.stopPropagation();

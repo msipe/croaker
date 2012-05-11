@@ -144,6 +144,16 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[2].name, 'SomeType.Core');
   },
   
+  testComplexNameMatching: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module);
+      
+      filteredList.applyFilters();
+      
+      assertThat(filteredList.getAccepted().length, 3);
+        
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     
