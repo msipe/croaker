@@ -55,18 +55,61 @@
       </table>
     </script>  
 
-  
-   
     <script type="text/javascript">
+      
+      function Filter() {
+        var that = {}, list;
+        
+        function setList(newList) {
+          list = newList;
+        }
+        
+        function setFilters() {
+          if ($('#NS').is(':checked')) {
+            list.addFilter(nsFilter);
+          }
+        
+          if ($('#TY').is(':checked')) {
+            list.addFilter(tyFilter);
+          }
+        
+          if ($('#MB').is(':checked')) {
+            list.addFilter(mbFilter);
+          }
+        
+          if ($('#filter').val().length > 0) {
+            list.addFilter(new croaker.NameFilter($('#filter').val()));
+          }
+          
+          list.applyFilters();
+          
+          return list.getAccepted();
+        }
+        
+        that.setFilters = setFilters;
+        that.setList = setList;
+        
+        return that;
+      }
+      
+      
+      masterFilter = new Filter(); 
+      nsFilter = new croaker.NSFilter();      
+      tyFilter = new croaker.TypeFilter();      
+      mbFilter = new croaker.MemberFilter();      
+      nameFilter = new croaker.NameFilter();      
+  
       function parseData(xml) {
         try {
         var nodes = new croaker.Parser().parse(xml),
           module = new croaker.Mapper().map(nodes),
           results = $('#results'),
           template = $('#main-template').html(),
-          list = new croaker.FilteredList(module),
-          listArray = list.getAccepted();
-          
+          list = new croaker.FilteredList(module), listArray;
+         
+          masterFilter.setList(list);
+          listArray = masterFilter.setFilters();
+                    
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions }, 
                       {metrics: $('#metrics-template').html(), 
                        entry: $('#entry-template').html()}));
@@ -76,8 +119,7 @@
           alert(e);
         }        
       }
-      
-      
+
       function load(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -95,7 +137,7 @@
 
       function init() {
         $('#btnload').click(load);
-        $('#filterBtn').click(load);
+        $('#filterBtn').click(masterFilter.setFilters);
       }
 
       $(window).load(init);
@@ -105,11 +147,11 @@
     <div id="logo">
       <img src="logo.png"/>  
     </div>
-    
+
     <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all">Doing work</div>    
     <br/>
     <div id="main">
-     
+
       <div id="nav">
         <form>
           <label for="file"></label>

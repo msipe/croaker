@@ -150,7 +150,7 @@ TestCase("Croaker.Filter.Tests", {
       
       filteredList.applyFilters();
       
-      assertThat(filteredList.getAccepted().length, 3);
+      assertThat(filteredList.getAccepted().length, 4);
   },
   
   setUp: function () {
