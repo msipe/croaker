@@ -315,6 +315,8 @@ function Croaker(env) {
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [], x, y, z, temp;
     
+    elements.push(module);
+    
     for (x=0; x < module.namespaces.length; x++) {
       temp = module.namespaces[x];
       elements.push(temp);
