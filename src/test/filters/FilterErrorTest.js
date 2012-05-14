@@ -3,9 +3,9 @@ TestCase("Croaker.FilterError.Tests", {
   testOverlappingFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.MemberFilter(),
-      typeFilter = new croaker.TypeFilter(),
-      nsFilter = new croaker.NSFilter(),
+      memberFilter = new croaker.StrainFilter('MB'),
+      typeFilter = new croaker.StrainFilter('TY'),
+      nsFilter = new croaker.StrainFilter('NS'),
       nameSearch = new croaker.NameFilter('weard.Core');
   
     filteredList.addFilter(nameSearch);

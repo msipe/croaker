@@ -94,9 +94,9 @@
       
       
       masterFilter = new Filter(); 
-      nsFilter = new croaker.NSFilter();      
-      tyFilter = new croaker.TypeFilter();      
-      mbFilter = new croaker.MemberFilter();      
+      nsFilter = new croaker.StrainFilter('NS')      
+      tyFilter = new croaker.StrainFilter('TY')      
+      mbFilter = new croaker.StrainFilter('MB')      
       nameFilter = new croaker.NameFilter();      
   
       function parseData(xml) {
@@ -109,6 +109,7 @@
          
           masterFilter.setList(list);
           listArray = masterFilter.setFilters();
+          list.clearFilters();
                     
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions }, 
                       {metrics: $('#metrics-template').html(), 

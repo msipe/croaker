@@ -313,7 +313,8 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, filters = [], accepted = [], elements = [], x, y, z, temp;
+    var that = {}, filters = [], accepted = [], elements = [], nameArray, 
+      x, y, z, temp;
     
     elements.push(module);
     
@@ -373,36 +374,11 @@ function Croaker(env) {
     return that;
   }  
   
-  function NSFilter() {
+  function StrainFilter(lookFor) {
     var that = {};
     
     function filter(node) {
-      
-      return(node.strain === 'NS');
-    }
-    
-    that.filter = filter;
-    
-    return that;
-  }
-  
-  function TypeFilter() {
-    var that = {};
-    
-    function filter(node) {
-      return (node.strain === 'TY');
-    }
-    
-    that.filter = filter;
-    
-    return that;
-  }
-  
-  function MemberFilter() {
-    var that = {};
-    
-    function filter(node) {
-      return (node.strain === 'MB');
+      return (node.strain === lookFor);
     }
     
     that.filter = filter;
@@ -418,6 +394,7 @@ function Croaker(env) {
       
       return (compareTo.indexOf(searchFor) !== -1);
     }
+   
    
     that.filter = filter;
    
@@ -446,9 +423,7 @@ function Croaker(env) {
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
     strains: strains,
-    NSFilter: NSFilter,
-    TypeFilter: TypeFilter,
-    MemberFilter: MemberFilter,
+    StrainFilter: StrainFilter,
     NameFilter: NameFilter
   };
 }

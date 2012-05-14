@@ -1,7 +1,7 @@
 TestCase("Croaker.FilterObj.Tests", {
   
   testNSFilter: function() {
-    var nsFilter = new croaker.NSFilter(), ns = new croaker.Namespace('joe');
+    var nsFilter = new croaker.StrainFilter('NS'), ns = new croaker.Namespace('joe');
     
     assertThat(nsFilter.filter(ns), true);
   },

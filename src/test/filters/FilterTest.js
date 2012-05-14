@@ -16,7 +16,7 @@ TestCase("Croaker.Filter.Tests", {
    testNSStrainFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      namespaceFilter = new croaker.NSFilter();
+      namespaceFilter = new croaker.StrainFilter('NS');
       
       filteredList.addFilter(namespaceFilter);
       
@@ -32,7 +32,7 @@ TestCase("Croaker.Filter.Tests", {
   testFilterMultipleNS: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      namespaceFilter = new croaker.NSFilter();
+      namespaceFilter = new croaker.StrainFilter('NS')
       
       filteredList.addFilter(namespaceFilter);
       
@@ -46,7 +46,7 @@ TestCase("Croaker.Filter.Tests", {
   testTypeFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      typeFilter = new croaker.TypeFilter();
+      typeFilter = new croaker.StrainFilter('TY')
     
     filteredList.addFilter(typeFilter);
     
@@ -58,7 +58,7 @@ TestCase("Croaker.Filter.Tests", {
   testMultiTypeFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      typeFilter = new croaker.TypeFilter();
+      typeFilter =new croaker.StrainFilter('TY')
     
     filteredList.addFilter(typeFilter);
     
@@ -73,7 +73,7 @@ TestCase("Croaker.Filter.Tests", {
   testMemberFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.MemberFilter();
+      memberFilter = new croaker.StrainFilter('MB');
     
     filteredList.addFilter(memberFilter);
     
@@ -85,7 +85,7 @@ TestCase("Croaker.Filter.Tests", {
   testMultiMemberFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.MemberFilter();
+      memberFilter = new croaker.StrainFilter('MB');
     
     filteredList.addFilter(memberFilter);
     
@@ -98,9 +98,9 @@ TestCase("Croaker.Filter.Tests", {
   testIntegrateStrainFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.MemberFilter(),
-      typeFilter = new croaker.TypeFilter(),
-      nsFilter = new croaker.NSFilter();
+      memberFilter = new croaker.StrainFilter('MB'),
+      typeFilter = new croaker.StrainFilter('TY'),
+      nsFilter = new croaker.StrainFilter('NS');
     
     filteredList.addFilter(memberFilter);
     filteredList.addFilter(typeFilter);
@@ -126,11 +126,8 @@ TestCase("Croaker.Filter.Tests", {
   testComplexNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.MemberFilter(),
-      typeFilter = new croaker.TypeFilter(),
-      nsFilter = new croaker.NSFilter(),
-      nameSearch1 = new croaker.NameFilter('weard.Core');
-      nameSearch2 = new croaker.NameFilter('Thisis.Core');
+      nameSearch1 = new croaker.NameFilter('weard.Core'),
+      nameSearch2 = new croaker.NameFilter('Thisis.Core'),
       nameSearch3 = new croaker.NameFilter('SomeType.Core');
   
     filteredList.addFilter(nameSearch1);
@@ -151,6 +148,23 @@ TestCase("Croaker.Filter.Tests", {
       filteredList.applyFilters();
       
       assertThat(filteredList.getAccepted().length, 4);
+  },
+  
+  testNameandElementMatching: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      memberFilter = new croaker.StrainFilter('MB'),
+      nameSearch1= new croaker.NameFilter('Core');
+
+  
+    filteredList.addFilter(nameSearch1);
+    filteredList.addFilter(memberFilter);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted().length, 1);
+    
+
   },
   
   setUp: function () {
