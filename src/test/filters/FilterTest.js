@@ -1,18 +1,5 @@
 TestCase("Croaker.Filter.Tests", {
   
-  testSimpleFilteredListFunctionality: function() {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filteredList = new croaker.FilteredList(module);
-      
-      filteredList.addFilter('oatmeal');
-      
-      assertThat(filteredList.getFilters(), ['oatmeal']);
-      
-      filteredList.clearFilters();
-      
-      assertThat(filteredList.getFilters(), []);
-  },
-  
    testNSStrainFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
