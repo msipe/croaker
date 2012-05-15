@@ -101,10 +101,10 @@ TestCase("Croaker.Filter.Tests", {
   
   testSimpleNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filteredList = new croaker.FilteredList(module), nameSearch = new croaker.NameFilter('Thisis.Core')
+      filteredList = new croaker.FilteredList(module), nameSearch = new croaker.NameFilter('Thisis.Core');
   
     filteredList.addFilter(nameSearch);
-  
+    
     filteredList.applyFilters();
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
@@ -123,9 +123,15 @@ TestCase("Croaker.Filter.Tests", {
     
     filteredList.applyFilters();
     
-    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted().length, 5);
+    
+    
+    
+    assertThat(filteredList.getAccepted()[0].name, 'weard.Core');
     assertThat(filteredList.getAccepted()[1].name, 'weard.Core');
-    assertThat(filteredList.getAccepted()[2].name, 'SomeType.Core');
+    assertThat(filteredList.getAccepted()[2].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted()[3].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted()[4].name, 'SomeType.Core');
   },
   
   testEmptyFilter: function() {
@@ -149,8 +155,8 @@ TestCase("Croaker.Filter.Tests", {
     
     filteredList.applyFilters();
     
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
     assertThat(filteredList.getAccepted().length, 1);
-    
 
   },
   

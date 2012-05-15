@@ -13,7 +13,8 @@ TestCase("Croaker.FilterError.Tests", {
     
     filteredList.applyFilters();
     
-    assertThat(filteredList.getAccepted().length, 4);
+    assertThat(filteredList.getAccepted().length, 2);
+    
   },
 
   setUp: function () {
