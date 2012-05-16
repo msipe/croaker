@@ -56,7 +56,14 @@
     </script>  
 
     <script type="text/javascript">
-      
+      var masterFilter, 
+        listArray;
+        mapper = new croaker.Mapper(),
+        nsFilter = new croaker.StrainFilter('NS'),    
+        tyFilter = new croaker.StrainFilter('TY'),    
+        mbFilter = new croaker.StrainFilter('MB'),     
+        nameFilter = new croaker.NameFilter(); 
+       
       function Filter() {
         var that = {}, list;
         
@@ -86,40 +93,65 @@
           return list.getAccepted();
         }
         
+        function getList() {
+          return list;
+        }
+        
+        that.getList = getList;
         that.setFilters = setFilters;
         that.setList = setList;
         
         return that;
       }
       
-      
-      masterFilter = new Filter(); 
-      nsFilter = new croaker.StrainFilter('NS')      
-      tyFilter = new croaker.StrainFilter('TY')      
-      mbFilter = new croaker.StrainFilter('MB')      
-      nameFilter = new croaker.NameFilter();      
-  
+      masterFilter = new Filter();
+          
+                     
       function parseData(xml) {
         try {
-        var nodes = new croaker.Parser().parse(xml),
-          module = new croaker.Mapper().map(nodes),
-          results = $('#results'),
-          template = $('#main-template').html(),
-          list = new croaker.FilteredList(module), listArray;
-         
-          masterFilter.setList(list);
-          listArray = masterFilter.setFilters();
-          list.clearFilters();
-                    
-          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions }, 
-                      {metrics: $('#metrics-template').html(), 
+          var nodes = new croaker.Parser().parse(xml),
+            mappedNode = mapper.map(nodes),
+            results = $('#results'),
+            template = $('#main-template').html(),
+            list = new croaker.FilteredList(mappedNode);
+
+            masterFilter.setList(list);
+            
+            listArray = masterFilter.setFilters();
+            
+            results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
+                      {metrics: $('#metrics-template').html(),
                        entry: $('#entry-template').html()}));
+            
+            masterFilter.getList().clearFilters();
         }
         
         catch(e) {
           alert(e);
-        }        
+        }
       }
+      
+      function render(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        try {
+          var results = $('#results'),
+            template = $('#main-template').html();
+         
+          listArray = masterFilter.setFilters();
+
+          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions}, 
+                      {metrics: $('#metrics-template').html(), 
+                       entry: $('#entry-template').html()}));
+          
+          masterFilter.getList().clearFilters();
+        }
+        
+        catch(err) {
+          alert(err);
+        }
+      }  
 
       function load(e) {
         e.stopPropagation();
@@ -138,10 +170,11 @@
 
       function init() {
         $('#btnload').click(load);
-        $('#filterBtn').click(masterFilter.setFilters);
+        $('#filterBtn').click(render);
       }
 
       $(window).load(init);
+      
     </script>
   </head>
   <body >
@@ -156,7 +189,7 @@
       <div id="nav">
         <form>
           <label for="file"></label>
-          <input id="file" type="text" value="sample.xml"/>
+          <input id="file" type="text" value="test.xml"/>
           <button id="btnload">Load</button>
         </form>      
         </br>

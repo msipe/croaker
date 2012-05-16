@@ -332,6 +332,7 @@ function Croaker(env) {
     }
     
     function addFilter(newFilter) {
+      emptyFilter = false;
       if (newFilter.isNameFilter()) {
         nameFilter.push(newFilter);
         return;
@@ -356,6 +357,7 @@ function Croaker(env) {
       filters = [];
       accepted = [];
       actualAccepted = [];
+      nameFilter = [];
       emptyFilter = true;
     }
     
@@ -378,6 +380,7 @@ function Croaker(env) {
       }
       
       if (nameFilter.length > 0) {
+        emptyFilter = false;
         for (y=0; y < nameFilter.length; y++) {
           for (x=0; x < accepted.length; x++) {
             if (nameFilter[y].filter(accepted[x])) {
