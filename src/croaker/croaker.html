@@ -124,6 +124,7 @@
                        entry: $('#entry-template').html()}));
             
             masterFilter.getList().clearFilters();
+            $('input:checkbox').removeAttr('checked');
         }
         
         catch(e) {

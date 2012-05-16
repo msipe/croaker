@@ -365,15 +365,12 @@ function Croaker(env) {
       var x, y, temp;
       
       if (filters.length === 0) {
-        emptyFilter = false;
-        for (x=0; x < elements.length; x++) {
-          accepted.push(elements[x]);
-        }
+        accepted = elements;
       }
       
       for (y=0; y < elements.length; y++) {
         for (x=0; x < filters.length; x++) {
-          if (filters[x].filter(elements[y]) && elements[y] !== accepted[accepted.length -1]) {
+          if (filters[x].filter(elements[y])) {
             accepted.push(elements[y]);
           }
         }
