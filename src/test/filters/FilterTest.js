@@ -163,13 +163,15 @@ TestCase("Croaker.Filter.Tests", {
    testCaseInsensitiveSearching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      nameSearch1= new croaker.NameFilter('core');
+      nameSearch1= new croaker.NameFilter('core'),
+      nameSearch2= new croaker.NameFilter('soMe.DLl');
 
     filteredList.addFilter(nameSearch1);
+    filteredList.addFilter(nameSearch2);
     
     filteredList.applyFilters();
     
-    assertThat(filteredList.getAccepted().length);
+    assertThat(filteredList.getAccepted().length, 4);
 
   },
   

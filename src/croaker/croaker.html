@@ -106,7 +106,8 @@
       
       masterFilter = new Filter();
           
-                     
+      
+      
       function parseData(xml) {
         try {
         
@@ -156,7 +157,12 @@
         catch(err) {
           alert(err);
         }
-      }  
+      }
+
+      function reset() {
+        $('input:checkbox').removeAttr('checked');
+        $('#filter').val('');
+      }      
 
       function load(e) {
         e.stopPropagation();
@@ -176,6 +182,7 @@
       function init() {
         $('#btnload').click(load);
         $('#filterBtn').click(render);
+        $('#reset').click(reset);
       }
 
       $(window).load(init);
@@ -208,6 +215,7 @@
           <input type="checkbox" id="MB"/>
           
           <button id="filterBtn"> Filter </button>
+          <button id="restBtn"> Reset </button>
           
         </form>
         </br>
