@@ -160,6 +160,19 @@ TestCase("Croaker.Filter.Tests", {
 
   },
   
+   testCaseInsensitiveSearching: function() {
+    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      nameSearch1= new croaker.NameFilter('core');
+
+    filteredList.addFilter(nameSearch1);
+    
+    filteredList.applyFilters();
+    
+    assertThat(filteredList.getAccepted().length);
+
+  },
+  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     

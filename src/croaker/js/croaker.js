@@ -425,7 +425,8 @@ function Croaker(env) {
     var that = {};
     
     function filter(compareTo) {
-      compareTo = compareTo.name;
+      compareTo = compareTo.name.toLowerCase();
+      searchFor = searchFor.toLowerCase();
       
       return (compareTo.indexOf(searchFor) !== -1);
     }

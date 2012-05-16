@@ -109,6 +109,10 @@
                      
       function parseData(xml) {
         try {
+        
+          $('input:checkbox').removeAttr('checked');
+          $('#filter').val('');
+          
           var nodes = new croaker.Parser().parse(xml),
             mappedNode = mapper.map(nodes),
             results = $('#results'),
@@ -124,7 +128,7 @@
                        entry: $('#entry-template').html()}));
             
             masterFilter.getList().clearFilters();
-            $('input:checkbox').removeAttr('checked');
+            
         }
         
         catch(e) {
