@@ -109,6 +109,8 @@
       
       
       function parseData(xml) {
+        
+        
         try {
           $('input:checkbox').removeAttr('checked');
           $('#filter').val('');
@@ -128,6 +130,7 @@
                      entry: $('#entry-template').html()}));
             
           masterFilter.getList().clearFilters();
+          $('#flash').html('');
         }
         
         catch(e) {
@@ -172,6 +175,7 @@
       }      
 
       function load(e) {
+        $('#flash').html('Doing Work');
         e.stopPropagation();
         e.preventDefault();
         //var url = new croaker.LocationUrlParser().parse();
@@ -201,7 +205,7 @@
       <img src="logo.png"/>  
     </div>
 
-    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all">Doing work</div>    
+    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all"></div>    
     <br/>
     <div id="main">
 
