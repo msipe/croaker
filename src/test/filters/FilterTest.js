@@ -125,14 +125,12 @@ TestCase("Croaker.Filter.Tests", {
     
     assertThat(filteredList.getAccepted().length, 5);
     
-    
-    
-    assertThat(filteredList.getAccepted()[0].name, 'weard.Core');
+    assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
     assertThat(filteredList.getAccepted()[1].name, 'weard.Core');
-    assertThat(filteredList.getAccepted()[2].name, 'Thisis.Core');
+    assertThat(filteredList.getAccepted()[2].name, 'SomeType.Core');
     assertThat(filteredList.getAccepted()[3].name, 'Thisis.Core');
-    assertThat(filteredList.getAccepted()[4].name, 'SomeType.Core');
-  },
+    assertThat(filteredList.getAccepted()[4].name, 'weard.Core');
+  }, 
   
   testEmptyFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),

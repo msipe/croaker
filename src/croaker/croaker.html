@@ -159,7 +159,10 @@
         }
       }
 
-      function reset() {
+      function reset(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
       }      
@@ -182,7 +185,7 @@
       function init() {
         $('#btnload').click(load);
         $('#filterBtn').click(render);
-        $('#reset').click(reset);
+        $('#resetBtn').click(reset);
       }
 
       $(window).load(init);
@@ -215,7 +218,7 @@
           <input type="checkbox" id="MB"/>
           
           <button id="filterBtn"> Filter </button>
-          <button id="restBtn"> Reset </button>
+          <button id="resetBtn"> Reset </button>
           
         </form>
         </br>

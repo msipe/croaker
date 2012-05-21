@@ -312,9 +312,59 @@ function Croaker(env) {
     };
   }
   
+  function OrFilter(filterArray) {
+    var that = {};
+    
+    function filter(element) {
+      var x;
+      
+      for (x=0; x < filterArray.length; x++) {
+        if (filterArray[x].filter(element)) {
+          return true;
+        }
+      }
+    }
+      
+    that.filter = filter;
+    
+    return that;
+  }
+  
+  function AndFilter(filterArray) {
+    var that = {};
+    
+    function filter(element) {
+      var x;
+      
+      for (x=0; x < filterArray.length; x++) {
+        if (filterArray[x].filter(element)) {
+          return true;
+        }
+      }
+    }
+      
+    that.filter = filter;
+    
+    return that;
+  }
+  
+  function DummyFilter() {
+    var that = {};
+    
+    function filter() {
+      return true;
+    }
+    
+    that.filter = filter;
+    
+    return that;
+  }
+  
+  
+  
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [], emptyFilter = false,
-      x, y, z, temp, actualAccepted = [], nameFilter = [];
+      x, y, z, temp, actualAccepted = [], nameFilter = [], andFilter, orFilter;
     
     elements.push(module);
     
@@ -333,6 +383,7 @@ function Croaker(env) {
     
     function addFilter(newFilter) {
       emptyFilter = false;
+      
       if (newFilter.isNameFilter()) {
         nameFilter.push(newFilter);
         return;
@@ -362,36 +413,22 @@ function Croaker(env) {
     }
     
     function applyFilters() {
-      var x, y, temp;
-      
-      if (filters.length === 0) {
-        accepted = elements;
+      var x, y, z, temp, orFilter = new DummyFilter(), andFilter = new DummyFilter();
+       
+      if (filters.length > 0) {
+        orFilter = new OrFilter(filters);
+      }
+       
+      if (nameFilter.length > 0) {
+        andFilter = new AndFilter(nameFilter);
       }
       
       for (y=0; y < elements.length; y++) {
-        for (x=0; x < filters.length; x++) {
-          if (filters[x].filter(elements[y])) {
-            accepted.push(elements[y]);
-          }
+        if (orFilter.filter(elements[y]) && andFilter.filter(elements[y])) {
+          actualAccepted.push(elements[y]);
         }
       }
-      
-      if (nameFilter.length > 0) {
-        emptyFilter = false;
-        for (y=0; y < nameFilter.length; y++) {
-          for (x=0; x < accepted.length; x++) {
-            if (nameFilter[y].filter(accepted[x])) {
-              actualAccepted.push(accepted[x]);
-            }
-          }
-        }
-      }
-      
-      else {
-        for (x=0; x < accepted.length; x++) {
-          actualAccepted.push(accepted[x]);
-        }
-      } 
+          
     }
     
     that.getAccepted = getAccepted;
@@ -402,7 +439,9 @@ function Croaker(env) {
     that.applyFilters = applyFilters;
     
     return that;
-  }  
+  }
+  
+  
   
   function StrainFilter(lookFor) {
     var that = {};
