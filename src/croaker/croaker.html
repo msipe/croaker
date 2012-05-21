@@ -57,7 +57,7 @@
 
     <script type="text/javascript">
       var masterFilter, 
-        listArray;
+        listArray,
         mapper = new croaker.Mapper(),
         nsFilter = new croaker.StrainFilter('NS'),    
         tyFilter = new croaker.StrainFilter('TY'),    
@@ -110,7 +110,6 @@
       
       function parseData(xml) {
         try {
-        
           $('input:checkbox').removeAttr('checked');
           $('#filter').val('');
           
@@ -120,16 +119,15 @@
             template = $('#main-template').html(),
             list = new croaker.FilteredList(mappedNode);
 
-            masterFilter.setList(list);
+          masterFilter.setList(list);
             
-            listArray = masterFilter.setFilters();
+          listArray = masterFilter.setFilters();
             
-            results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
-                      {metrics: $('#metrics-template').html(),
-                       entry: $('#entry-template').html()}));
+          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
+                    {metrics: $('#metrics-template').html(),
+                     entry: $('#entry-template').html()}));
             
-            masterFilter.getList().clearFilters();
-            
+          masterFilter.getList().clearFilters();
         }
         
         catch(e) {
@@ -140,6 +138,11 @@
       function render(e) {
         e.stopPropagation();
         e.preventDefault();
+        
+        if (!listArray) {
+          alert('XML is not loaded');
+          return;
+        }
         
         try {
           var results = $('#results'),
@@ -157,6 +160,7 @@
         catch(err) {
           alert(err);
         }
+        
       }
 
       function reset(e) {
