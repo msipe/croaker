@@ -93,11 +93,11 @@
           return list.getAccepted();
         }
         
-        function getList() {
-          return list;
+        function clearFilters() {
+          list.clearFilters();
         }
         
-        that.getList = getList;
+        that.clearFilters = clearFilters;
         that.setFilters = setFilters;
         that.setList = setList;
         
@@ -129,7 +129,7 @@
                     {metrics: $('#metrics-template').html(),
                      entry: $('#entry-template').html()}));
             
-          adapter.getList().clearFilters();
+          adapter.clearFilters();
           $('#flash').html('');
         }
         
@@ -157,7 +157,7 @@
                       {metrics: $('#metrics-template').html(), 
                        entry: $('#entry-template').html()}));
           
-          adapter.getList().clearFilters();
+          adapter.clearFilters();
         }
         
         catch(err) {
