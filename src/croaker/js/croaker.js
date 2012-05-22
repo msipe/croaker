@@ -3,11 +3,11 @@ function Croaker(env) {
     $ = deps.jQuery || jQuery,
     mywindow = deps.window || window,
     MISSING_METRIC_VALUE = -99999,
-    MaintainabilityIndex,
-    CyclomaticComplexity,
-    ClassCoupling,
-    DepthOfInheritance,
-    LinesOfCode,
+    maintainabilityIndex,
+    cyclomaticComplexity,
+    classCoupling,
+    depthOfInheritance,
+    linesOfCode,
     allDefinitions,
     strains;
     
@@ -33,13 +33,13 @@ function Croaker(env) {
     };
   }
   
-  MaintainabilityIndex = new MetricDefinition('MI', 'MaintainabilityIndex');
-  CyclomaticComplexity = new MetricDefinition('CyC', 'CyclomaticComplexity');
-  ClassCoupling = new MetricDefinition('CC', 'ClassCoupling');
-  LinesOfCode = new MetricDefinition('LC', 'LinesOfCode');
-  DepthOfInheritance = new MetricDefinition('DI', 'DepthOfInheritance');
+  maintainabilityIndex = new MetricDefinition('MI', 'MaintainabilityIndex');
+  cyclomaticComplexity = new MetricDefinition('CyC', 'CyclomaticComplexity');
+  classCoupling = new MetricDefinition('CC', 'ClassCoupling');
+  linesOfCode = new MetricDefinition('LC', 'LinesOfCode');
+  depthOfInheritance = new MetricDefinition('DI', 'DepthOfInheritance');
   
-  allDefinitions = [MaintainabilityIndex, CyclomaticComplexity, ClassCoupling, DepthOfInheritance, LinesOfCode];
+  allDefinitions = [maintainabilityIndex, cyclomaticComplexity, classCoupling, depthOfInheritance, linesOfCode];
   
   function Parser() {
     var that = {};
@@ -493,11 +493,11 @@ function Croaker(env) {
     LocationUrlParser: LocationUrlParser,
     MISSING_METRIC_VALUE: MISSING_METRIC_VALUE,
     MetricDefinition: MetricDefinition,
-    MaintainabilityIndex: MaintainabilityIndex,
-    CyclomaticComplexity: CyclomaticComplexity,
-    ClassCoupling: ClassCoupling,
-    DepthOfInheritance: DepthOfInheritance,
-    LinesOfCode: LinesOfCode,
+    maintainabilityIndex: maintainabilityIndex,
+    cyclomaticComplexity: cyclomaticComplexity,
+    classCoupling: classCoupling,
+    depthOfInheritance: depthOfInheritance,
+    linesOfCode: linesOfCode,
     allDefinitions: allDefinitions,
     FilteredList:FilteredList,
     strains: strains,
