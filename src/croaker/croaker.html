@@ -104,7 +104,7 @@
         return that;
       }
       
-      masterFilter = new Filter();
+      adapter = new Filter();
           
       
       
@@ -119,17 +119,17 @@
             mappedNode = mapper.map(nodes),
             results = $('#results'),
             template = $('#main-template').html(),
-            list = new croaker.FilteredList(mappedNode);
+            filteredList = new croaker.FilteredList(mappedNode);
 
-          masterFilter.setList(list);
+          adapter.setList(filteredList);
             
-          listArray = masterFilter.setFilters();
+          listArray = adapter.setFilters();
             
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
                     {metrics: $('#metrics-template').html(),
                      entry: $('#entry-template').html()}));
             
-          masterFilter.getList().clearFilters();
+          adapter.getList().clearFilters();
           $('#flash').html('');
         }
         
@@ -151,13 +151,13 @@
           var results = $('#results'),
             template = $('#main-template').html();
          
-          listArray = masterFilter.setFilters();
+          listArray = adapter.setFilters();
 
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions}, 
                       {metrics: $('#metrics-template').html(), 
                        entry: $('#entry-template').html()}));
           
-          masterFilter.getList().clearFilters();
+          adapter.getList().clearFilters();
         }
         
         catch(err) {

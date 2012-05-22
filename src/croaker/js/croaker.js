@@ -347,7 +347,7 @@ function Croaker(env) {
     return that;
   }
   
-  function DummyFilter() {
+  function TrueFilter() {
     var that = {};
     
     function filter() {
@@ -411,7 +411,7 @@ function Croaker(env) {
     }
     
     function applyFilters() {
-      var y, orFilter = new DummyFilter(), andFilter = new DummyFilter();
+      var y, orFilter = new TrueFilter(), andFilter = new TrueFilter();
        
       if (filters.length > 0) {
         orFilter = new OrFilter(filters);
