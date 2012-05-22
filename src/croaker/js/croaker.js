@@ -361,7 +361,6 @@ function Croaker(env) {
   }
   
   
-  
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [], emptyFilter = false,
       x, y, z, temp, actualAccepted = [], nameFilter = [], andFilter, orFilter;
@@ -388,7 +387,7 @@ function Croaker(env) {
         nameFilter.push(newFilter);
         return;
       }
-      
+      //should be this guy alone
       filters.push(newFilter);
     }
     
@@ -400,7 +399,7 @@ function Croaker(env) {
       if (emptyFilter) {
         return elements;   
       }
-      
+      //remove this check ^
       return actualAccepted;
     }
     
@@ -466,7 +465,7 @@ function Croaker(env) {
     function filter(compareTo) {
       compareTo = compareTo.name.toLowerCase();
       searchFor = searchFor.toLowerCase();
-      
+      //move this guy up ^
       return (compareTo.indexOf(searchFor) !== -1);
     }
    
