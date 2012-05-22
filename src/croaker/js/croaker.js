@@ -103,7 +103,6 @@ function Croaker(env) {
         }
       }
       else {
-        console.log('ie here');
         xmldoc=new ActiveXObject("Microsoft.XMLDOM");
         xmldoc.async=false;
         xmldoc.loadXML(string); 
@@ -117,7 +116,7 @@ function Croaker(env) {
     return that;
   }
   
-  function BaseNamed(name, strain) {
+  function BaseNamed(name) {
     return {
       name: name
     };
@@ -208,7 +207,7 @@ function Croaker(env) {
     var that = {};
     
     function formMetric(startingNodeChild) {
-      var x, val = startingNodeChild.attributes.Value, endArray = [];
+      var x, val = startingNodeChild.attributes.Value;
       
       for (x=0; x < val.length; x++) {
         val = val.replace(',','');
@@ -238,7 +237,7 @@ function Croaker(env) {
     }
     
     function formType(startingNode) {
-      var types = [], x,  membersNode = startingNode.children[1], membersArray = [];
+      var x,  membersNode = startingNode.children[1], membersArray = [];
       
       
       for(x=0; x < membersNode.children.length; x++) {
@@ -252,7 +251,7 @@ function Croaker(env) {
     }
 
     function formNamespace(startingNode) {
-      var typesNode = startingNode.children[1], namespaces = [], x, typesArray = [];
+      var typesNode = startingNode.children[1], x, typesArray = [];
     
         for (x=0; x < typesNode.children.length; x++) {
           typesArray.push(formType(typesNode.children[x]));
@@ -363,7 +362,7 @@ function Croaker(env) {
   
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [], emptyFilter = false,
-      x, y, z, temp, actualAccepted = [], nameFilter = [], andFilter, orFilter;
+      x, y, z, temp, actualAccepted = [], nameFilter = [];
     
     elements.push(module);
     
@@ -412,7 +411,7 @@ function Croaker(env) {
     }
     
     function applyFilters() {
-      var x, y, z, temp, orFilter = new DummyFilter(), andFilter = new DummyFilter();
+      var y, orFilter = new DummyFilter(), andFilter = new DummyFilter();
        
       if (filters.length > 0) {
         orFilter = new OrFilter(filters);
