@@ -380,11 +380,7 @@ function Croaker(env) {
     }
     
     function clearFilters() {
-      filters = [];
-      accepted = [];
       actualAccepted = [];
-      nameFilter = [];
-      emptyFilter = true;
     }
     
     function applyFilters(filters) {
@@ -413,18 +409,13 @@ function Croaker(env) {
       return (node.strain === lookFor);
     }
     
-    function isNameFilter() {
-      return false;
-    }
-    
-    that.isNameFilter = isNameFilter;
     that.filter = filter;
     
     return that;
   }
   
   function NameFilter(searchFor) {
-    var that = {};
+    var that = {},
     searchFor = searchFor.toLowerCase();
     
     function filter(compareTo) {
@@ -432,11 +423,6 @@ function Croaker(env) {
       return (compareTo.indexOf(searchFor) !== -1);
     }
    
-   function isNameFilter() {
-      return true;
-    }
-    
-    that.isNameFilter = isNameFilter;
     that.filter = filter;
    
     return that;

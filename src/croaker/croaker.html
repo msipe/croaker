@@ -1,20 +1,19 @@
-<!DOCTYPE html>
 <html>
   <head>
     <title>Croaker</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>   
-    <script type="text/javascript" src="js/lib/mustache.js"></script>   
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/lib/mustache.js"></script>
     <script type="text/javascript" src="js/croaker.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.19.custom.css" />
     
     <script id="metrics-template" type="text-x-mustache-tmpl">
-      {{#getFullMetrics}}  
+      {{#getFullMetrics}}
         <td>
           {{getFormattedValue}}
-        </td>            
+        </td>
       {{/getFullMetrics}}
     </script>
     <script id="entry-template" type="text-x-mustache-tmpl">
@@ -26,11 +25,11 @@
           {{name}}
         </td>
         {{> metrics}}
-      </tr>       
-    </script>    
+      </tr>
+    </script>
         
     <script id="main-template" type="text-x-mustache-tmpl">
-      <table border="0" cellpadding="0" cellspacing="0"  id="table">
+      <table border="0" cellpadding="0" cellspacing="0" id="table">
         <thead>
           <tr>
             <th>
@@ -46,70 +45,74 @@
             {{/metricdefs}}
             </th>
           </tr>
-        </thead>          
+        </thead>
         <tbody>
           {{#listArray}}
             {{> entry}}
           {{/listArray}}
         </tbody>
       </table>
-    </script>  
+    </script>
 
     <script type="text/javascript">
-      var masterFilter, 
+      var masterFilter,
         listArray,
         mapper = new croaker.Mapper(),
-        nsFilter = new croaker.StrainFilter('NS'),    
-        tyFilter = new croaker.StrainFilter('TY'),    
-        mbFilter = new croaker.StrainFilter('MB'),     
-        nameFilter = new croaker.NameFilter(); 
+        nsFilter = new croaker.StrainFilter('NS'),
+        tyFilter = new croaker.StrainFilter('TY'),
+        mbFilter = new croaker.StrainFilter('MB');
        
       function Filter() {
-        var that = {}, list, strainFilter;
+        var that = {}, list, strainFilters = [], nameFilters = [], 
+          filters = [], 
+          strainOrFilter, nameOrFilter;
         
         function setList(newList) {
           list = newList;
         }
         
         function setFilters() {
-          var strains = [], names = [];
-          
           if ($('#NS').is(':checked')) {
-            strains.push(nsFilter);
+            strainFilters.push(nsFilter);
           }
         
           if ($('#TY').is(':checked')) {
-            strains.push(tyFilter);
+            strainFilters.push(tyFilter);
           }
         
           if ($('#MB').is(':checked')) {
-            strains.push(mbFilter);
+            strainFilters.push(mbFilter);
           }
         
           if ($('#filter').val().length > 0) {
-            names.push(new croaker.NameFilter($('#filter').val()));
+            nameFilters.push(new croaker.NameFilter($('#filter').val()));
           }
           
-          nameFilter = new OrFilter(names);
-          strainFilter = new OrFilter(strains);
+          orFilter = new croaker.OrFilter(strainFilters);
+          nameOrFilter = new croaker.OrFilter(nameFilters);
           
-          list.applyFilters([strainFilter, nameFilter]);
+          filters = [orFilter, nameOrFilter];
+          
+          list.applyFilters(filters);
+          
+          strainFilters = [];
+          nameFilters = [];
           
           return list.getAccepted();
         }
         
-        function clearFilters() {
-          list.clearFilters();
+        function getList() {
+          return list;
         }
         
-        that.clearFilters = clearFilters;
+        that.getList = getList;
         that.setFilters = setFilters;
         that.setList = setList;
         
         return that;
       }
       
-      adapter = new Filter();
+      masterFilter = new Filter();
           
       
       
@@ -124,17 +127,17 @@
             mappedNode = mapper.map(nodes),
             results = $('#results'),
             template = $('#main-template').html(),
-            filteredList = new croaker.FilteredList(mappedNode);
+            list = new croaker.FilteredList(mappedNode);
 
-          adapter.setList(filteredList);
+          masterFilter.setList(list);
             
-          listArray = adapter.setFilters();
+          listArray = masterFilter.setFilters();
             
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
                     {metrics: $('#metrics-template').html(),
                      entry: $('#entry-template').html()}));
             
-          adapter.clearFilters();
+          masterFilter.getList().clearFilters();
           $('#flash').html('');
         }
         
@@ -144,9 +147,10 @@
       }
       
       function render(e) {
+
         e.stopPropagation();
         e.preventDefault();
-        
+  
         if (!listArray) {
           alert('XML is not loaded');
           return;
@@ -156,13 +160,13 @@
           var results = $('#results'),
             template = $('#main-template').html();
          
-          listArray = adapter.setFilters();
+          listArray = masterFilter.setFilters();
 
-          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions}, 
-                      {metrics: $('#metrics-template').html(), 
+          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions},
+                      {metrics: $('#metrics-template').html(),
                        entry: $('#entry-template').html()}));
           
-          adapter.clearFilters();
+          masterFilter.getList().clearFilters();
         }
         
         catch(err) {
@@ -177,12 +181,13 @@
         
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
-      }      
+      }
 
       function load(e) {
         $('#flash').html('Doing Work');
         e.stopPropagation();
         e.preventDefault();
+               
         //var url = new croaker.LocationUrlParser().parse();
         var url = $('#file').val();
         var loader = new croaker.DataLoader(url, parseData);
@@ -192,7 +197,7 @@
             alert('error');
             alert(status);
             alert(error);
-          });      
+          });
       }
 
       function init() {
@@ -207,10 +212,10 @@
   </head>
   <body >
     <div id="logo">
-      <img src="images/logo.png"/>  
+      <img src="images/logo.png"/>
     </div>
 
-    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all"></div>    
+    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all"></div>
     <br/>
     <div id="main">
 
@@ -219,7 +224,7 @@
           <label for="file"></label>
           <input id="file" type="text" value="test.xml"/>
           <button id="btnload">Load</button>
-        </form>      
+        </form>
         </br>
         <form class="ui-corner-all">
           <input id="filter" type="text" value=""/>
