@@ -371,20 +371,11 @@ function Croaker(env) {
       }
     }
     
-    function addFilter(newFilter) {
-      emptyFilter = false;
-      filters.push(newFilter);
-    }
-    
     function getFilters() {
       return filters;
     }
     
     function getAccepted() {
-      if (emptyFilter) {
-        return elements;   
-      }
-      //remove this check ^
       return actualAccepted;
     }
     
@@ -409,7 +400,6 @@ function Croaker(env) {
     that.getAccepted = getAccepted;
     that.applyFilters = applyFilters;
     that.clearFilters = clearFilters;
-    that.addFilter = addFilter;
     that.getFilters = getFilters;
     that.applyFilters = applyFilters;
     
