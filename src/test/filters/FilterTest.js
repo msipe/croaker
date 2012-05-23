@@ -3,11 +3,10 @@ TestCase("Croaker.Filter.Tests", {
    testNSStrainFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      namespaceFilter = new croaker.StrainFilter('NS');
+      namespaceFilter = [new croaker.StrainFilter('NS')],
+      nsFilter = [new croaker.OrFilter(namespaceFilter)];
       
-      filteredList.addFilter(namespaceFilter);
-      
-      filteredList.applyFilters();
+      filteredList.applyFilters(nsFilter);
       
       assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
       
@@ -19,11 +18,10 @@ TestCase("Croaker.Filter.Tests", {
   testFilterMultipleNS: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      namespaceFilter = new croaker.StrainFilter('NS')
+      namespaceFilter = [new croaker.StrainFilter('NS')],
+      nsFilter = [new croaker.OrFilter(namespaceFilter)];
       
-      filteredList.addFilter(namespaceFilter);
-      
-      filteredList.applyFilters();
+      filteredList.applyFilters(nsFilter);
       
       assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
       assertThat(filteredList.getAccepted()[1].name, 'Other.Core');      
@@ -33,11 +31,10 @@ TestCase("Croaker.Filter.Tests", {
   testTypeFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      typeFilter = new croaker.StrainFilter('TY')
+      typeFilter = [new croaker.StrainFilter('TY')],
+      typesFilter = [new croaker.OrFilter(typeFilter)];
     
-    filteredList.addFilter(typeFilter);
-    
-    filteredList.applyFilters();
+    filteredList.applyFilters(typeFilter);
     
     assertThat(filteredList.getAccepted()[0].name, 'SampleType.Core');
   },
@@ -45,11 +42,11 @@ TestCase("Croaker.Filter.Tests", {
   testMultiTypeFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      typeFilter =new croaker.StrainFilter('TY')
-    
-    filteredList.addFilter(typeFilter);
-    
-    filteredList.applyFilters();
+      filteredList = new croaker.FilteredList(module),
+      typeFilter = [new croaker.StrainFilter('TY')],
+      typesFilter = [new croaker.OrFilter(typeFilter)];
+      
+    filteredList.applyFilters(typesFilter);
     
     assertThat(filteredList.getAccepted()[0].name, 'SampleType.Core');
     assertThat(filteredList.getAccepted()[1].name, 'SecondType.Core');
@@ -60,11 +57,10 @@ TestCase("Croaker.Filter.Tests", {
   testMemberFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.StrainFilter('MB');
+      memberFilter = [new croaker.StrainFilter('MB')],
+      membersFilter = [new croaker.OrFilter(memberFilter)];
     
-    filteredList.addFilter(memberFilter);
-    
-    filteredList.applyFilters();
+    filteredList.applyFilters(membersFilter);
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
   },
@@ -72,11 +68,10 @@ TestCase("Croaker.Filter.Tests", {
   testMultiMemberFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleTypes),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.StrainFilter('MB');
+      memberFilter = [new croaker.StrainFilter('MB')],
+      membersFilter = [new croaker.OrFilter(memberFilter)];
     
-    filteredList.addFilter(memberFilter);
-    
-    filteredList.applyFilters();
+    filteredList.applyFilters(membersFilter);
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
     assertThat(filteredList.getAccepted()[1].name, 'Tested.Core');
@@ -85,27 +80,22 @@ TestCase("Croaker.Filter.Tests", {
   testIntegrateStrainFilters: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.StrainFilter('MB'),
-      typeFilter = new croaker.StrainFilter('TY'),
-      nsFilter = new croaker.StrainFilter('NS');
+      strainFilters = [new croaker.StrainFilter('MB'),new croaker.StrainFilter('TY'), new croaker.StrainFilter('NS')],
+      orFilter = [new croaker.OrFilter(strainFilters)];
     
-    filteredList.addFilter(memberFilter);
-    filteredList.addFilter(typeFilter);
-    filteredList.addFilter(nsFilter);
+    filteredList.applyFilters(orFilter);
     
-    filteredList.applyFilters();
-    
-     assertThat(filteredList.getAccepted().length, 11);
-     assertThat(filteredList.getAccepted()[10].name, 'weard.Core');
+    assertThat(filteredList.getAccepted().length, 11);
+    assertThat(filteredList.getAccepted()[10].name, 'weard.Core');
   },
   
   testSimpleNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
-      filteredList = new croaker.FilteredList(module), nameSearch = new croaker.NameFilter('Thisis.Core');
-  
-    filteredList.addFilter(nameSearch);
+      filteredList = new croaker.FilteredList(module), 
+      nameSearch = [new croaker.NameFilter('Thisis.Core')],
+      orFilter = [new croaker.OrFilter(nameSearch)];
     
-    filteredList.applyFilters();
+    filteredList.applyFilters(orFilter);
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
   },
@@ -113,15 +103,11 @@ TestCase("Croaker.Filter.Tests", {
   testComplexNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
-      nameSearch1 = new croaker.NameFilter('weard.Core'),
-      nameSearch2 = new croaker.NameFilter('Thisis.Core'),
-      nameSearch3 = new croaker.NameFilter('SomeType.Core');
+      nameFilters = [new croaker.NameFilter('weard.Core'), new croaker.NameFilter('Thisis.Core'), new croaker.NameFilter('SomeType.Core')],
   
-    filteredList.addFilter(nameSearch1);
-    filteredList.addFilter(nameSearch2);
-    filteredList.addFilter(nameSearch3);
+   orFilter = [new croaker.OrFilter(nameFilters)];
     
-    filteredList.applyFilters();
+    filteredList.applyFilters(orFilter);
     
     assertThat(filteredList.getAccepted().length, 5);
     
@@ -134,9 +120,10 @@ TestCase("Croaker.Filter.Tests", {
   
   testEmptyFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
-      filteredList = new croaker.FilteredList(module);
+      filteredList = new croaker.FilteredList(module),
+      orFilter = [new croaker.OrFilter([])];
       
-      filteredList.applyFilters();
+      filteredList.applyFilters(orFilter);
       
       assertThat(filteredList.getAccepted().length, 4);
   },
@@ -144,30 +131,23 @@ TestCase("Croaker.Filter.Tests", {
   testNameandElementMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      memberFilter = new croaker.StrainFilter('MB'),
-      nameSearch1= new croaker.NameFilter('Core');
-
-  
-    filteredList.addFilter(nameSearch1);
-    filteredList.addFilter(memberFilter);
-    
-    filteredList.applyFilters();
+      strainFilters = [new croaker.StrainFilter('MB')],
+      nameFilters = [ new croaker.OrFilter([new croaker.NameFilter('Core')])],
+      orFilters = [new croaker.OrFilter(strainFilters)]
+      
+    filteredList.applyFilters(orFilters, nameFilters);
     
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
     assertThat(filteredList.getAccepted().length, 1);
-
   },
   
    testCaseInsensitiveSearching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
-      nameSearch1= new croaker.NameFilter('core'),
-      nameSearch2= new croaker.NameFilter('soMe.DLl');
-
-    filteredList.addFilter(nameSearch1);
-    filteredList.addFilter(nameSearch2);
+      nameFilters = [new croaker.NameFilter('core'), new croaker.NameFilter('soMe.DLl')],
+      orFilter = [new croaker.OrFilter(nameFilters)]
     
-    filteredList.applyFilters();
+    filteredList.applyFilters(orFilter);
     
     assertThat(filteredList.getAccepted().length, 4);
 

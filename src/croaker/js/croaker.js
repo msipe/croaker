@@ -65,7 +65,7 @@ function Croaker(env) {
 
       if (node.hasChildNodes()) {
         for (x = 0; x < node.childNodes.length; x++) {
-          if(isNodeValid(node.childNodes.item(x))) {
+          if (isNodeValid(node.childNodes.item(x))) {
             children.push(processor(node.childNodes.item(x)));
           }
         }
@@ -82,7 +82,7 @@ function Croaker(env) {
         throw new FatalException('unable to parse xml');
       }
     
-      if(doc.documentElement.innerHTML) {
+      if (doc.documentElement.innerHTML) {
         throw new FatalException('unable to parse xml');
       }
       
@@ -141,17 +141,17 @@ function Croaker(env) {
     function getFullMetrics() {
       var x, y, results = [], found;
        
-      for(x=0; x < allDefinitions.length; x++) {
+      for (x=0; x < allDefinitions.length; x++) {
         found = false;
         
-        for(y=0; y < metrics.length; y++) {
+        for (y=0; y < metrics.length; y++) {
           if(metrics[y].name === allDefinitions[x].name) {
             results.push(metrics[y]);
             found = true;
           }
         }
         
-        if(found === false) {
+        if (found === false) {
           results.push(new Metric(allDefinitions[x].name, MISSING_METRIC_VALUE));
         }
       }
@@ -240,7 +240,7 @@ function Croaker(env) {
       var x,  membersNode = startingNode.children[1], membersArray = [];
       
       
-      for(x=0; x < membersNode.children.length; x++) {
+      for (x=0; x < membersNode.children.length; x++) {
         membersArray.push(formMember(membersNode.children[x]));
       }
  
@@ -317,48 +317,40 @@ function Croaker(env) {
     function filter(element) {
       var x;
       
+      if (filterArray.length === 0) {
+        return true;
+      }
+      
       for (x=0; x < filterArray.length; x++) {
         if (filterArray[x].filter(element)) {
           return true;
         }
       }
+      return false;
     }
       
     that.filter = filter;
     
     return that;
   }
-  
-  function AndFilter(filterArray) {
+
+  function AndFilter(filters) {
     var that = {};
-    
+
     function filter(element) {
       var x;
       
-      for (x=0; x < filterArray.length; x++) {
-        if (filterArray[x].filter(element)) {
-          return true;
+      for (x=0; x < filters.length; x++) {
+        if (!filters[x].filter(element)) {
+          return false;
         }
       }
-    }
-      
-    that.filter = filter;
-    
-    return that;
-  }
-  
-  function TrueFilter() {
-    var that = {};
-    
-    function filter() {
       return true;
     }
-    
+
     that.filter = filter;
-    
     return that;
   }
-  
   
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [], emptyFilter = false,
@@ -381,12 +373,6 @@ function Croaker(env) {
     
     function addFilter(newFilter) {
       emptyFilter = false;
-      
-      if (newFilter.isNameFilter()) {
-        nameFilter.push(newFilter);
-        return;
-      }
-      //should be this guy alone
       filters.push(newFilter);
     }
     
@@ -410,23 +396,14 @@ function Croaker(env) {
       emptyFilter = true;
     }
     
-    function applyFilters() {
-      var y, orFilter = new TrueFilter(), andFilter = new TrueFilter();
+    function applyFilters(filters) {
+      var y, andFilter = new AndFilter(filters);
        
-      if (filters.length > 0) {
-        orFilter = new OrFilter(filters);
-      }
-       
-      if (nameFilter.length > 0) {
-        andFilter = new AndFilter(nameFilter);
-      }
-      
       for (y=0; y < elements.length; y++) {
-        if (orFilter.filter(elements[y]) && andFilter.filter(elements[y])) {
+        if (andFilter.filter(elements[y])) {
           actualAccepted.push(elements[y]);
         }
       }
-          
     }
     
     that.getAccepted = getAccepted;
@@ -438,8 +415,6 @@ function Croaker(env) {
     
     return that;
   }
-  
-  
   
   function StrainFilter(lookFor) {
     var that = {};
@@ -460,11 +435,10 @@ function Croaker(env) {
   
   function NameFilter(searchFor) {
     var that = {};
+    searchFor = searchFor.toLowerCase();
     
     function filter(compareTo) {
       compareTo = compareTo.name.toLowerCase();
-      searchFor = searchFor.toLowerCase();
-      //move this guy up ^
       return (compareTo.indexOf(searchFor) !== -1);
     }
    
@@ -501,7 +475,9 @@ function Croaker(env) {
     FilteredList:FilteredList,
     strains: strains,
     StrainFilter: StrainFilter,
-    NameFilter: NameFilter
+    NameFilter: NameFilter,
+    AndFilter: AndFilter,
+    OrFilter: OrFilter
   };
 }
 

@@ -65,30 +65,35 @@
         nameFilter = new croaker.NameFilter(); 
        
       function Filter() {
-        var that = {}, list;
+        var that = {}, list, strainFilter;
         
         function setList(newList) {
           list = newList;
         }
         
         function setFilters() {
+          var strains = [], names = [];
+          
           if ($('#NS').is(':checked')) {
-            list.addFilter(nsFilter);
+            strains.push(nsFilter);
           }
         
           if ($('#TY').is(':checked')) {
-            list.addFilter(tyFilter);
+            strains.push(tyFilter);
           }
         
           if ($('#MB').is(':checked')) {
-            list.addFilter(mbFilter);
+            strains.push(mbFilter);
           }
         
           if ($('#filter').val().length > 0) {
-            list.addFilter(new croaker.NameFilter($('#filter').val()));
+            names.push(new croaker.NameFilter($('#filter').val()));
           }
           
-          list.applyFilters();
+          nameFilter = new OrFilter(names);
+          strainFilter = new OrFilter(strains);
+          
+          list.applyFilters([strainFilter, nameFilter]);
           
           return list.getAccepted();
         }
