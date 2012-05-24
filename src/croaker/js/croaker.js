@@ -206,14 +206,14 @@ function Croaker(env) {
   function Mapper() {
     var that = {};
     
-    function formMetric(startingNodeChild) {
-      var x, val = startingNodeChild.attributes.Value;
+    function createMetric(node) {
+      var x, val = node.attributes.Value;
       
       for (x=0; x < val.length; x++) {
         val = val.replace(',','');
       }
       
-      return new Metric(startingNodeChild.attributes.Name, 
+      return new Metric(node.attributes.Name, 
                         parseInt(val, 10));
     }
     
@@ -221,7 +221,7 @@ function Croaker(env) {
        var x, metrics = [], metricsNode = startingNode.children[index];    
          
        for (x=0; x < metricsNode.children.length; x++) {
-         metrics.push(formMetric(metricsNode.children[x]));
+         metrics.push(createMetric(metricsNode.children[x]));
        } 
               
        return metrics;

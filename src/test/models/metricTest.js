@@ -16,7 +16,7 @@ TestCase("Croaker.Metric.Tests", {
   testgetFormattedValueWithInvalidValue: function() {
     var metric = new croaker.Metric('joe', -99999);
     
-    assertThat(metric.getFormattedValue(), '');
+    assertThat(metric.getFormattedValue(), '-99999');
     assertThat(metric.value, -99999);
   },  
   
