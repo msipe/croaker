@@ -2,7 +2,7 @@ function Croaker(env) {
   var deps = env || {},
     $ = deps.jQuery || jQuery,
     mywindow = deps.window || window,
-    MISSING_METRIC_VALUE = -99999,
+    MISSING_METRIC_VALUE = -9999934,
     maintainabilityIndex,
     cyclomaticComplexity,
     classCoupling,
@@ -126,7 +126,7 @@ function Croaker(env) {
     var that = new BaseNamed(name);
     
     function getFormattedValue() {
-      return (value === -99999) ? '' : value.toString();
+      return (value === MISSING_METRIC_VALUE) ? '' : value.toString();
     }
     
     that.value = value;
@@ -415,7 +415,7 @@ function Croaker(env) {
   }
   
   function NameFilter(searchFor) {
-    var that = {},
+    var that = {};
     searchFor = searchFor.toLowerCase();
     
     function filter(compareTo) {
