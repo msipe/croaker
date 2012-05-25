@@ -246,8 +246,7 @@ function Croaker(env) {
  
       return new Type(startingNode.attributes.Name,
                       membersArray,
-                      formMetrics(startingNode, 0)
-                 );
+                      formMetrics(startingNode, 0));
     }
 
     function formNamespace(startingNode) {
@@ -259,8 +258,7 @@ function Croaker(env) {
       
        return new Namespace(startingNode.attributes.Name,
                             typesArray,
-                            formMetrics(startingNode, 0)
-       );       
+                            formMetrics(startingNode, 0));       
     }
     
     function map(entryNode) {
@@ -275,8 +273,7 @@ function Croaker(env) {
       return new Module(moduleNode.attributes.Name,
                    moduleNode.attributes.AssemblyVersion,
                    formMetrics(moduleNode,0),
-                   nsArray
-      );
+                   nsArray);
     }
     
     that.map = map;
@@ -428,7 +425,6 @@ function Croaker(env) {
     return that;
   }
     
-  
   return {
     NodeEntry: NodeEntry,
     Parser: Parser,
