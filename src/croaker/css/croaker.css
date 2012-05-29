@@ -35,6 +35,10 @@
      background-color: #F2F2F1;
     }
     
+    tbody tr:hover {
+      background-color: #FFFF99;  
+    }
+    
     
     tbody td {
       text-align:right;
@@ -42,6 +46,7 @@
       border-left-style:solid;
       border-left-width:.05em;
     }
+    
 
     tbody tr td:first-child {
       text-align:center;

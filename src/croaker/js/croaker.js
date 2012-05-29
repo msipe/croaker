@@ -156,6 +156,7 @@ function Croaker(env) {
         }
       }
       
+      that.getFullMetrics = function() {return results;};
       return results;      
     }
     
@@ -238,7 +239,6 @@ function Croaker(env) {
     
     function formType(startingNode) {
       var x,  membersNode = startingNode.children[1], membersArray = [];
-      
       
       for (x=0; x < membersNode.children.length; x++) {
         membersArray.push(formMember(membersNode.children[x]));
