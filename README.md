@@ -1,1 +1,1 @@
-Croaker
+Croaker is an HTML viewer which displays the XML from Microsoft's Code Metric Report. 
