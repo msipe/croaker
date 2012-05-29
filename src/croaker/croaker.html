@@ -8,14 +8,16 @@
 
     <link rel="stylesheet" type="text/css" href="css/croaker.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.19.custom.css" />
-    
+        
     <script id="metrics-template" type="text-x-mustache-tmpl">
       {{#getFullMetrics}}
         <td>
           {{getFormattedValue}}
         </td>
       {{/getFullMetrics}}
+      
     </script>
+    
     <script id="entry-template" type="text-x-mustache-tmpl">
       <tr>
         <td>
@@ -53,6 +55,8 @@
         </tbody>
       </table>
     </script>
+    
+    
 
     <script type="text/javascript">
       var masterFilter,

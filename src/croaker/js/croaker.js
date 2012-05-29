@@ -126,7 +126,7 @@ function Croaker(env) {
     var that = new BaseNamed(name);
     
     function getFormattedValue() {
-      return (value === MISSING_METRIC_VALUE) ? '' : value.toString();
+      return (value === MISSING_METRIC_VALUE) ? '-' : value.toString();
     }
     
     that.value = value;
@@ -223,10 +223,10 @@ function Croaker(env) {
          
        for (x=0; x < metricsNode.children.length; x++) {
          metrics.push(createMetric(metricsNode.children[x]));
-       } 
-              
+       }
+       
        return metrics;
-     }
+    }
 
     function formMember(startingNode) {
     
