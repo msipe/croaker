@@ -60,12 +60,26 @@
     
 
     <script type="text/javascript">
-      var masterFilter,
+      var filter,
         listArray,
+        flash,
         mapper = new croaker.Mapper(),
         nsFilter = new croaker.StrainFilter('NS'),
         tyFilter = new croaker.StrainFilter('TY'),
         mbFilter = new croaker.StrainFilter('MB');
+        
+      function Flash() {
+        var that = {};
+        
+        function displayMessage(message) {
+          $('#flash').show()
+          $('#flash').html(message);
+        }
+        
+        that.displayMessage = displayMessage;
+        
+        return that;
+      }
        
       function Filter() {
         var that = {}, list, strainFilters = [], nameFilters = [], 
@@ -117,14 +131,14 @@
         return that;
       }
       
-      masterFilter = new Filter();
+      filter = new Filter();
+      flash = new Flash()
           
       
       
       function parseData(xml) {
-        
-        
         try {
+          $('input').attr('disabled', true);
           $('input:checkbox').removeAttr('checked');
           $('#filter').val('');
           
@@ -134,28 +148,29 @@
             template = $('#main-template').html(),
             list = new croaker.FilteredList(mappedNode);
 
-          masterFilter.setList(list);
+          filter.setList(list);
             
-          listArray = masterFilter.setFilters();
+          listArray = filter.setFilters();
             
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
                     {metrics: $('#metrics-template').html(),
                      entry: $('#entry-template').html()}));
             
-          masterFilter.getList().clearFilters();
-          $('#flash').html('');
+          filter.getList().clearFilters();
+          $('#flash').hide();
+          $('input').attr('disabled', false);
         }
         
         catch(e) {
           alert(e);
         }
       }
-      
+
       function render(e) {
 
         e.stopPropagation();
         e.preventDefault();
-  
+
         if (!listArray) {
           alert('XML is not loaded');
           return;
@@ -165,13 +180,13 @@
           var results = $('#results'),
             template = $('#main-template').html();
          
-          listArray = masterFilter.setFilters();
+          listArray = filter.setFilters();
 
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions},
                       {metrics: $('#metrics-template').html(),
                        entry: $('#entry-template').html()}));
           
-          masterFilter.getList().clearFilters();
+          filter.getList().clearFilters();
         }
         
         catch(err) {
@@ -189,7 +204,7 @@
       }
 
       function load(e) {
-        $('#flash').html('Doing Work');
+        flash.displayMessage('Parsing Data');
         e.stopPropagation();
         e.preventDefault();
                
