@@ -70,7 +70,8 @@
       float:right;
       text-align:right;
       padding-right:.5em;
-      font-size:larger;
+      font-size:2em;
+      font:Arial;
     }
     
     #flash {
@@ -80,5 +81,14 @@
     
     #main {
       clear:both;
+    }
+    
+    
+    .highlighted > td {
+      border-top-style:solid;
+      border-bottom-style:solid;
+      border-top-width: 2px;
+      border-bottom-width: 2px;
+      border-color:#527A7A;
     }
   

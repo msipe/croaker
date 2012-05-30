@@ -167,10 +167,11 @@
       }
 
       function render(e) {
-
         e.stopPropagation();
         e.preventDefault();
-
+        $('input').attr('disabled', true);
+        flash.displayMessage('Filtering Data...');
+        
         if (!listArray) {
           alert('XML is not loaded');
           return;
@@ -187,12 +188,14 @@
                        entry: $('#entry-template').html()}));
           
           filter.getList().clearFilters();
+          
+          $('input').attr('disabled', false);
         }
         
         catch(err) {
           alert(err);
         }
-        
+        $('#flash').hide();
       }
 
       function reset(e) {
@@ -201,10 +204,11 @@
         
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
+        
       }
 
       function load(e) {
-        flash.displayMessage('Parsing Data');
+        flash.displayMessage('Parsing Data...');
         e.stopPropagation();
         e.preventDefault();
                
@@ -219,11 +223,16 @@
             alert(error);
           });
       }
+      
+      function highlight() {
+        $(this).toggleClass('highlighted');
+      }
 
       function init() {
         $('#btnload').click(load);
         $('#filterBtn').click(render);
-        $('#resetBtn').click(reset);
+        $('#resetBtn').click(reset);    
+        $('#results').on('click', 'tbody > tr', highlight);
       }
 
       $(window).load(init);
@@ -231,11 +240,12 @@
     </script>
   </head>
   <body >
-    <div id="logo">
-      <img src="images/logo.png"/>
+    <div id="heading">
+      Croaker
     </div>
 
     <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all"></div>
+    <br/>
     <br/>
     <div id="main">
 
