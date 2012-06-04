@@ -240,27 +240,27 @@
     <br/>
     <div id="main">
       <div id="nav">
-        <form>
-          <label for="file"></label>
-          <input id="file" type="text" value="samples/test.xml"/>
-          <button id="btnload">Load</button>
+        <form action="post">
+          <div>
+            <label for="file"></label>
+            <input id="file" type="text" value="samples/test.xml"/>
+            <button id="btnload">Load</button>
+          </div>
+          <div>
+            Filter
+            <input id="filter" type="text" value=""/>
+            NS
+            <input type="checkbox" id="NS"/>
+            TY
+            <input type="checkbox" id="TY"/>
+            MB
+            <input type="checkbox" id="MB"/>
+            <button id="filterBtn"> Filter </button>
+            <button id="resetBtn"> Reset </button>
+          </div>
         </form>
-        </br>
-        <form class="ui-corner-all">
-          <input id="filter" type="text" value=""/>
-           NS
-          <input type="checkbox" id="NS"/>
-          TY
-          <input type="checkbox" id="TY"/>
-          MB
-          <input type="checkbox" id="MB"/>
-          <button id="filterBtn"> Filter </button>
-          <button id="resetBtn"> Reset </button>
-        </form>
-        </br>
       </div>
-      </br>
-      <div id="results" class="ui-widget-content ui-corner-all"></div>
+      <div id="results" class="ui-widget-content ui-corner-all" style="clear:both"></div>
     </div>
   </body>
 </html>

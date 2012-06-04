@@ -75,10 +75,6 @@ tbody tr td:nth-child(3), nth-child(4), nth-child(5) {
   float:left;
 }
 
-#main {
-  clear:both;
-}
-
 .highlighted > td {
   border-top-style:solid;
   border-bottom-style:solid;
@@ -86,3 +82,24 @@ tbody tr td:nth-child(3), nth-child(4), nth-child(5) {
   border-bottom-width: 2px;
   border-color:#A6A7A7;
 }
+
+form > div {
+  float:left;
+  width:45%;
+  padding-bottom:1em;
+  padding-top:.5em;
+}
+
+form > div:last-child {
+  text-align:right;
+  float:right;
+}
+
+form button {
+  width:6em;
+}
+
+form input[type='text'] {
+  width:15em;
+}
+
