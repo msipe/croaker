@@ -1,18 +1,11 @@
 
-#table {
+table {
   width:100%;
 }
 
-#flash {
-  width: 45%
-}
-
-#logo {
-  float:right;
-  position:absolute;
-  top:2px;
-  bottom:0;
-  right:14px;
+.flash {
+  width:50%;
+  float:left;
 }
 
 thead th {
@@ -56,23 +49,13 @@ tbody tr td:nth-child(2) {
   padding-left:.32em;
 }
 
-tbody tr td:nth-child(3), nth-child(4), nth-child(5) {
-  border-left-width:1px;
-  padding-left:.32em;
-}
-
- #heading {
+.heading {
   width:35%;
   float:right;
   text-align:right;
   padding-right:.5em;
   font-size:2em;
   font:Arial;
-}
-
-#flash {
-  width:50%;
-  float:left;
 }
 
 .highlighted > td {
@@ -102,4 +85,3 @@ form button {
 form input[type='text'] {
   width:15em;
 }
-
