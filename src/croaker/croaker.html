@@ -16,7 +16,6 @@
           {{getFormattedValue}}
         </td>
       {{/getFullMetrics}}
-      
     </script>
     
     <script id="entry-template" type="text-x-mustache-tmpl">
@@ -56,8 +55,6 @@
         </tbody>
       </table>
     </script>
-    
-    
 
     <script type="text/javascript">
       var filter,
@@ -77,7 +74,6 @@
         }
         
         that.displayMessage = displayMessage;
-        
         return that;
       }
        
@@ -133,8 +129,6 @@
       
       filter = new Filter();
       flash = new Flash()
-          
-      
       
       function parseData(xml) {
         try {
@@ -180,7 +174,6 @@
         $('input').attr('disabled', true);
         
         window.setTimeout(function() {
-        
           try {
             var results = $('#results'),
               template = $('#main-template').html();
@@ -195,16 +188,14 @@
           
             $('input').attr('disabled', false);
           }
-        
           catch(err) {
             alert(err);
           }
           $('#flash').hide();
-          }, 25);
+        }, 25);
       }
 
       function reset(e) {
-        //$('#results tr').removeClass('highlighted');
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
         render(e);
@@ -215,7 +206,6 @@
         e.stopPropagation();
         e.preventDefault();
                
-        //var url = new croaker.LocationUrlParser().parse();
         var url = $('#file').val();
         var loader = new croaker.DataLoader(url, parseData);
         loader
@@ -239,14 +229,12 @@
       }
 
       $(window).load(init);
-      
     </script>
   </head>
   <body >
     <div id="heading">
       Croaker
     </div>
-
     <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all" style="display:none"></div>
     <br/>
     <br/>
@@ -266,7 +254,6 @@
           <input type="checkbox" id="TY"/>
           MB
           <input type="checkbox" id="MB"/>
-          
           <button id="filterBtn"> Filter </button>
           <button id="resetBtn"> Reset </button>
         </form>
