@@ -137,6 +137,7 @@
       
       
       function parseData(xml) {
+        flash.displayMessage('Parsing Data...');
         try {
           $('input').attr('disabled', true);
           $('input:checkbox').removeAttr('checked');
@@ -157,7 +158,7 @@
                      entry: $('#entry-template').html()}));
             
           filter.getList().clearFilters();
-          $('#flash').hide();
+          //$('#flash').hide();
           $('input').attr('disabled', false);
         }
         
@@ -208,7 +209,7 @@
       }
 
       function load(e) {
-        flash.displayMessage('Parsing Data...');
+        
         e.stopPropagation();
         e.preventDefault();
                
