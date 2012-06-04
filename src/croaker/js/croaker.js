@@ -412,12 +412,10 @@ function Croaker(env) {
   }
   
   function NameFilter(searchFor) {
-    var that = {};
-    searchFor = searchFor.toLowerCase();
+    var that = {}, search = new RegExp(searchFor, 'i');
     
     function filter(compareTo) {
-      compareTo = compareTo.name.toLowerCase();
-      return (compareTo.indexOf(searchFor) !== -1);
+      return (search.test(compareTo.name));
     }
    
     that.filter = filter;

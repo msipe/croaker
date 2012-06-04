@@ -100,6 +100,15 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted()[0].name, 'Thisis.Core');
   },
   
+  testSimpleNameMatchingABC: function() {
+    var filter = new croaker.NameFilter('^Thisis.Core');
+    
+    assertThat(filter.filter({name: 'a'}), false);
+    assertThat(filter.filter({name: 'Thisis.Core'}), true);
+    assertThat(filter.filter({name: 'abcThisis.Core'}), false);
+
+  },
+  
   testComplexNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
@@ -142,7 +151,7 @@ TestCase("Croaker.Filter.Tests", {
   },
   
    testCaseInsensitiveSearching: function() {
-    var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
       nameFilters = [new croaker.NameFilter('core'), new croaker.NameFilter('soMe.DLl')],
       orFilter = [new croaker.OrFilter(nameFilters)]
@@ -150,7 +159,17 @@ TestCase("Croaker.Filter.Tests", {
     filteredList.applyFilters(orFilter);
     
     assertThat(filteredList.getAccepted().length, 4);
-
+  },
+  
+  testRegExSearching: function() {
+    /* var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
+      filteredList = new croaker.FilteredList(module),
+      nameFilters = [new croaker.NameFilter('core'), new croaker.NameFilter('soMe.DLl')],
+      orFilter = [new croaker.OrFilter(nameFilters)]
+    
+    filteredList.applyFilters(orFilter);
+    
+    assertThat(filteredList.getAccepted().length, 4); */
   },
   
   setUp: function () {
