@@ -161,17 +161,6 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted().length, 4);
   },
   
-  testRegExSearching: function() {
-    /* var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
-      filteredList = new croaker.FilteredList(module),
-      nameFilters = [new croaker.NameFilter('core'), new croaker.NameFilter('soMe.DLl')],
-      orFilter = [new croaker.OrFilter(nameFilters)]
-    
-    filteredList.applyFilters(orFilter);
-    
-    assertThat(filteredList.getAccepted().length, 4); */
-  },
-  
   setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     
