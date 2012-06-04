@@ -72,8 +72,8 @@
         var that = {};
         
         function displayMessage(message) {
-          $('#flash').show()
-          $('#flash').html(message);
+          console.log(message);
+          $('#flash').text(message).show();
         }
         
         that.displayMessage = displayMessage;
@@ -137,7 +137,6 @@
       
       
       function parseData(xml) {
-        flash.displayMessage('Parsing Data...');
         try {
           $('input').attr('disabled', true);
           $('input:checkbox').removeAttr('checked');
@@ -158,7 +157,7 @@
                      entry: $('#entry-template').html()}));
             
           filter.getList().clearFilters();
-          //$('#flash').hide();
+          $('#flash').hide();
           $('input').attr('disabled', false);
         }
         
@@ -170,33 +169,38 @@
       function render(e) {
         e.stopPropagation();
         e.preventDefault();
-        $('input').attr('disabled', true);
-        flash.displayMessage('Filtering Data...');
         
         if (!listArray) {
           alert('XML is not loaded');
           return;
         }
         
-        try {
-          var results = $('#results'),
-            template = $('#main-template').html();
-         
-          listArray = filter.setFilters();
-
-          results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions},
-                      {metrics: $('#metrics-template').html(),
-                       entry: $('#entry-template').html()}));
-          
-          filter.getList().clearFilters();
-          
-          $('input').attr('disabled', false);
-        }
+        flash.displayMessage('Filtering Data...');
         
-        catch(err) {
-          alert(err);
-        }
-        $('#flash').hide();
+        $('input').attr('disabled', true);
+        
+        window.setTimeout(function() {
+        
+          try {
+            var results = $('#results'),
+              template = $('#main-template').html();
+         
+            listArray = filter.setFilters();
+
+            results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions},
+                        {metrics: $('#metrics-template').html(),
+                         entry: $('#entry-template').html()}));
+          
+            filter.getList().clearFilters();
+          
+            $('input').attr('disabled', false);
+          }
+        
+          catch(err) {
+            alert(err);
+          }
+          $('#flash').hide();
+          }, 25);
       }
 
       function reset(e) {
@@ -205,11 +209,10 @@
         
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
-        
       }
 
       function load(e) {
-        
+        flash.displayMessage('Parsing Data...');
         e.stopPropagation();
         e.preventDefault();
                
@@ -245,7 +248,7 @@
       Croaker
     </div>
 
-    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all"></div>
+    <div id="flash" class="ui-widget-content ui-state-highlight ui-corner-all" style="display:none"></div>
     <br/>
     <br/>
     <div id="main">
