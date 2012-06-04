@@ -4,7 +4,7 @@ table {
 }
 
 .flash {
-  width:50%;
+  width:80%;
   float:left;
 }
 
@@ -50,7 +50,7 @@ tbody tr td:nth-child(2) {
 }
 
 .heading {
-  width:35%;
+  width:15%;
   float:right;
   text-align:right;
   padding-right:.5em;

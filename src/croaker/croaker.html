@@ -69,7 +69,6 @@
         var that = {};
         
         function displayMessage(message) {
-          console.log(message);
           $('#flash').text(message).show();
         }
         
@@ -154,43 +153,38 @@
           $('#flash').hide();
           $('input').attr('disabled', false);
         }
-        
-        catch(e) {
-          alert(e);
+        catch (e) {
+          flash.displayMessage(e.name + ' : ' + e.message);
         }
       }
 
       function render(e) {
         e.stopPropagation();
         e.preventDefault();
-        
+
         if (!listArray) {
-          alert('XML is not loaded');
+          flash.displayMessage('XML is not loaded');
           return;
         }
         
         flash.displayMessage('Filtering Data...');
         
         $('input').attr('disabled', true);
-        
-        window.setTimeout(function() {
-          try {
-            var results = $('#results'),
-              template = $('#main-template').html();
-         
-            listArray = filter.setFilters();
 
-            results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions},
-                        {metrics: $('#metrics-template').html(),
-                         entry: $('#entry-template').html()}));
-          
-            filter.getList().clearFilters();
-          
-            $('input').attr('disabled', false);
-          }
-          catch(err) {
-            alert(err);
-          }
+        window.setTimeout(function () {
+          var results = $('#results'),
+            template = $('#main-template').html();
+
+          listArray = filter.setFilters();
+
+          results.html(Mustache.to_html(template, { listArray: listArray, metricdefs: croaker.allDefinitions },
+                      { metrics: $('#metrics-template').html(),
+                        entry: $('#entry-template').html()
+                      }));
+
+          filter.getList().clearFilters();
+
+          $('input').attr('disabled', false);
           $('#flash').hide();
         }, 25);
       }
@@ -211,9 +205,7 @@
         loader
           .execute()
           .fail(function (jqxhr, status, error) {
-            alert('error');
-            alert(status);
-            alert(error);
+            flash.displayMessage('' + error);
           });
       }
       
@@ -240,7 +232,7 @@
     <br/>
     <div id="main">
       <div id="nav">
-        <form action="post">
+        <form action="#">
           <div>
             <label for="file"></label>
             <input id="file" type="text" value="samples/test.xml"/>
