@@ -204,11 +204,10 @@
       }
 
       function reset(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        
+        //$('#results tr').removeClass('highlighted');
         $('input:checkbox').removeAttr('checked');
         $('#filter').val('');
+        render(e);
       }
 
       function load(e) {
@@ -252,7 +251,6 @@
     <br/>
     <br/>
     <div id="main">
-
       <div id="nav">
         <form>
           <label for="file"></label>
@@ -271,12 +269,9 @@
           
           <button id="filterBtn"> Filter </button>
           <button id="resetBtn"> Reset </button>
-          
         </form>
         </br>
-        
       </div>
-
       </br>
       <div id="results" class="ui-widget-content ui-corner-all"></div>
     </div>
