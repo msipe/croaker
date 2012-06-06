@@ -10,10 +10,7 @@ table {
 
 thead th {
   border-style:solid;
-  border-right-width:0em;
-  border-top-width:0em;
-  border-left-width:.05em;
-  border-bottom-width:1px;
+  border-width: 0em 0em 1px .05em;
   text-align:center;
   width:5%;
 }
