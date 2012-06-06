@@ -27,8 +27,8 @@ TestCase("Croaker.BaseMetric.Tests", {
   },
   
    testGetSomeMetrics: function() {
-    var type = new croaker.Type('Joe', [], [new croaker.Metric('MaintainabilityIndex', 32), new croaker.Metric('ClassCoupling', 3)])
-      actual = type.getFullMetrics();
+    var bm = new croaker.BaseMetrics('Metrics', [new croaker.Metric('MaintainabilityIndex', 32), new croaker.Metric('ClassCoupling', 3)])
+      actual = bm.getFullMetrics();
     
     assertThat(actual.length, 5);
     
@@ -52,8 +52,8 @@ TestCase("Croaker.BaseMetric.Tests", {
   },
   
   testGetSingleMetric: function() {
-    var type = new croaker.Type('Joe', [], [new croaker.Metric('MaintainabilityIndex', 32), new croaker.Metric('CyclomaticComplexity', 2), new croaker.Metric('ClassCoupling', 3), new croaker.Metric('LinesOfCode', 5)])
-      actual = type.getFullMetrics();
+    var bm = new croaker.BaseMetrics('Metrics', [new croaker.Metric('MaintainabilityIndex', 32), new croaker.Metric('CyclomaticComplexity', 2), new croaker.Metric('ClassCoupling', 3), new croaker.Metric('LinesOfCode', 5)])
+      actual = bm.getFullMetrics();
     
     assertThat(actual.length, 5);
     
