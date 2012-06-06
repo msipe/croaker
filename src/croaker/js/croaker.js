@@ -268,8 +268,7 @@ function Croaker(env) {
         for (x=0; x < namespacesNode.children.length; x++) {
           nsArray.push(formNamespace(namespacesNode.children[x]));
         } 
-       
-       
+
       return new Module(moduleNode.attributes.Name,
                    moduleNode.attributes.AssemblyVersion,
                    formMetrics(moduleNode,0),
