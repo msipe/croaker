@@ -72,6 +72,11 @@
           $('#flash').text(message).show();
         }
         
+        function hide() {
+          $('#flash').hide();
+        }
+        
+        that.hide = hide;
         that.displayMessage = displayMessage;
         return that;
       }
@@ -148,9 +153,9 @@
           results.html(Mustache.to_html(template, {listArray: listArray, metricdefs: croaker.allDefinitions },
                     {metrics: $('#metrics-template').html(),
                      entry: $('#entry-template').html()}));
-            
+          
+          flash.hide();
           filter.getList().clearFilters();
-          $('#flash').hide();
           $('input').attr('disabled', false);
         }
         catch (e) {
@@ -185,7 +190,7 @@
           filter.getList().clearFilters();
 
           $('input').attr('disabled', false);
-          $('#flash').hide();
+          flash.hide();
         }, 25);
       }
 
