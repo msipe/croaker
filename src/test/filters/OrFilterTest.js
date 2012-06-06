@@ -1,6 +1,8 @@
-TestCase("Croaker.AndFilter.Tests", {
-  testEmptyOrFilterReturnsEmpty function() {
-  
+TestCase("Croaker.OrFilter.Tests", {
+  testEmptyOrFilterReturnsEmpty: function() {
+    var orFilter = new croaker.OrFilter([]);
+    
+    assertThat(orFilter.filter(''), true);
   
   },
   
