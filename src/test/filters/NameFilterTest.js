@@ -8,6 +8,11 @@ TestCase("Croaker.NameFilter.Tests", {
     assertThat(filter.filter({name: 'abcThisis.Core'}), false);
   },
   
+  testMultipleNameFilters() {
+  
+  
+  }
+  
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
   }

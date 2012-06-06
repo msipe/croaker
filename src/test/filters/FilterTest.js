@@ -1,5 +1,5 @@
 TestCase("Croaker.Filter.Tests", {
-  
+  //Done
    testNSStrainFilter: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entry),
       filteredList = new croaker.FilteredList(module),
@@ -14,7 +14,7 @@ TestCase("Croaker.Filter.Tests", {
       
       assertThat(filteredList.getFilters(), []);
   }, 
-  
+  //FilteredList
   testFilterMultipleNS: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
@@ -88,7 +88,7 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filteredList.getAccepted().length, 11);
     assertThat(filteredList.getAccepted()[10].name, 'weard.Core');
   },
-  
+  // FilteredList Ends
   testSimpleNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module), 
@@ -108,7 +108,7 @@ TestCase("Croaker.Filter.Tests", {
     assertThat(filter.filter({name: 'abcThisis.Core'}), false);
 
   },
-  
+  //FilteredList
   testComplexNameMatching: function() {
     var mapper = new croaker.Mapper(), module = mapper.map(this.entryMultipleNS),
       filteredList = new croaker.FilteredList(module),
