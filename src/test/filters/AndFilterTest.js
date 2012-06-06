@@ -21,6 +21,21 @@ TestCase("Croaker.AndFilter.Tests", {
      when(afilter).filter('').thenReturn(true);
      assertThat(andFilter.filter('false'), not(true));
    },
+   
+   testMultipleTrueFiltersGiveTrue: function() {
+     var filters = [
+       mock(croaker.StrainFilter),
+       mock(croaker.StrainFilter),
+       mock(croaker.StrainFilter)     
+     ],
+     andFilter = new croaker.AndFilter(filters);
+     
+     when(filters[0]).filter('').thenReturn(true);
+     when(filters[1]).filter('').thenReturn(true);
+     when(filters[2]).filter(anything()).thenReturn(true);
+     
+     assertThat(andFilter.filter(''), true);
+   },
   
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
