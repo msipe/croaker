@@ -6,11 +6,20 @@ TestCase("Croaker.AndFilter.Tests", {
      assertThat(andFilter.filter(), true);
    },
    
-   testSingleTrueFilter: function() {
-     var strainFilter = {filter: function() {return true}},
-       andFilter = new croaker.AndFilter([]);
-      
+   testSingleTrueFilterGivesTrue: function() {
+     var afilter = mock(croaker.StrainFilter),
+       andFilter = new croaker.AndFilter([afilter]);
+     
+     when(afilter).filter(anything()).thenReturn(true);
      assertThat(andFilter.filter(''), true);
+   },
+   
+   testSingleFalseFilterGivesFalse: function() {
+     var afilter = mock(croaker.StrainFilter),
+       andFilter = new croaker.AndFilter([afilter]);
+     
+     when(afilter).filter('').thenReturn(true);
+     assertThat(andFilter.filter('false'), not(true));
    },
   
    setUp: function () {

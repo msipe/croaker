@@ -1,6 +1,5 @@
 TestCase("Croaker.NameFilter.Tests", {
-  
-   testDefualts: function() {
+   testFilter: function() {
     var filter = new croaker.NameFilter('^Thisis.Core');
     
     assertThat(filter.filter({name: 'a'}), false);
