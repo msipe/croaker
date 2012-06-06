@@ -1,8 +1,10 @@
 TestCase("Croaker.FilteredList.Tests", {
   
   testFilteredListDefaults: function() {
-  
-  console.log('hai');
+    var module = mock(croaker.Module), 
+      filteredList = new croaker.FilteredList(module);
+    
+    assertThat(filteredList.getFilters(), []);
   },
   
   setUp: function () {

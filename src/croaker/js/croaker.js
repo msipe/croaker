@@ -366,7 +366,7 @@ function Croaker(env) {
         }
       }
     }
-    
+    //remove this function plz
     function getFilters() {
       return filters;
     }
