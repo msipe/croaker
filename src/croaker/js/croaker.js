@@ -195,8 +195,26 @@ function Croaker(env) {
   }
   
   function Module(name, version, metrics, namespaces) {
-    var that = new BaseMetrics(name, metrics);
+    var that = new BaseMetrics(name, metrics), elements;
     
+    function flatten() {
+      var x, y, z, elements = [];
+      
+      for (x=0; x < namespaces.length; x++) {
+        elements.push(namespaces[x]);
+      
+        for (y=0; y < namespaces[x].types.length; y++) {
+          elements.push(namespaces[x].types[y]);
+      
+          for (z=0; z < namespaces[x].types[y].members.length; z++) {
+            elements.push(namespaces[x].types[y].members[z]);
+          }
+        }
+      }
+      return elements;
+    }
+    
+    that.flatten = flatten;
     that.strain = 'MD';
     that.version = version;
     that.namespaces = namespaces;
@@ -352,20 +370,8 @@ function Croaker(env) {
     var that = {}, filters = [], accepted = [], elements = [],
       x, y, z, temp, actualAccepted = [], nameFilter = [];
     
-    elements.push(module);
-    
-    for (x=0; x < module.namespaces.length; x++) {
-      temp = module.namespaces[x];
-      elements.push(temp);
-      
-      for (y=0; y < temp.types.length; y++) {
-        elements.push(temp.types[y]);
-      
-        for (z=0; z < temp.types[y].members.length; z++) {
-          elements.push(temp.types[y].members[z]);
-        }
-      }
-    }
+    elements = module.flatten();
+    elements.unshift(module);
     
     function getAccepted() {
       return actualAccepted;
