@@ -60,7 +60,7 @@ tbody tr td:nth-child(2) {
   border-bottom-style:solid;
   border-top-width: 2px;
   border-bottom-width: 2px;
-  border-color:#A6A7A7;
+  background-color:#FFFF99;
 }
 
 form > div {
