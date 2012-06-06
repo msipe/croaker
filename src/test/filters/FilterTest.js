@@ -9,10 +9,6 @@ TestCase("Croaker.Filter.Tests", {
       filteredList.applyFilters(nsFilter);
       
       assertThat(filteredList.getAccepted()[0].name, 'Sample.Core');
-      
-      filteredList.clearFilters();
-      
-      assertThat(filteredList.getFilters(), []);
   }, 
   //FilteredList
   testFilterMultipleNS: function() {

@@ -64,19 +64,16 @@ tbody tr td:nth-child(2) {
 }
 
 form > div {
-  float:left;
-  width:45%;
   padding-bottom:1em;
   padding-top:.5em;
 }
 
 form > div:last-child {
-  text-align:right;
-  float:right;
+
 }
 
 form button {
-  width:6em;
+  width:7em;
 }
 
 form input[type='text'] {

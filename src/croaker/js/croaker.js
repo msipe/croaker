@@ -349,7 +349,7 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, filters = [], accepted = [], elements = [], emptyFilter = false,
+    var that = {}, filters = [], accepted = [], elements = [],
       x, y, z, temp, actualAccepted = [], nameFilter = [];
     
     elements.push(module);
@@ -365,10 +365,6 @@ function Croaker(env) {
           elements.push(temp.types[y].members[z]);
         }
       }
-    }
-    //remove this function plz
-    function getFilters() {
-      return filters;
     }
     
     function getAccepted() {
@@ -392,7 +388,6 @@ function Croaker(env) {
     that.getAccepted = getAccepted;
     that.applyFilters = applyFilters;
     that.clearFilters = clearFilters;
-    that.getFilters = getFilters;
     that.applyFilters = applyFilters;
     
     return that;
