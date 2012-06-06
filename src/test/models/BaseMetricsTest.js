@@ -1,7 +1,7 @@
 TestCase("Croaker.BaseMetric.Tests", {
   testGetFullMetrics: function() {
-    var type = new croaker.Type('Joe', [], [])
-      actual = type.getFullMetrics();
+    var baseMetric = new croaker.BaseMetrics('Metrics', []),
+      actual = baseMetric.getFullMetrics();
     
     assertThat(actual.length, 5);
     

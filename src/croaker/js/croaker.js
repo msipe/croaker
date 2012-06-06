@@ -434,6 +434,7 @@ function Croaker(env) {
     DataLoader: DataLoader,
     LocationUrlParser: LocationUrlParser,
     MISSING_METRIC_VALUE: MISSING_METRIC_VALUE,
+    BaseMetrics: BaseMetrics,
     MetricDefinition: MetricDefinition,
     maintainabilityIndex: maintainabilityIndex,
     cyclomaticComplexity: cyclomaticComplexity,
