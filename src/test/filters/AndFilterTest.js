@@ -36,6 +36,21 @@ TestCase("Croaker.AndFilter.Tests", {
      
      assertThat(andFilter.filter(''), true);
    },
+   
+   testOneFalseFilterInAnArrayGivesFalse: function() {
+     var filters = [
+       mock(croaker.StrainFilter),
+       mock(croaker.StrainFilter),
+       mock(croaker.StrainFilter)     
+     ],
+     andFilter = new croaker.AndFilter(filters);
+     
+     when(filters[0]).filter('').thenReturn(true);
+     when(filters[1]).filter('').thenReturn(false);
+     when(filters[2]).filter('').thenReturn(true);
+     
+     assertThat(andFilter.filter(''), false);
+   },
   
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
