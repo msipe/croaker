@@ -43,7 +43,6 @@ TestCase("Croaker.OrFilter.Tests", {
     assertThat(orFilter.filter(''), true);
   },
   
-  
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     JsMockito.Integration.JsTestDriver();
