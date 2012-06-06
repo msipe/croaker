@@ -1,9 +1,10 @@
 TestCase("Croaker.FilteredList.Tests", {
   
-  testFilteredListDefaults: function() {
-    var module = mock(croaker.Module), 
+  testFilteredListSingleNS: function() {
+    var module = mock(croaker.Module), strainFilter = mock(croaker.StrainFilter),
       filteredList = new croaker.FilteredList(module);
     
+    //when(module).namespaces.thenReturn([mock(croaker.Namespace)]);
     assertThat(filteredList.getFilters(), []);
   },
   

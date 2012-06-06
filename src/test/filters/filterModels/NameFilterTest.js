@@ -5,6 +5,7 @@ TestCase("Croaker.NameFilter.Tests", {
     assertThat(filter.filter({name: 'a'}), false);
     assertThat(filter.filter({name: 'Thisis.Core'}), true);
     assertThat(filter.filter({name: 'abcThisis.Core'}), false);
+    assertThat(filter.filter({name: 'ThiSis.Core'}), true);
   },
 
    setUp: function () {
