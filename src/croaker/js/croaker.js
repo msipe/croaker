@@ -368,17 +368,14 @@ function Croaker(env) {
   }
   
   function FilteredList(module) {
-    var that = {}, filters = [], accepted = [], elements = [],
-      x, y, z, actualAccepted = [], nameFilter = [];
-    
-    elements = module.flatten();
+    var that = {}, accepted = [], elements = module.flatten();
     
     function getAccepted() {
-      return actualAccepted;
+      return accepted;
     }
     
     function clearFilters() {
-      actualAccepted = [];
+      accepted = [];
     }
     
     function applyFilters(filters) {
@@ -386,7 +383,7 @@ function Croaker(env) {
        
       for (y=0; y < elements.length; y++) {
         if (andFilter.filter(elements[y])) {
-          actualAccepted.push(elements[y]);
+          accepted.push(elements[y]);
         }
       }
     }
