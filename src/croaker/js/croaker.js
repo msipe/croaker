@@ -391,7 +391,6 @@ function Croaker(env) {
     that.getAccepted = getAccepted;
     that.applyFilters = applyFilters;
     that.clearFilters = clearFilters;
-    that.applyFilters = applyFilters;
     
     return that;
   }
