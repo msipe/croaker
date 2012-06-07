@@ -372,7 +372,6 @@ function Croaker(env) {
       x, y, z, actualAccepted = [], nameFilter = [];
     
     elements = module.flatten();
-    //elements.unshift(module);
     
     function getAccepted() {
       return actualAccepted;
