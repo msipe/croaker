@@ -1,5 +1,20 @@
 TestCase("Croaker.FilteredList.Tests", {
-  testDefaults: function() {
+  testNoElements: function() {
+    var module = mock(croaker.Module), 
+      filters = [mock(croaker.StrainFilter)], 
+      list;
+      
+      when(filters[0]).filter(anything()).thenReturn(true);
+      when(module).flatten().thenReturn([]);
+    
+      list = new croaker.FilteredList(module);
+      
+      list.applyFilters(filters);
+      
+      assertThat(list.getAccepted(), []);
+  },
+  
+  testMultipleElements: function() {
     var module = mock(croaker.Module), 
       filters = [mock(croaker.StrainFilter)], 
       list;
@@ -13,8 +28,7 @@ TestCase("Croaker.FilteredList.Tests", {
       
       assertThat(list.getAccepted(), [1, 2, 3]);
   },
-   
-  
+
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
     JsMockito.Integration.JsTestDriver();
