@@ -178,9 +178,10 @@ function Croaker(env) {
   
   function Type (name,members,metrics) {
     var that = new BaseMetrics(name, metrics);
-  
+
     that.strain = 'TY';
     that.members = members;
+    that.getMembers = getMembers;
        
     return that;
   }
@@ -188,6 +189,7 @@ function Croaker(env) {
   function Namespace(name, types, metrics) {
     var that = new BaseMetrics(name, metrics);
     
+    that.getTypes = getTypes;
     that.strain = 'NS';
     that.types = types;
     
@@ -198,7 +200,7 @@ function Croaker(env) {
     var that = new BaseMetrics(name, metrics), elements;
     
     function flatten() {
-      var x, y, z, elements = [];
+      var x, y, z, elements = [that];
       
       for (x=0; x < namespaces.length; x++) {
         elements.push(namespaces[x]);
@@ -211,6 +213,7 @@ function Croaker(env) {
           }
         }
       }
+      
       return elements;
     }
     
@@ -368,10 +371,10 @@ function Croaker(env) {
   
   function FilteredList(module) {
     var that = {}, filters = [], accepted = [], elements = [],
-      x, y, z, temp, actualAccepted = [], nameFilter = [];
+      x, y, z, actualAccepted = [], nameFilter = [];
     
     elements = module.flatten();
-    elements.unshift(module);
+    //elements.unshift(module);
     
     function getAccepted() {
       return actualAccepted;
