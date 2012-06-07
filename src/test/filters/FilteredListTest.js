@@ -56,6 +56,20 @@ TestCase("Croaker.FilteredList.Tests", {
       
       assertThat(list.getAccepted(), [1, 2, 3]);
   },
+  
+  testSingleFilter: function() {
+    var module = mock(croaker.Module), 
+      filters = [mock(croaker.StrainFilter)], list;
+      
+      when(filters[0]).filter(1).thenReturn(true);
+      when(module).flatten().thenReturn([1, 2, 3]);
+    
+      list = new croaker.FilteredList(module);
+      
+      list.applyFilters(filters);
+      
+      assertThat(list.getAccepted(), [1]);
+  },
 
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
