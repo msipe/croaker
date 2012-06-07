@@ -70,6 +70,24 @@ TestCase("Croaker.FilteredList.Tests", {
       
       assertThat(list.getAccepted(), [1]);
   },
+  
+  testMultipleFilters: function() {
+    var module = mock(croaker.Module), 
+      filters = [mock(croaker.StrainFilter), mock(croaker.StrainFilter), mock(croaker.NameFilter)],
+      list;
+      
+      when(filters[0]).filter(anything()).thenReturn(true);
+      when(filters[1]).filter(anything()).thenReturn(true);
+      when(filters[2]).filter(4).thenReturn(true);
+      
+      when(module).flatten().thenReturn([1, 2, 3, 4]);
+    
+      list = new croaker.FilteredList(module);
+      
+      list.applyFilters(filters);
+      
+      assertThat(list.getAccepted(), [4]);
+  },
 
    setUp: function () {
     JsHamcrest.Integration.JsTestDriver();
