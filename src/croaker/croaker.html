@@ -112,12 +112,10 @@
           
           filters = [orFilter, nameOrFilter];
           
-          list.applyFilters(filters);
-          
           strainFilters = [];
           nameFilters = [];
           
-          return list.getAccepted();
+          return list.applyFilters(filters);
         }
         
         function getList() {
@@ -155,7 +153,6 @@
                      entry: $('#entry-template').html()}));
           
           flash.hide();
-          filter.getList().clearFilters();
           $('input').attr('disabled', false);
         }
         catch (e) {
@@ -186,8 +183,6 @@
                       { metrics: $('#metrics-template').html(),
                         entry: $('#entry-template').html()
                       }));
-
-          filter.getList().clearFilters();
 
           $('input').attr('disabled', false);
           flash.hide();
@@ -222,6 +217,7 @@
         $('#btnload').click(load);
         $('#filterBtn').click(render);
         $('#resetBtn').click(reset);    
+        #('#selectBtn').clicK(getSelection);
         $('#results').on('click', 'tbody > tr', highlight);
       }
 
@@ -255,6 +251,7 @@
             <input type="checkbox" id="MB"/>
             <button id="filterBtn"> Filter </button>
             <button id="resetBtn"> Reset </button>
+            <button id="selectBtn"> Selection </button>
           </div>
         </form>
       </div>
