@@ -8,10 +8,8 @@ TestCase("Croaker.FilteredList.Tests", {
       when(module).flatten().thenReturn([]);
     
       list = new croaker.FilteredList(module);
-      
-      list.applyFilters(filters);
 
-      assertThat(list.getAccepted(), []);
+      assertThat(list.applyFilters(filters), []);
   },
   
   testSingleElement: function() {
@@ -23,10 +21,8 @@ TestCase("Croaker.FilteredList.Tests", {
       when(module).flatten().thenReturn(['one']);
     
       list = new croaker.FilteredList(module);
-      
-      list.applyFilters(filters);
 
-      assertThat(list.getAccepted(), ['one']);
+      assertThat(list.applyFilters(filters), ['one']);
   },
   
   testMultipleElements: function() {
@@ -39,9 +35,7 @@ TestCase("Croaker.FilteredList.Tests", {
     
       list = new croaker.FilteredList(module);
       
-      list.applyFilters(filters);
-      
-      assertThat(list.getAccepted(), [1, 2, 3]);
+      assertThat(list.applyFilters(filters), [1, 2, 3]);
   },
   
   testNoFilters: function() {
@@ -52,9 +46,7 @@ TestCase("Croaker.FilteredList.Tests", {
     
       list = new croaker.FilteredList(module);
       
-      list.applyFilters(filters);
-      
-      assertThat(list.getAccepted(), [1, 2, 3]);
+      assertThat(list.applyFilters(filters), [1, 2, 3]);
   },
   
   testSingleFilter: function() {
@@ -66,9 +58,7 @@ TestCase("Croaker.FilteredList.Tests", {
     
       list = new croaker.FilteredList(module);
       
-      list.applyFilters(filters);
-      
-      assertThat(list.getAccepted(), [1]);
+      assertThat(list.applyFilters(filters), [1]);
   },
   
   testMultipleFilters: function() {
@@ -83,10 +73,8 @@ TestCase("Croaker.FilteredList.Tests", {
       when(module).flatten().thenReturn([1, 2, 3, 4]);
     
       list = new croaker.FilteredList(module);
-      
-      list.applyFilters(filters);
-      
-      assertThat(list.getAccepted(), [4]);
+
+      assertThat(list.applyFilters(filters), [4]);
   },
 
    setUp: function () {

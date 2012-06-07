@@ -370,27 +370,19 @@ function Croaker(env) {
   function FilteredList(module) {
     var that = {}, accepted = [], elements = module.flatten();
     
-    function getAccepted() {
-      return accepted;
-    }
-    
-    function clearFilters() {
-      accepted = [];
-    }
-    
     function applyFilters(filters) {
-      var y, andFilter = new AndFilter(filters);
-       
+      var y, andFilter = new AndFilter(filters), accepted = [];
+
       for (y=0; y < elements.length; y++) {
         if (andFilter.filter(elements[y])) {
           accepted.push(elements[y]);
         }
       }
+      
+      return accepted;
     }
     
-    that.getAccepted = getAccepted;
     that.applyFilters = applyFilters;
-    that.clearFilters = clearFilters;
     
     return that;
   }

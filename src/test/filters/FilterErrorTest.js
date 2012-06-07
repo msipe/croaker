@@ -9,9 +9,7 @@ TestCase("Croaker.FilterError.Tests", {
       orFilter = new croaker.OrFilter(strainFilters),
       filters = [nameOrFilter, orFilter];
       
-    filteredList.applyFilters(filters);
-    
-    assertThat(filteredList.getAccepted().length, 2);
+    assertThat(filteredList.applyFilters(filters).length, 2);
     
   },
 
