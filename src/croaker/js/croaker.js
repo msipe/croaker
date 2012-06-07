@@ -181,7 +181,6 @@ function Croaker(env) {
 
     that.strain = 'TY';
     that.members = members;
-    that.getMembers = getMembers;
        
     return that;
   }
@@ -189,7 +188,6 @@ function Croaker(env) {
   function Namespace(name, types, metrics) {
     var that = new BaseMetrics(name, metrics);
     
-    that.getTypes = getTypes;
     that.strain = 'NS';
     that.types = types;
     
