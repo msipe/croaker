@@ -8,4 +8,4 @@ Croaker can only load files that are below the origin.
 
 
 ####Filters
-Croaker can filter by the type of an element, either namespaces, types or members. And it can filter by names. In it's name searching Croaker supports Regular Expression searching
+Croaker can filter by the type of an element (namespace, type or member) and/or name. Name searching supports Regular Expressions.
