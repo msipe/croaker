@@ -5,12 +5,12 @@ TestCase("Croaker.LocationUrlParser.Tests", {
   },
   
   testParseEmptyPathThrows: function() {
-    assertThat(this.parser.parse, raises('FatalException'));
+    assertThat(this.parser.parse(), nil());
   },
   
   testNullSearchThrows: function() {
     this.mywindow.location.search = null;
-    assertThat(this.parser.parse, raises('FatalException'));
+    assertThat(this.parser.parse(), nil());
   },
   
   setUp: function () {

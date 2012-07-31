@@ -309,16 +309,13 @@ function Croaker(env) {
   }
   
   function LocationUrlParser() {
-    function validateUrl(url) {
-      if (!url || url.length <= 1) {
-        throw new FatalException('no path argument provided');
-      }
+    function isUrlValid(url) {
+      return(url && url.length > 1);
     }
     
     function parse() {
       var url = mywindow.location.search;
-      validateUrl(url);
-      return url.substring(1).split('=')[1];
+      return isUrlValid(url) ? url.substring(1).split('=')[1] : null;
     }
     
     return {
