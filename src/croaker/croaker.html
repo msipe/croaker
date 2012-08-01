@@ -82,8 +82,8 @@
       }
        
       function Filter() {
-        var that = {}, list, strainFilters = [], nameFilters = [], 
-          filters = [], 
+        var that = {}, list, strainFilters = [], nameFilters = [],
+          filters = [],
           strainOrFilter, nameOrFilter;
         
         function setList(newList) {
@@ -196,40 +196,41 @@
       }
 
       function load(e) {
+        var url = $('#file').val(),
+            loader = new croaker.DataLoader(url, parseData);
+        
         flash.displayMessage('Parsing Data...');
         e.stopPropagation();
         e.preventDefault();
         
-        var locationParser = new LocationUrlParser(), url;
-        
-        if (locationParser.parse()) {
-          url = locationParser.parse();
-          console.log(url);
-        }
-        
-        else { 
-          url = $('#file').val();
-          console.log(url);
-        }
-        
-        var loader = new croaker.DataLoader(url, parseData);
         loader
           .execute()
           .fail(function (jqxhr, status, error) {
             flash.displayMessage('' + error);
           });
-        }
-
+      }
+      
       
       function highlight() {
         $(this).toggleClass('highlighted');
+      }
+      
+      function tryLoadPathFromQueryString() {
+        var userpath = new croaker.LocationUrlParser().parse();
+        
+        if (userpath) {
+          $('#file').val(userpath);
+          $('#btnload').click();
+        }      
       }
 
       function init() {
         $('#btnload').click(load);
         $('#filterBtn').click(render);
-        $('#resetBtn').click(reset);    
+        $('#resetBtn').click(reset);
         $('#results').on('click', 'tbody > tr', highlight);
+        
+        tryLoadPathFromQueryString();
       }
 
       $(window).load(init);
@@ -248,13 +249,13 @@
           <div>
           
             <label for="file"></label>
-            File Name: <input id="file" type="text" class="filename" value=""/>
+            File Name: <input id="file" type="text" value=""/>
             <button id="btnload">Load</button>
           </div>
           <hr/>
           <div>
           
-            Name:  <input id="filter" type="text" value=""/>
+            Name: <input id="filter" type="text" value=""/>
             NS
             <input type="checkbox" id="NS"/>
             TY
