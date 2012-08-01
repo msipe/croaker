@@ -199,15 +199,27 @@
         flash.displayMessage('Parsing Data...');
         e.stopPropagation();
         e.preventDefault();
-               
-        var url = $('#file').val();
+        
+        var locationParser = new LocationUrlParser(), url;
+        
+        if (locationParser.parse()) {
+          url = locationParser.parse();
+          console.log(url);
+        }
+        
+        else { 
+          url = $('#file').val();
+          console.log(url);
+        }
+        
         var loader = new croaker.DataLoader(url, parseData);
         loader
           .execute()
           .fail(function (jqxhr, status, error) {
             flash.displayMessage('' + error);
           });
-      }
+        }
+
       
       function highlight() {
         $(this).toggleClass('highlighted');
