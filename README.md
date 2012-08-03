@@ -16,4 +16,4 @@ Croaker can filter by the type of an element (namespace, type or member) and/or 
 ######Support
 Croaker supports Firefox, Internet Explorer 9 and Google Chrome. Croaker runs best on Firefox and Chrome. 
 
-Running in Chrome: Due to origin restrictins, Chrome will not allow local files to be loaded via AJAX. This means that when running Croaker from the local file system using Chrome requires that Chrome be started from the console with this command line switch "--allow-file-access-from-files". This is restriction only applies when running Chrome locally. Chrome will run Croaker normally off of Web hosting.
+Running in Chrome: [Due to origin restrictions] (https://www.google.com/search?q=allow-file-access-from-files), Chrome will not allow local files to be loaded via AJAX. This means that when running Croaker from the local file system using Chrome requires that Chrome be started from the console with this command line switch "--allow-file-access-from-files". This is restriction only applies when running Chrome locally. Chrome will run Croaker normally off of Web hosting.
