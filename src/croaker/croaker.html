@@ -1,4 +1,4 @@
-<!DOCTYPE Html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Croaker</title>
@@ -11,48 +11,26 @@
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.19.custom.css" />
         
     <script id="metrics-template" type="text-x-mustache-tmpl">
-      {{#getFullMetrics}}
-        <td>
-          {{getFormattedValue}}
-        </td>
-      {{/getFullMetrics}}
+      {{#getFullMetrics}}<td>{{getFormattedValue}}</td>{{/getFullMetrics}}
     </script>
     
     <script id="entry-template" type="text-x-mustache-tmpl">
-      <tr>
-        <td>
-          {{strain}}
-        </td>
-        <td>
-          {{name}}
-        </td>
-        {{> metrics}}
-      </tr>
+      <tr><td>{{strain}}</td><td>{{name}}</td>{{> metrics}}</tr>
     </script>
         
     <script id="main-template" type="text-x-mustache-tmpl">
       <table border="0" cellpadding="0" cellspacing="0">
         <thead>
           <tr>
-            <th>
-              Type
-            </th>
-            <th>
-              Name
-            </th>
+            <th>Type</th>
+            <th>Name</th>
             {{#metricdefs}}
-              <th>
-                {{abbreviation}}
-              </th>
+              <th>{{abbreviation}}</th>
             {{/metricdefs}}
             </th>
           </tr>
         </thead>
-        <tbody>
-          {{#listArray}}
-            {{> entry}}
-          {{/listArray}}
-        </tbody>
+        <tbody>{{#listArray}}{{> entry}}{{/listArray}}</tbody>
       </table>
     </script>
 
@@ -82,9 +60,13 @@
       }
        
       function Filter() {
-        var that = {}, list, strainFilters = [], nameFilters = [],
+        var that = {}, 
+          list, 
+          strainFilters = [], 
+          nameFilters = [],
           filters = [],
-          strainOrFilter, nameOrFilter;
+          nameOrFilter,
+          orFilter;
         
         function setList(newList) {
           list = newList;
@@ -130,7 +112,7 @@
       }
       
       filter = new Filter();
-      flash = new Flash()
+      flash = new Flash();
       
       function parseData(xml) {
         try {
@@ -205,8 +187,8 @@
         
         loader
           .execute()
-          .fail(function (jqxhr, status, error) {
-            flash.displayMessage('' + error);
+          .fail(function (error) {
+            flash.displayMessage(' ' + error);
           });
       }
       
@@ -247,14 +229,12 @@
       <div id="nav">
         <form action="#">
           <div>
-          
             <label for="file"></label>
             File Name: <input id="file" type="text" value=""/>
             <button id="btnload">Load</button>
           </div>
           <hr/>
           <div>
-          
             Name: <input id="filter" type="text" value=""/>
             NS
             <input type="checkbox" id="NS"/>
