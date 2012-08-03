@@ -2,13 +2,13 @@ Croaker is an HTML viewer which displays the XML from [Microsoft's Code Metric R
 
 
 ###Setup
-To use Croaker, download the zip file and run Croaker.html. Croaker has two ways to load XML files, through the load box and from a URL query string. 
+To use Croaker, download one of th prepackaged download beta files and run Croaker.html. Croaker has two ways to load XML files, through the load box and from a URL query string. 
 
-  Croaker.html has a load box which will load the file at the path entered into it. Entering samples/sample.xml into the load box should bring up the sample file.
+Croaker.html has a load box which will load the file at the path entered into it. Entering samples/sample.xml into the load box should bring up the sample file.
 
-  Croaker can also load a file from a URL query path. Following croaker.html in the URL, enter "?path=samples/sample.xml" to load the sample file.(...croaker.html?path=samples/sample.xml). 
+Croaker can also load a file from a URL query path. Following croaker.html in the URL, enter "?path=samples/sample.xml" to load the sample file.(...croaker.html?path=samples/sample.xml). 
 
-  Croaker can only load files which are located below Croaker.html. See the support section below for instructions on running Croaker in Chrome.
+Croaker can only load files which are located below Croaker.html. See the support section below for instructions on running Croaker in Chrome.
 
 ####Filters
 Croaker can filter by the type of an element (namespace, type or member) and/or name. Name searching supports Regular Expressions.
